@@ -1,3 +1,4 @@
+successfully downloaded text file (SHA: 587e03b079a96db189d7e3075c6bf936066a63b3)
 # Late Rains, Next Crop (Field Shift)
 
 NASA Space Apps 2026, Field Shift challenge, team AgriCloud.
@@ -43,3 +44,7 @@ Python notebooks on Colab or Kaggle; pandas and xarray for data; geopandas and r
 main is protected; work goes on short branches; one review before merge. A sources file and AI-use credits are kept from day one.
 
 These rules are the starting suggestions. The team's baseline rules win wherever they differ; they get settled on a call, and planning stays with Stephen.
+
+## Credits
+
+Repository setup was done with help from AI agents (Openbot).
