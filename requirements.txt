@@ -1,9 +1,20 @@
 # One pinned requirements file.
-# Exact versions get frozen at the first working environment build (Colab or
-# Kaggle) and do not drift after that.
-pandas
-xarray
-geopandas
-rasterio
-matplotlib
-plotly
+#
+# The data layer below is verified: these exact versions ran
+# notebooks/field_shift.ipynb top to bottom on 14 Nov 2026 (Python 3.14,
+# Linux, clean pip install) and wrote results/site_climate.json.
+pandas==2.3.3
+numpy==2.5.4
+matplotlib==3.10.6
+
+# Notebook execution and regeneration.
+nbformat==5.10.4
+nbclient==0.10.2
+ipykernel==6.30.1
+
+# Reserved for the later map and app steps. Not imported by the data layer.
+# Pinned to the release current on 14 Nov 2026; re-check at the first map run.
+xarray==2026.9.0
+geopandas==1.2.0
+rasterio==1.5.2
+plotly==7.1.0
