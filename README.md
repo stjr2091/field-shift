@@ -1,4 +1,3 @@
-successfully downloaded text file (SHA: 587e03b079a96db189d7e3075c6bf936066a63b3)
 # Late Rains, Next Crop (Field Shift)
 
 NASA Space Apps 2026, Field Shift challenge, team AgriCloud.
