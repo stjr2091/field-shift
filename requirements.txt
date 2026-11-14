@@ -1,0 +1,9 @@
+# One pinned requirements file.
+# Exact versions get frozen at the first working environment build (Colab or
+# Kaggle) and do not drift after that.
+pandas
+xarray
+geopandas
+rasterio
+matplotlib
+plotly
