@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Late Rains, Next Crop — Nakasongola</title>
+<link rel="stylesheet" href="styles.css?v=3">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="masthead">
+  <p class="eyebrow">Field Shift · NASA Space Apps 2026</p>
+  <h1>Late Rains, Next Crop</h1>
+  <p class="standfirst">
+    One question for one district: <strong>what do I plant, and when.</strong>
+    Not a yield forecast.
+  </p>
+  <dl class="site-facts">
+    <div><dt>Place</dt><dd id="fact-site">…</dd></div>
+    <div><dt>Record</dt><dd id="fact-period">…</dd></div>
+    <div><dt>Scale</dt><dd id="fact-scale">…</dd></div>
+  </dl>
+</header>
+
+<nav class="steps" aria-label="Screens">
+  <button class="step" data-view="answer" aria-current="page"><span>1</span> The answer</button>
+  <button class="step" data-view="rain"><span>2</span> The rain record</button>
+  <button class="step" data-view="crops"><span>3</span> Crops and rules</button>
+</nav>
+
+<main id="main">
+
+  <!-- 1 ─────────────────────────────────────────────────────────── -->
+  <section class="view" id="view-answer" aria-labelledby="h-answer">
+    <h2 id="h-answer">What this district can and cannot say today</h2>
+
+    <div class="split">
+      <article class="panel panel--known">
+        <h3><span class="tag tag--known">Answerable</span> When the rains arrive</h3>
+        <p class="lede" id="answer-when">…</p>
+        <p class="note" id="answer-when-note">…</p>
+        <button class="link" data-goto="rain">See every year in the record →</button>
+      </article>
+
+      <article class="panel panel--blocked">
+        <h3><span class="tag tag--blocked">Not answerable yet</span> What to plant</h3>
+        <p class="lede">
+          No crop is shown. The crop rule table has
+          <strong id="answer-rules">no sourced rows yet</strong>, so there is no
+          crop threshold, season length, pH range or temperature range to test
+          the rainfall against.
+        </p>
+        <p class="note">
+          A number without a source does not go on this page. That is a decision,
+          not an oversight.
+        </p>
+        <button class="link" data-goto="crops">See what is missing →</button>
+      </article>
+    </div>
+
+    <article class="panel panel--wide">
+      <h3>One honest sentence</h3>
+      <p class="lede" id="answer-oneline">…</p>
+      <p class="note" id="answer-caveat">…</p>
+    </article>
+  </section>
+
+  <!-- 2 ─────────────────────────────────────────────────────────── -->
+  <section class="view" id="view-rain" aria-labelledby="h-rain" hidden>
+    <h2 id="h-rain">The rain record, district scale</h2>
+    <p class="viewnote">
+      NASA POWER daily rainfall, one grid cell. This is the day the
+      <em>10-day rainfall threshold is first met</em>, not the first rain day.
+    </p>
+
+    <article class="panel">
+      <header class="panel-head">
+        <h3>Rain by month</h3>
+        <p class="panel-sub">Bar is the long-run mean. The line is the middle half of years (25th–75th percentile).</p>
+      </header>
+      <figure class="chart" id="fig-monthly" aria-labelledby="cap-monthly"></figure>
+      <figcaption id="cap-monthly" class="figcap">…</figcaption>
+    </article>
+
+    <article class="panel">
+      <header class="panel-head">
+        <h3>First-rains onset, one row per year</h3>
+        <p class="panel-sub">Each mark is a real year in the record. Pick a year to read its numbers.</p>
+      </header>
+      <figure class="chart chart--strip" id="fig-strip"></figure>
+      <div class="readout" id="strip-readout" aria-live="polite"></div>
+      <ul class="legend">
+        <li><span class="dot dot--wet"></span> onset, no long dry spell after</li>
+        <li><span class="dot dot--dry"></span> onset, then a dry spell of 7 days or more</li>
+        <li><span class="swatch swatch--band"></span> middle half of years</li>
+        <li><span class="rule-line"></span> median</li>
+      </ul>
+    </article>
+
+    <div class="split">
+      <article class="panel">
+        <header class="panel-head">
+          <h3>Does the answer move with the trigger?</h3>
+          <p class="panel-sub">The trigger is not yet sourced. Moving it moves the date.</p>
+        </header>
+        <table class="grid" id="table-sensitivity">
+          <caption class="sr">Median first-rains onset at three trigger values</caption>
+          <thead><tr><th scope="col">10-day trigger</th><th scope="col">Median onset</th><th scope="col">Years found</th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <p class="note" id="sensitivity-note">…</p>
+      </article>
+
+      <article class="panel">
+        <header class="panel-head">
+          <h3>Dry spell after onset</h3>
+          <p class="panel-sub">Share of years with a run of 7 days or more below 1&nbsp;mm, in the 30 days after onset.</p>
+        </header>
+        <p class="bigfig" id="dryfig">…</p>
+        <div class="meter" role="img" id="drymeter" aria-label=""></div>
+        <p class="note">A dry spell matters to a seedling, not to the rainfall total. It is reported, not scored.</p>
+      </article>
+    </div>
+
+    <article class="panel">
+      <header class="panel-head">
+        <h3 id="h-second">Second rains</h3>
+        <p class="panel-sub">Same rule, later window. Read the median as a re-wetting date: most years are already wet when the window opens.</p>
+      </header>
+      <table class="grid" id="table-second">
+        <caption class="sr">Second-rains onset summary</caption>
+        <thead><tr><th scope="col">Median</th><th scope="col">Middle half</th><th scope="col">Years found</th><th scope="col">Dry spell ≥7 d</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </article>
+  </section>
+
+  <!-- 3 ─────────────────────────────────────────────────────────── -->
+  <section class="view" id="view-crops" aria-labelledby="h-crops" hidden>
+    <h2 id="h-crops">Crops and rules</h2>
+
+    <article class="panel panel--blocked panel--wide">
+      <h3><span class="tag tag--blocked">Waiting on evidence</span> The crop half is empty on purpose</h3>
+      <p class="lede">
+        Each crop needs four sourced rules: a planting rainfall threshold, a
+        season length, a soil pH range and a temperature range. The rule table has
+        <strong id="crops-sourced">no sourced rows yet</strong>, so there is no
+        threshold to test the rainfall against. A crop with fewer than three
+        sourced rules is cut, so no crop can appear.
+      </p>
+      <p class="note">
+        The screen is built and reads the file. The moment the rules land, the
+        table below fills from <code>results/app_data.json</code> with no code
+        change. Until then, an empty table is the true answer.
+      </p>
+    </article>
+
+    <article class="panel">
+      <header class="panel-head">
+        <h3>Rules coverage</h3>
+        <p class="panel-sub">Sourced rows out of four, per crop.</p>
+      </header>
+      <table class="grid" id="table-coverage">
+        <caption class="sr">Sourced rules per crop</caption>
+        <thead><tr><th scope="col">Crop</th><th scope="col">Sourced</th><th scope="col">Status</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </article>
+
+    <article class="panel" id="panel-windows" hidden>
+      <header class="panel-head">
+        <h3>Window comparison</h3>
+        <p class="panel-sub">What practice says against what the rainfall supports, same years, same rule.</p>
+      </header>
+      <table class="grid grid--wide" id="table-windows">
+        <caption class="sr">Documented against computed planting windows</caption>
+        <thead>
+          <tr>
+            <th scope="col">Crop</th>
+            <th scope="col">Practice says</th>
+            <th scope="col">Rain record says</th>
+            <th scope="col">Gap</th>
+            <th scope="col">Holds across trigger band</th>
+            <th scope="col">Source</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <p class="note" id="windows-note">…</p>
+    </article>
+
+    <article class="panel">
+      <header class="panel-head">
+        <h3>Site soil, sourced</h3>
+        <p class="panel-sub">SoilGrids v2.0, one point, depth-weighted 0–30 cm. A district estimate, not your field.</p>
+      </header>
+      <dl class="soil" id="soil"></dl>
+    </article>
+
+    <article class="panel panel--wide">
+      <h3>What this page will never claim</h3>
+      <ul class="limits">
+        <li>Yield, harvest success or income.</li>
+        <li>Anything below district scale: one cell, one point.</li>
+        <li>Your field's soil, seed or fertiliser.</li>
+        <li>That planting on the onset day is best.</li>
+      </ul>
+    </article>
+  </section>
+
+  <footer class="provenance">
+    <h2>Where the numbers come from</h2>
+    <ul id="sources"></ul>
+    <p class="note" id="prov-line">…</p>
+  </footer>
+</main>
+
+<script src="app.js?v=3"></script>
+</body>
+</html>
