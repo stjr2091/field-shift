@@ -30,6 +30,13 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "notebooks"))
 import crop_path  # noqa: E402
 
+# The path index is written by this same build, so it cannot drift from the
+# data file. It lives beside this script.
+sys.path.insert(0, str(ROOT / "scripts"))
+import build_path_index  # noqa: E402
+
+write_path_index = build_path_index.write_index
+
 CLIMATE = ROOT / "results" / "site_climate.json"
 RULES = ROOT / "rules" / "rules.csv"
 OUT = ROOT / "results" / "app_data.json"
@@ -433,6 +440,14 @@ def main() -> None:
     digest = hashlib.sha256(OUT.read_bytes()).hexdigest()
     print(f"wrote {OUT.relative_to(ROOT)} ({OUT.stat().st_size} bytes, sha256 {digest[:16]}…)")
     print(f"crops: {len(crops)} — data_status.crop_windows = {payload['data_status']['crop_windows']}")
+
+    # The path index is built here, in the same run, from the same model. One
+    # build therefore produces both files, so they cannot drift apart.
+    index_path, index_payload = write_path_index()
+    print(
+        f"wrote {index_path.relative_to(ROOT)} "
+        f"({index_path.stat().st_size} bytes, {index_payload['n_paths']} paths)"
+    )
 
 
 if __name__ == "__main__":

@@ -217,6 +217,66 @@ different order give a different result.
 The model assumes each crop affects only the crop that follows it. It does not
 test a crop against a crop two steps back.
 
+## The path index
+
+`results/path_index.json` is a build-time lookup for screens that need the
+ordered-path comparison without a server. One build writes it with
+`results/app_data.json`, so the two cannot drift.
+
+The key is the crop path, newest last, with segments joined by `>`. For example
+`maize>common_bean>finger_millet`.
+
+Each value carries the fields a screen renders, under the same names the model
+returns: `steps`, `n_steps`, `n_matched`, `n_for`, `n_against`, `n_unmatched`
+and `path_labels`. Each step carries `from`, `to`, `matched`, `label`,
+`direction`, `reason` and `note`. There is no translation layer.
+
+The value is a subset of the model's result. `path` and `assumption` are
+dropped, because the key already states the path and the assumption is one
+statement for the whole file. A screen shows the one-step assumption from
+`crop_path_assumption` in `results/app_data.json`, not from this file.
+
+Every entry is produced by calling the model. The index is a projection of
+`notebooks/crop_path.py`, not a second implementation.
+
+It covers the five crop keys at lengths 1 to 3. Length 1 is included, so a
+single-crop request returns an empty result rather than a missing key.
+
+## What the screen must do before it looks up
+
+1. Drop blank values.
+2. Drop the sentinel values `other` and `unsure`. They are not crops, and the
+   model has no rules for them. A key that contains either has no entry.
+3. Keep a crop that repeats in the same history. The model assesses each
+   adjacent pair, so `maize>maize` is a real path with a real answer: no rule is
+   held for that pair. Do not remove the repeat.
+4. Join the rest with `>`, newest last.
+
+## Order matters, and a wrong order does not fail
+
+The three fields on the page are ordered newest first. The newest crop is
+`prev-1`, labelled "This season follows". The oldest is `prev-3`. The key runs
+the other way, oldest first and newest last.
+
+A handler must reverse the field order, or build from `prev-3` to `prev-1`.
+
+This is the one mistake the index cannot catch. A reversed key is still a real
+crop path, so it exists in the index and the lookup succeeds. It returns a
+different pairing with no error. For example, `sorghum>finger_millet` reports
+one reason against, and `finger_millet>sorghum` reports none. Both keys are
+present. Only the first carries the warning that finger millet should not
+follow sorghum.
+
+So a lookup that succeeds is not proof that the order is right.
+
+The index holds no empty-key entry and no key with an empty segment.
+
+If the lookup finds no entry, the screen says no comparison is available for
+that path. Do not invent a result and do not fall back to a shorter path. Use
+that message for a real miss only. It must not absorb a reversed key.
+
+`scripts/qa_path_index_check.py` checks the file against the live model.
+
 ## Example top-level skeleton
 
 ```json
