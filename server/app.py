@@ -59,7 +59,10 @@ def handle_request(payload: dict) -> dict:
     data = calc.load_data()
     site = (data.get("site") or {}).get("name", "")
     district = (payload.get("district") or "").strip()
-    if district and site and district.lower() != site.lower():
+    # "auto" and a blank mean the same thing: use the one site the data file
+    # holds. Only a different named district is refused, because answering it
+    # with these numbers would be a claim about a district we did not measure.
+    if district.lower() not in ("", "auto") and site and district.lower() != site.lower():
         raise calc.RequestError(
             f"This service holds data for {site} only. The request named {district}."
         )
