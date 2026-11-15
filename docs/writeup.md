@@ -172,6 +172,11 @@ The check record is `qa/app_rebuild/check_soroti_app_numbers.md`.
   and the two crop-pair rows as assumed, with no source. Each row is labelled untested, and
   the panel states that no nitrogen, yield, plot or trial data is held, so no rotation
   effect can be measured. No rotation reason is advice.
+- The interaction evaluates candidate next crops. A user enters up to three crops they grew
+  before, and each candidate is read against that history, the site record and the crop
+  rules. It is not a comparison of whole sequences: the entered crops are a set, and their
+  order does not change any reason, any count or the ranking. The screen says so and the
+  three fields are not labelled by recency.
 
 ## Sources
 

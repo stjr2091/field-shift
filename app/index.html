@@ -173,16 +173,17 @@
       <header class="panel-head">
         <h3>Previous crops, next crop</h3>
         <p class="panel-sub">
-          Choose up to three crops you grew last, most recent first. Each candidate
-          is read against the site record and the crop rules. Nothing here is a
-          yield estimate.
+          Choose up to three crops you grew before. Each candidate next crop is
+          read against this history, the site record and the crop rules. Order is
+          not used: the history is a set of crops, not a sequence. Nothing here is
+          a yield estimate.
         </p>
       </header>
 
       <div class="sequence-input">
-        <p class="sequence-label" id="sequence-input-label">What did you grow last?</p>
+        <p class="sequence-label" id="sequence-input-label">What did you grow before?</p>
         <div class="sequence-fields" role="group" aria-labelledby="sequence-input-label">
-          <label>Most recent
+          <label>Previous crop 1
             <select id="prev-1">
               <option value="">Not chosen</option>
               <option value="maize">Maize</option>
@@ -194,7 +195,7 @@
               <option value="unsure">Unsure</option>
             </select>
           </label>
-          <label>One before
+          <label>Previous crop 2
             <select id="prev-2">
               <option value="">Not chosen</option>
               <option value="maize">Maize</option>
@@ -206,7 +207,7 @@
               <option value="unsure">Unsure</option>
             </select>
           </label>
-          <label>Two before
+          <label>Previous crop 3
             <select id="prev-3">
               <option value="">Not chosen</option>
               <option value="maize">Maize</option>
@@ -227,7 +228,7 @@
       </p>
 
       <table class="grid grid--wide" id="table-sequence">
-        <caption class="sr">Previous-crop sequence compared with each candidate</caption>
+        <caption class="sr">Candidate crops read against the chosen previous crops</caption>
         <thead>
           <tr>
             <th scope="col">Candidate</th>
