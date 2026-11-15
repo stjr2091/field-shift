@@ -283,11 +283,19 @@ def recommend(previous_crops, soil_ph=None, moisture=None, data: dict | None = N
     # finding.
     tied = [item for item in ranked if item["rank"] == best["rank"]]
     tie_note = None
+    tie_line = None
     if len(tied) > 1:
         names = ", ".join(item["row"]["crop_label"] for item in tied)
         tie_note = (
             f"{names} rank the same on the rules held. The crop list order chose "
             "between them, not the evidence."
+        )
+        # The same disclosure in the shortest form a card can carry. The card
+        # must state it, because a reader who sees one crop named will otherwise
+        # read a tie as a finding.
+        tie_line = (
+            f"The crops tie. No rule separated them, so the list order decided. "
+            f"Tied: {names}."
         )
 
     window, window_basis = _window_text(row)
@@ -297,8 +305,10 @@ def recommend(previous_crops, soil_ph=None, moisture=None, data: dict | None = N
         reasons.append(best["ph_reason"])
     reasons.append(f"Planting window: {window}. {window_basis}")
     reasons.append(onset)
-    if tie_note:
-        reasons.append(tie_note)
+    if tie_line:
+        # Second, right after the reason, so it is read with the recommendation
+        # and not as a footnote at the end.
+        reasons.append(tie_line)
     note = _moisture_note(moisture)
     if note:
         reasons.append(note)
@@ -336,6 +346,13 @@ def recommend(previous_crops, soil_ph=None, moisture=None, data: dict | None = N
             "crop_status": row.get("status"),
             "unknown_rules": row.get("unknown_rules", []),
             "pair_label": (best["pair_row"] or {}).get("label"),
+            "pair_direction": (best["pair_row"] or {}).get("direction"),
             "assumption": data.get("crop_path_assumption"),
+            # The tie disclosure, in the form the card must carry. Absent when
+            # no tie occurred, so a card is never told to claim one.
+            "tie_line": tie_line,
+            "tied_crops": [item["row"]["crop_label"] for item in tied]
+            if len(tied) > 1
+            else [],
         },
     }
