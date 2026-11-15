@@ -163,8 +163,8 @@ The check record is `qa/app_rebuild/check_soroti_app_numbers.md`.
 - The second season's dates are re-wetting dates, not season starts.
 - The dry-spell windows in this note and in the analysis differ, 30 days against 21, and are
   never compared.
-- The CHIRPS record is shown beside POWER but no record is chosen as primary. The two
-  disagree.
+- A second rainfall record (CHIRPS) was pulled during the analysis and is held outside the
+  repository. It is not shown in the app and no record is chosen as primary. The two disagree.
 - Rotation is recorded as a direction only, with no number. The two crop-pair rows have no
   source, so they are not published. No rotation effect is tested, because no nitrogen, yield
   or trial data is held.
