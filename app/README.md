@@ -1,72 +1,50 @@
-# App
+# 🌱 AgriCloud · Web Interface
 
-One small form and one advice card. No build step. No dependencies.
+**A simple form for crop options, seasonal evidence and clear next checks.**
+
+AgriCloud is built for the **NASA Space Apps Challenge — Field Shift category**. For the complete project setup, reproducible Python notebooks, Google Colab instructions, dependencies and AI-use information, see the [project README](../README.md).
+
+[Run the app](../README.md#-quick-start) · [Reproduce the data](../README.md#-reproduce-the-analysis) · [API reference](../server/README.md) · [Sources](../SOURCES.md)
 
 ## Run it
 
-Serve the repository root, then open `/app/index.html`:
+From the repository root:
 
-    python3 -m http.server 8000
+```bash
+python -m http.server 8000 --bind 127.0.0.1
+```
 
-    http://localhost:8000/app/index.html
+Open the [sample interface](http://127.0.0.1:8000/app/index.html?api=mock). No frontend build or package installation is required.
 
-The district line reads the site name from `results/app_data.json`. A copy in
-this folder is used as a fallback.
+To use the recommendation service, start it in another terminal:
+
+```bash
+python server/app.py
+```
+
+Then open [AgriCloud with the local backend](http://127.0.0.1:8000/app/index.html?api=http://127.0.0.1:8099/recommend).
 
 ## Backend
 
-The form posts JSON to the advice service:
+The form sends crop history, optional soil pH, moisture, planting date and district to `POST /recommend`. The service validates the inputs and returns advice and supporting evidence. `GET /assumption` provides the season assumption.
 
-    POST {previous_crops: string[], soil_ph?: number, moisture?: string,
-          planting_date?: string, district?: string}
+The `api` query parameter selects the recommendation URL. Without it, or with `?api=mock`, the interface uses fixed samples. Samples do not recalculate advice for every input. A configured service error must not silently become a sample result.
 
-`planting_date` is ISO YYYY-MM-DD from the optional date input. When it is
-blank the field is left out and the server picks the season from today's
-date. Any check on the date itself is the server's business.
+See the [service documentation](../server/README.md) for request fields, credentials and optional integrations. Provider secrets belong only in the backend environment.
 
-The response shape the card expects:
+## Interface files
 
-    {recommended_crop: string, when: string, why: string, alternative: string,
-     reasons: string[], card_en: string, card_lg?: string, season_assumption: string,
-     error?: string}
-
-`season_assumption` is one plain sentence naming the season the advice assumes.
-The card shows it on the result and next to the submit button before the advice
-is requested. When `card_lg` is missing, the Luganda area says so in one line
-instead of staying blank. If the response carries an `error` string, the form
-shows it in the error line instead of the card.
-
-`previous_crops` carries crop keys, oldest first, newest last:
-`maize`, `common_bean`, `finger_millet`, `sorghum`, `groundnut`, `other`.
-
-### Point it at the live service
-
-By default the page uses `mock_response.json`, a local sample, so the card can
-be tested before the service exists. Add the flag to use the real address:
-
-    http://localhost:8000/app/index.html?api=https://example.org/advice
-
-The samples follow the request: a blank planting date shows the default
-second-season sample without a Luganda card, and a chosen date shows the
-dated first-rains sample with the Luganda card. The flag
-
-    http://localhost:8000/app/index.html?api=mock-nolg
-
-removes the Luganda card from either sample, so the missing-card note shows.
-
-The service must allow the browser's origin (CORS) and answer with the JSON
-shape above. No other setting is needed.
-
-On page load the form also asks `GET <api-base>/assumption` for the season
-assumption, where the base is the `?api=` URL without a trailing
-`/recommend`. It returns `{season_assumption: string}` and fills the note by
-the submit button before any advice is requested. If that fetch fails, the
-note stays empty until the first advice.
+| File | Purpose |
+| --- | --- |
+| [index.html](index.html) | Form and result sections. |
+| [app.js](app.js) | Input handling, submission and rendering. |
+| [styles.css](styles.css) | Layout and presentation. |
+| [app_data.json](app_data.json) | Fallback derived app data. |
 
 ## Limits
 
-- The district is automatic and fixed to the site in `results/app_data.json`.
-  There is no picker. A location lookup is still a decision, not built here.
-- Optional values left blank are left out of the request. They never block the
-  form.
-- The card only repeats what the service returns. It adds no advice.
+The interface presents supplied evidence; it does not invent agricultural advice. Seasonal suitability is separate from planting readiness, and forecast rainfall is not proof that a field is ready to plant.
+
+Translation depends on provider availability, configured safeguards and meaning checks. Synthetic language fixtures are test strings, not Luganda. The app does not predict yield or income.
+
+[Method](../docs/method.md) · [AI use](../AI_USE.md) · [License](../LICENSE)
