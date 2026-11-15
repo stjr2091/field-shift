@@ -128,6 +128,7 @@ here with that note without checking which rule produced them."""
 display(trend.set_index("season"))
 frames = sorted(set(trend["date_frame"].dropna()))
 print("date frame:", ", ".join(frames) if frames else "not stated")
+print("lag-1 autocorrelation is shown to three places.")
 print("trend is reported only. No correction is applied for serial correlation.")"""
     ),
     md("## 5b. Soil at the point (SoilGrids, 0–30 cm depth-weighted)"),
