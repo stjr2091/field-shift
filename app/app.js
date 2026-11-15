@@ -14,10 +14,13 @@
   };
 
   /* The API flag. No flag, or "?api=mock", uses the local sample response.
+     "?api=mock-nolg" uses the sample without a Luganda card.
      "?api=https://example.org/advice" posts to the live service instead. */
   var API_PARAM = new URLSearchParams(window.location.search).get("api");
-  var USE_MOCK = !API_PARAM || API_PARAM === "mock";
-  var API_URL = API_PARAM || "";
+  var MOCK_FILES = { "mock": "mock_response.json", "mock-nolg": "mock_response_nolg.json" };
+  var USE_MOCK = !API_PARAM || MOCK_FILES.hasOwnProperty(API_PARAM);
+  var MOCK_FILE = USE_MOCK ? (MOCK_FILES[API_PARAM] || MOCK_FILES.mock) : "";
+  var API_URL = USE_MOCK ? "" : API_PARAM;
 
   var state = { crops: [], district: "" };
 
@@ -45,6 +48,11 @@
   var alternativeBlock = document.querySelector(".alternative");
   var lugandaBlock = document.getElementById("luganda-block");
   var cardLg = document.getElementById("card-lg");
+  var lugandaMissing = document.getElementById("luganda-missing");
+  var seasonBlock = document.getElementById("season-block");
+  var seasonEl = document.getElementById("season");
+  var seasonNote = document.getElementById("season-note");
+  var seasonNoteText = document.getElementById("season-note-text");
 
   /* ── previous crops ─────────────────────────────────────────── */
 
@@ -167,7 +175,7 @@
   function getAdvice(body) {
     if (USE_MOCK) {
       return new Promise(function (resolve) { setTimeout(resolve, 450); })
-        .then(function () { return fetch("mock_response.json", { cache: "no-store" }); })
+        .then(function () { return fetch(MOCK_FILE, { cache: "no-store" }); })
         .then(function (response) {
           if (!response.ok) throw new Error("HTTP " + response.status);
           return response.json();
@@ -190,6 +198,26 @@
     node.textContent = value == null ? "" : String(value);
   }
 
+  var SEASON_MISSING = "The service did not state the season this advice assumes.";
+
+  /* The assumption sits by the submit control, so the user reads it before
+     asking for advice. In mock mode the sample fills it on load; with the
+     live service it fills from the first response. */
+  function showSeasonNote(text) {
+    setText(seasonNoteText, text || SEASON_MISSING);
+    seasonNote.hidden = false;
+  }
+
+  function loadSampleSeason() {
+    if (!USE_MOCK) return;
+    fetch(MOCK_FILE, { cache: "no-store" })
+      .then(function (response) { return response.ok ? response.json() : null; })
+      .then(function (data) {
+        if (data && data.season_assumption) showSeasonNote(data.season_assumption);
+      })
+      .catch(function () { /* the card still shows the assumption after submit */ });
+  }
+
   function renderCard(data) {
     setText(resultTitle, data.recommended_crop || "Advice");
     setText(whenEl, data.when || "No supported timing in this response.");
@@ -208,7 +236,20 @@
     alternativeBlock.hidden = !data.alternative;
 
     setText(cardLg, data.card_lg || "");
-    lugandaBlock.hidden = !data.card_lg;
+    lugandaBlock.hidden = false;
+    if (data.card_lg) {
+      cardLg.hidden = false;
+      lugandaMissing.hidden = true;
+      lugandaBlock.setAttribute("lang", "lg");
+    } else {
+      cardLg.hidden = true;
+      lugandaMissing.hidden = false;
+      lugandaBlock.setAttribute("lang", "en");
+    }
+
+    setText(seasonEl, data.season_assumption || SEASON_MISSING);
+    seasonBlock.hidden = false;
+    showSeasonNote(data.season_assumption);
 
     badge.hidden = !USE_MOCK;
 
@@ -236,4 +277,5 @@
 
   drawCrops();
   loadDistrict();
+  loadSampleSeason();
 })();

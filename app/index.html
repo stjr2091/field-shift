@@ -69,6 +69,11 @@
         <span class="auto">automatic</span>
       </p>
 
+      <p class="season-note" id="season-note" hidden>
+        <span class="season-note-label">Assumed season</span>
+        <span id="season-note-text"></span>
+      </p>
+
       <div class="actions">
         <button class="btn" type="submit" id="submit">Get advice</button>
         <p class="status" id="status" role="status" aria-live="polite"></p>
@@ -115,9 +120,15 @@
       </div>
     </div>
 
-    <div class="luganda" id="luganda-block" hidden lang="lg">
+    <div class="season" id="season-block">
+      <h3>Assumed season</h3>
+      <p id="season"></p>
+    </div>
+
+    <div class="luganda" id="luganda-block" lang="lg">
       <h3>Luganda</h3>
       <p id="card-lg"></p>
+      <p class="luganda-missing" id="luganda-missing" hidden>Luganda card unavailable for this advice</p>
     </div>
   </section>
 </main>
