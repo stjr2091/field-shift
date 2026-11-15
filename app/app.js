@@ -63,6 +63,25 @@
     return Math.round((part / whole) * 100) + "%";
   }
 
+  /* Month/day from the data, turned into a day number on a common year. The
+     second-rains window start arrives as "08-01", never as a typed number. */
+  function mdToDoy(md) {
+    if (!md) return null;
+    var parts = String(md).split("-");
+    if (parts.length !== 2) return null;
+    var start = Date.UTC(2026, 0, 1);
+    var date = Date.UTC(2026, Number(parts[0]) - 1, Number(parts[1]));
+    return Math.round((date - start) / 86400000) + 1;
+  }
+
+  function cropLabel(data, key) {
+    var row = (data.crop_rule_coverage || []).filter(function (c) {
+      return c.crop === key;
+    })[0];
+    if (row && row.crop_label) return row.crop_label;
+    return key.replace(/_/g, " ").replace(/\b\w/g, function (ch) { return ch.toUpperCase(); });
+  }
+
   /* ── nav ─────────────────────────────────────────────────────── */
 
   var VIEWS = { answer: "The answer", rain: "The rain record", crops: "Crops and rules" };
@@ -412,81 +431,185 @@
     });
   }
 
-  function renderRotation(data) {
-    var rows = data.crop_rotation || [];
-    var panel = $("#panel-rotation");
-    if (!panel) return;
-    if (!rows.length) {
-      panel.hidden = true;
-      return;
-    }
-    panel.hidden = false;
-    var body = $("#table-rotation tbody");
-    body.innerHTML = "";
-    rows.forEach(function (r) {
-      var tr = document.createElement("tr");
-      tr.className = "is-open";
-      var subject = r.subject === "finger_millet" ? "Finger millet" : r.subject;
-      tr.innerHTML =
-        "<td>" + subject + "</td>" +
-        "<td>" + (r.direction || "unknown") + "</td>" +
-        "<td class=\"unknown\">no</td>" +
-        "<td>" + (r.source || "<span class=\"unknown\">none</span>") +
-        (r.page_or_quote ? "<br><span class=\"note\">" + r.page_or_quote + "</span>" : "") +
-        "</td>";
-      body.appendChild(tr);
-    });
-    $("#rotation-note").textContent =
-      "Not tested. No nitrogen, yield or trial data is held, so a rotation effect " +
-      "cannot be measured here. This page shows direction only.";
-  }
-
-  function renderWindows(data) {
-    var body = $("#table-windows tbody");
-    body.innerHTML = "";
+  function renderSequence(data) {
+    var body = $("#table-sequence tbody");
+    if (!body) return;
 
     var crops = data.crops || [];
-    var panel = $("#panel-windows");
+    var first = season(data, "first_rains");
+    var second = season(data, "second_rains");
+    var sitePh = data.soil ? data.soil.ph_h2o : null;
+    var siteTemp = data.annual ? data.annual.t2m_mean_c : null;
+    var secondStart = second ? mdToDoy(second.window_start_md) : null;
 
-    // No sourced crop row, no comparison table. The waiting state on the
-    // screen above already says why, so this panel stays out of sight.
-    if (!crops.length) {
-      if (panel) panel.hidden = true;
-      return;
-    }
-    if (panel) panel.hidden = false;
+    var previous = ["#prev-1", "#prev-2", "#prev-3"].map(function (sel) {
+      var node = $(sel);
+      return node ? node.value : "";
+    }).filter(function (value) { return value !== ""; });
 
-    crops.forEach(function (crop) {
+    var unknownChosen = previous.some(function (key) {
+      return key === "other" || key === "unsure";
+    });
+
+    var rotationRows = (data.sequence_reasons || []).filter(function (row) {
+      return previous.indexOf(row.previous_crop) !== -1;
+    });
+
+    var rows = crops.map(function (crop) {
+      var reasons = [];
+
+      rotationRows.forEach(function (row) {
+        if (row.candidate !== crop.crop) return;
+        reasons.push({
+          label: row.label,
+          direction: row.direction,
+          text: row.reason,
+          detail: "Previous crop: " + cropLabel(data, row.previous_crop) + ". " + row.note
+        });
+      });
+
+      /* pH: two numbers, both from the data, said as inside or outside. */
+      var ph = crop.ph_range || null;
+      if (sitePh != null && ph && ph[0] != null && ph[1] != null) {
+        var phIn = sitePh >= ph[0] && sitePh <= ph[1];
+        reasons.push({
+          label: "computed",
+          direction: phIn ? "for" : "against",
+          text: "Site pH " + num(sitePh, 2) + (phIn ? " is inside " : " is outside ") +
+            num(ph[0], 1) + "–" + num(ph[1], 1) + ".",
+          detail: "Computed comparison, not a suitability score."
+        });
+      }
+
+      /* Temperature: an optimum range is not a daily mean. Say so. */
+      var temp = crop.temp_range_c || null;
+      if (siteTemp != null && temp && temp[0] != null && temp[1] != null) {
+        var tempIn = siteTemp >= temp[0] && siteTemp <= temp[1];
+        reasons.push({
+          label: "computed",
+          direction: tempIn ? "for" : "against",
+          text: "Site mean " + num(siteTemp, 1) + " °C is " +
+            (tempIn ? "inside " : "outside ") +
+            num(temp[0], 0) + "–" + num(temp[1], 0) + " °C optimum.",
+          detail: "An optimum range and a daily mean are different things, so this is not a verdict."
+        });
+      }
+
+      /* Season length against the second-rains window opening. */
+      if (first && first.onset_doy_median != null &&
+          crop.season_length_days != null && secondStart != null) {
+        var end = Math.round(first.onset_doy_median) + crop.season_length_days;
+        var fits = end <= secondStart;
+        reasons.push({
+          label: "computed",
+          direction: fits ? "for" : "against",
+          text: "Onset " + doyLabel(first.onset_doy_median) + " plus " +
+            crop.season_length_days + " days ends " + doyLabel(end) + ". It " +
+            (fits ? "fits" : "overlaps") + " the second-rains window that opens " +
+            doyLabel(secondStart) + ".",
+          detail: "Computed from the median onset and the crop season length in the data."
+        });
+      } else if (crop.season_length_days == null) {
+        reasons.push({
+          label: "computed",
+          direction: "against",
+          text: "No season length in the data, so the end date is unknown.",
+          detail: ""
+        });
+      }
+
+      return {
+        crop: crop,
+        reasons: reasons,
+        supporting: reasons.filter(function (r) { return r.direction === "for"; }).length,
+        against: reasons.filter(function (r) { return r.direction === "against"; }).length,
+        order: crops.indexOf(crop)
+      };
+    });
+
+    rows.sort(function (a, b) {
+      if (b.supporting !== a.supporting) return b.supporting - a.supporting;
+      if (a.against !== b.against) return a.against - b.against;
+      return a.order - b.order;
+    });
+
+    body.innerHTML = "";
+    rows.forEach(function (row) {
       var tr = document.createElement("tr");
-      var documented = crop.documented_window_start_doy != null
-        ? doyLabel(crop.documented_window_start_doy) +
-          (crop.documented_window_end_doy != null ? " – " + doyLabel(crop.documented_window_end_doy) : "")
-        : null;
-      var computed = crop.supported_window_start_doy != null
-        ? doyLabel(crop.supported_window_start_doy)
-        : null;
-      var gap = crop.gap_days;
-      var unknown = crop.unknown_rules || [];
-      if (unknown.length) tr.className = "is-open";
 
-      var holds;
-      if (crop.holds_across_band === true) holds = "yes";
-      else if (crop.holds_across_band === false) holds = "<span class=\"unknown\">no — trigger artefact</span>";
-      else holds = "<span class=\"unknown\">unknown</span>";
+      var name = document.createElement("td");
+      name.textContent = row.crop.crop_label;
+      tr.appendChild(name);
 
-      tr.innerHTML =
-        "<td>" + crop.crop_label + "</td>" +
-        "<td>" + (documented || "<span class=\"unknown\">unknown</span>") + "</td>" +
-        "<td>" + (computed || "<span class=\"unknown\">no data</span>") + "</td>" +
-        "<td class=\"num\">" + (gap == null ? "—" : (gap > 0 ? "+" + gap : gap) + " d") + "</td>" +
-        "<td>" + holds + "</td>" +
-        "<td>" + (crop.source_label || (unknown.length ? unknown.length + " of 4 rules unknown" : "sourced")) + "</td>";
+      var count = document.createElement("td");
+      count.className = "num";
+      count.textContent = row.supporting;
+      tr.appendChild(count);
+
+      var cell = document.createElement("td");
+      var list = document.createElement("ul");
+      list.className = "reasons";
+
+      row.reasons.forEach(function (reason) {
+        var li = document.createElement("li");
+        li.className = "reason reason--" + reason.direction;
+
+        var tag = document.createElement("span");
+        tag.className = "tag tag--" + reason.label;
+        tag.textContent = reason.label;
+        li.appendChild(tag);
+
+        var dir = document.createElement("span");
+        dir.className = "reason-dir reason-dir--" + reason.direction;
+        dir.textContent = reason.direction;
+        li.appendChild(dir);
+
+        var text = document.createElement("span");
+        text.textContent = reason.text;
+        li.appendChild(text);
+
+        if (reason.detail) {
+          var detail = document.createElement("span");
+          detail.className = "reason-detail";
+          detail.textContent = reason.detail;
+          li.appendChild(detail);
+        }
+        list.appendChild(li);
+      });
+
+      if (!row.reasons.length) {
+        var empty = document.createElement("li");
+        empty.className = "reason-detail";
+        empty.textContent = "No reason in the data for this crop.";
+        list.appendChild(empty);
+      }
+
+      cell.appendChild(list);
+      tr.appendChild(cell);
       body.appendChild(tr);
     });
 
-    $("#windows-note").innerHTML =
-      "Positive gap means the rainfall-supported start is later than documented practice. " +
-      "A gap that disappears when the trigger moves from 20 to 25&nbsp;mm is not a finding.";
+    var note = $("#sequence-rotation-note");
+    if (note) {
+      if (!previous.length) {
+        note.textContent = "Rotation is not judged until a previous crop is chosen.";
+      } else if (unknownChosen && !rotationRows.length) {
+        note.textContent = "Rotation is not judged because the previous crop is unknown.";
+      } else if (unknownChosen) {
+        note.textContent = "Rotation is not judged for the previous crop marked unknown.";
+      } else if (!rotationRows.length) {
+        note.textContent = "No rotation reason in the data matches this choice.";
+      } else {
+        note.textContent = "";
+      }
+    }
+
+    var caveat = $("#sequence-caveat");
+    if (caveat && first) {
+      caveat.textContent = "In " + first.years_with_dry_spell_ge_7d_in_next_30d +
+        " of " + first.years_evaluated + " years a dry spell of 7 days or more " +
+        "followed within 30 days of the onset. This applies to every crop equally.";
+    }
   }
 
   function renderSoil(data) {
@@ -545,10 +668,14 @@
     renderDry(data);
     renderSecond(data);
     renderCoverage(data);
-    renderRotation(data);
-    renderWindows(data);
+    renderSequence(data);
     renderSoil(data);
     renderProvenance(data);
+
+    ["#prev-1", "#prev-2", "#prev-3"].forEach(function (sel) {
+      var node = $(sel);
+      if (node) node.addEventListener("change", function () { renderSequence(data); });
+    });
   }
 
   function fail(message) {
