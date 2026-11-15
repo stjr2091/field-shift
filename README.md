@@ -1,5 +1,6 @@
 # 🌱 AgriCloud
 
+
 **Crop decisions grounded in rainfall, soil and traceable evidence.**
 
 AgriCloud is an agricultural decision-support prototype for the **NASA Space Apps Challenge — Field Shift category**. It helps farmers explore which crops may suit a season, understand the evidence behind an option, and see what still needs checking before planting.
