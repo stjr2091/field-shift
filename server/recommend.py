@@ -209,6 +209,11 @@ def _score(data: dict, history: list[str], soil_ph):
         row = rows.get(key)
         if row is None:
             continue
+        if last and key == last:
+            # The last grown crop is never ranked. No rule row advises
+            # repeating the crop just grown, so the tool does not offer it,
+            # neither as the recommendation nor as the alternative.
+            continue
         rank = RANK_UNKNOWN
         pair_row = None
         if last:
@@ -246,11 +251,48 @@ def _pair_reason(item: dict, last) -> str:
             return "No previous crop was given, so rotation was not judged."
         return (
             f"No rotation rule is held for {item['row']['crop_label']} after "
-            f"{crop_path.CROP_LABELS.get(last, last)}. The pair is unknown."
+            f"{crop_path.CROP_LABELS.get(last, last)}; the pair is unknown."
         )
     if pair_row["label"] == "survey":
-        return f"{pair_row['reason']} This rests on farmer survey knowledge, not a trial."
-    return f"{pair_row['reason']} This is a direction only, with no measured number."
+        return f"{pair_row['reason'].rstrip('.')}; this rests on farmer survey knowledge, not a trial."
+    return f"{pair_row['reason'].rstrip('.')}; this is a direction only, with no measured number."
+
+
+def season_assumption(data: dict) -> str:
+    """The one sentence that states which season this advice assumes.
+
+    The request holds no season field, so every window is built on the first
+    rains season. The sentence names that pick and the data fact that governs
+    it, so the assumption is never silent. It is built from the data file
+    only, with no model call.
+    """
+    head = (
+        "No planting season was entered, so this advice assumes the first rains "
+        "season, the main season"
+    )
+    summary = (data.get("onset") or {}).get("summary") or []
+    first = next((r for r in summary if r.get("season") == "first_rains"), None)
+    if not first or first.get("onset_doy_median") is None:
+        return (
+            head + "; the data file holds no rain onset figure, so the window rests "
+            "on the crop's sourced planting window alone."
+        )
+    source_name = ""
+    for source in (data.get("meta") or {}).get("sources") or []:
+        if "POWER" in str(source.get("name") or ""):
+            source_name = str(source["name"]).split(" (")[0]
+            break
+    period = data.get("period") or {}
+    span = f"{str(period.get('start_date', ''))[:4]} to {str(period.get('end_date', ''))[:4]}"
+    median = int(round(first["onset_doy_median"]))
+    found = first.get("years_found")
+    years = first.get("years_evaluated")
+    return (
+        head + "; the window rests on the crop's sourced planting window and the "
+        f"site's rain onset analysis of {source_name}, {span} "
+        f"(the middle start date was about {_doy_label(median)}, and an onset was "
+        f"found in {found} of {years} years)."
+    )
 
 
 def recommend(previous_crops, soil_ph=None, moisture=None, data: dict | None = None) -> dict:
@@ -300,11 +342,21 @@ def recommend(previous_crops, soil_ph=None, moisture=None, data: dict | None = N
 
     window, window_basis = _window_text(row)
     onset = _onset_text(data)
+    season_line = season_assumption(data)
+    last_label = crop_path.CROP_LABELS.get(last, last) if last else None
+    last_crop_guard = (
+        f"{last_label} was the last crop; this tool does not advise the same crop "
+        "again here."
+        if last
+        else None
+    )
     reasons = [_pair_reason(best, last)]
     if best["ph_reason"]:
         reasons.append(best["ph_reason"])
     reasons.append(f"Planting window: {window}. {window_basis}")
     reasons.append(onset)
+    if last_crop_guard:
+        reasons.append(last_crop_guard)
     if tie_line:
         # Second, right after the reason, so it is read with the recommendation
         # and not as a footnote at the end.
@@ -333,6 +385,7 @@ def recommend(previous_crops, soil_ph=None, moisture=None, data: dict | None = N
         "why": why,
         "alternative": alternative["row"]["crop_label"] if alternative else "none held",
         "reasons": reasons,
+        "season_assumption": season_line,
         # Evidence a card writer may use. Never shown as advice on its own.
         "facts": {
             "previous_crops": history,
@@ -341,12 +394,18 @@ def recommend(previous_crops, soil_ph=None, moisture=None, data: dict | None = N
             "window": window,
             "window_basis": window_basis,
             "onset": onset,
+            "season_assumption": season_line,
+            "last_crop_guard": last_crop_guard,
             "soil_ph": soil_ph,
             "moisture": moisture,
             "crop_status": row.get("status"),
             "unknown_rules": row.get("unknown_rules", []),
             "pair_label": (best["pair_row"] or {}).get("label"),
             "pair_direction": (best["pair_row"] or {}).get("direction"),
+            # The crop the direction starts from. A guard that reads the pair
+            # sentence needs both ends, and the second end is already in the
+            # result as the recommended crop.
+            "pair_from": history[-1].replace("_", " ") if history else None,
             "assumption": data.get("crop_path_assumption"),
             # The tie disclosure, in the form the card must carry. Absent when
             # no tie occurred, so a card is never told to claim one.

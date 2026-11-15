@@ -44,7 +44,7 @@ SUNBIRD_TIMEOUT_S = 15
 # rejected, because the rules table holds no yield, no trial and no guarantee.
 BANNED = [
     "yield", "harvest success", "guarantee", "guaranteed", "will increase",
-    "ensure", "confident", "confidence", "best crop", "proven", "certified",
+    "ensure", "confident", "confidence", "best", "proven", "certified",
     "always does well", "always yield", "always good", "does well every",
 ]
 
@@ -61,6 +61,27 @@ FOREIGN_CROPS = [
 # invent the very vocabulary this module refuses. It is checked by translating
 # it back to English and testing the English that comes out.
 
+# Words that turn a direction around. The list is read as single words, so
+# "not suitable", "do not plant" and "not a good idea" all land on "not".
+# A bare "no" is not on the list: "no rule" states an absence, not a flip.
+NEGATION_WORDS = {
+    "not", "never", "avoid", "avoided", "avoiding", "unsuitable", "unsuited",
+    "cannot", "cant", "dont", "doesnt", "didnt", "shouldnt",
+}
+
+# Words that praise a pair. They may not sit in a direction sentence when the
+# facts hold the pair against the recommendation.
+AFFIRM_WORDS = {
+    "favourable", "favorable", "suitable", "recommended", "recommend",
+    "beneficial", "good",
+}
+
+# Prompt echo and self-reference. A card speaks to the farmer, never about the
+# tool and never with the wording of the instructions it was written from.
+# "system" is read as its own word, so a crop name such as "ecosystem" passes.
+PROMPT_ECHO = ["rules:", "fields to phrase", "you rewrite"]
+SELF_REFERENCE = ["the recommendation", "the tool", "the system"]
+
 
 SYSTEM_PROMPT = """You rewrite a fixed agricultural result as a short card.
 Rules:
@@ -71,9 +92,11 @@ Rules:
 5. State that the figure is district-scale. Never say national, country or regional.
 6. Keep the direction of the reason as given. A favourable pair must not read as unfavourable.
 7. If a "tie_line" field is present, include its meaning in the card. Say that the crops tie and that the order listed decided.
-8. Plain text. No markdown, no bullets, no headings, no emoji.
-9. At most 90 words. Seven short sentences at most.
-10. Write for a farmer and an extension worker. Simple words, short sentences.
+8. Keep the "season_assumption" line in the card. State it plainly, in the same sense it is given.
+9. Plain text. No markdown, no bullets, no headings, no emoji.
+10. At most 90 words. Seven short sentences at most.
+11. Write to the farmer as "you". Never write "the recommendation" or "the tool". Never repeat the wording of these rules.
+12. Write for a farmer and an extension worker. Simple words, short sentences.
 Return the card text only."""
 
 
@@ -88,7 +111,8 @@ def _facts_text(result: dict) -> str:
     ]
     for reason in result.get("reasons", []):
         lines.append(f"reason: {reason}")
-    for key in ("previous_crops", "site", "window_basis", "onset", "soil_ph", "moisture", "assumption"):
+    for key in ("previous_crops", "site", "window_basis", "onset", "soil_ph", "moisture", "assumption",
+                "season_assumption", "last_crop_guard"):
         if facts.get(key) not in (None, "", []):
             lines.append(f"{key}: {facts[key]}")
     if facts.get("tie_line"):
@@ -101,20 +125,35 @@ def _facts_text(result: dict) -> str:
 
 
 def template_card(result: dict) -> str:
-    """The plain card, built from the result fields with no model involved."""
+    """The plain card, built from the result fields with no model involved.
+
+    This card is the primary one. It speaks to the farmer, carries one idea
+    per sentence, and states every fact a reader must not miss: the crop and
+    window, the reason, the alternative, the season assumption and the
+    district scale. The model card is polish on top and must pass the same
+    guard; when it does not, this card is sent.
+    """
     facts = result.get("facts") or {}
-    parts = [
-        f"{result['recommended_crop']}. Planting window: {result['when']}.",
-        f"Why: {result['why']}",
-    ]
+    crop = result["recommended_crop"]
+    when = str(result["when"])
+    if when.startswith("no sourced"):
+        parts = [f"Plant {crop}. {when}."]
+    else:
+        parts = [f"Plant {crop} from {when}."]
     if facts.get("tie_line"):
-        parts.append(str(facts["tie_line"]))
-    parts.append(f"Alternative: {result['alternative']}.")
-    if facts.get("unknown_rules"):
-        names = ", ".join(facts["unknown_rules"]).replace("_", " ")
-        parts.append(f"Not held for this crop: {names}.")
-    parts.append("Rotation reasons give a direction only, not a measured amount.")
-    parts.append("This is district-scale, not a field reading.")
+        names = ", ".join(facts.get("tied_crops") or [crop])
+        parts.append(
+            f"Several crops tie on the rules held, so the listed order decided: {names}."
+        )
+    else:
+        # The pair reason, as one plain clause. The qualifiers stay in the
+        # reasons list; a shorter sentence survives translation better.
+        parts.append(str(result["reasons"][0]).split(";")[0].strip().rstrip(".") + ".")
+    if str(result["alternative"]) not in ("", "none held"):
+        parts.append(f"Alternative crop: {result['alternative']}.")
+    if facts.get("season_assumption"):
+        parts.append(str(facts["season_assumption"]))
+    parts.append("This is district-scale advice, not a field reading.")
     return " ".join(parts)
 
 
@@ -150,6 +189,105 @@ def _crop_words(result: dict) -> set[str]:
     return out
 
 
+def _sentences(text: str) -> list[str]:
+    """Split on sentence and clause ends. A decimal such as 5.0 does not split.
+
+    Clauses are read separately because a translator adds tails such as "this
+    is just an example, not a rule" to a faithful sentence; the tail is not
+    the claim about the crops, and each clause is judged on its own words.
+    """
+    return [s.strip() for s in re.split(r"(?<=[.!?;])\s+", text) if s.strip()]
+
+
+def _word_set(text: str) -> set[str]:
+    return set(re.findall(r"[a-z]+", text.lower()))
+
+
+def _direction_sentences(text: str, result: dict) -> list[str]:
+    """The sentences that carry the pair direction, most specific first.
+
+    The true direction sentence names both crops of the pair. A card that
+    split the pair across sentences falls back to the sentences that name the
+    recommended crop, minus the sentences that state a rule is absent. Those
+    state an absence, not a direction.
+    """
+    facts = result.get("facts") or {}
+    to = _word_set(str(result.get("recommended_crop") or ""))
+    frm = _word_set(str(facts.get("pair_from") or ""))
+    found = _sentences(text)
+    if frm:
+        both = [s for s in found if frm <= _word_set(s) and to <= _word_set(s)]
+        if both:
+            return both
+    return [
+        s for s in found
+        if to <= _word_set(s) and not re.search(r"not held|no rule|no rotation", s, re.I)
+    ]
+
+
+def _polarity_fault(text: str, result: dict) -> str | None:
+    """The first sentence that reads the pair direction the wrong way.
+
+    The check runs only when the facts state a direction. A pair the data does
+    not rule on has no direction to flip.
+    """
+    facts = result.get("facts") or {}
+    direction = str(facts.get("pair_direction") or "").lower()
+    if direction not in ("for", "against"):
+        return None
+    for sent in _direction_sentences(text, result):
+        words = _word_set(sent)
+        negated = bool(words & NEGATION_WORDS)
+        if direction == "for" and negated:
+            return sent
+        if direction == "against" and not negated and words & AFFIRM_WORDS:
+            return sent
+    return None
+
+
+def _allowed_crop_names(result: dict) -> list[str]:
+    """The crops this request may name, in plain prose form."""
+    facts = result.get("facts") or {}
+    names = {str(result["recommended_crop"]), str(result["alternative"])}
+    for key in ("previous_crops", "tied_crops"):
+        names.update(str(name) for name in facts.get(key) or [])
+    out = set()
+    for name in names:
+        if name.lower() in ("", "none held"):
+            continue
+        out.add(name.lower().replace("_", " "))
+    return sorted(out)
+
+
+def _crop_counts(text: str, result: dict) -> dict[str, int]:
+    """How often each allowed crop is named, counted by its last word.
+
+    "Common bean" and a bare "beans" both count for common bean. So a made-up
+    crop word that the translator renders as an allowed crop shows up as an
+    extra mention, even when the crop it names is on the allowed list.
+    """
+    lowered = text.lower()
+    counts: dict[str, int] = {}
+    for name in _allowed_crop_names(result):
+        last = name.split()[-1]
+        counts[name] = len(re.findall(r"\b" + re.escape(last) + r"s?\b", lowered))
+    return counts
+
+
+def _prompt_echo(text: str) -> str | None:
+    """The first echo of the instructions, or self-reference, in a draft."""
+    lowered = text.lower()
+    for phrase in PROMPT_ECHO:
+        if phrase in lowered:
+            return phrase
+    if re.search(r"\bsystem\b", lowered):
+        return "system"
+    for phrase in SELF_REFERENCE:
+        if phrase in lowered:
+            return phrase
+    return None
+
+
 def check_card(card: str, result: dict) -> tuple[bool, str]:
     """Return (ok, reason). A card that fails is not sent.
 
@@ -169,6 +307,12 @@ def check_card(card: str, result: dict) -> tuple[bool, str]:
     for word in BANNED:
         if word in lowered:
             return False, f"card holds a banned claim: {word}"
+
+    # A draft that echoes the instructions or speaks about the tool was not
+    # written for the farmer, so it is refused whatever else it holds.
+    echo = _prompt_echo(text)
+    if echo:
+        return False, f"card echoes the instructions or the tool: {echo}"
 
     # A scope word wider than the data breaks the district-scale claim.
     for word in ("national", "country-wide", "countrywide", "regional", "state-wide"):
@@ -200,10 +344,12 @@ def check_card(card: str, result: dict) -> tuple[bool, str]:
     if not all(word in lowered for word in crop_words):
         return False, f"card does not name the recommended crop: {result['recommended_crop']}"
 
-    # The alternative must be the one the facts give, not another crop.
+    # The alternative must be named, and it must be the one the facts give.
+    # A card that leaves the reader without the second option has dropped
+    # part of the answer.
     alt = str(result["alternative"]).lower()
-    if alt not in ("", "none held") and "alternative" in lowered and alt not in lowered:
-        return False, f"card names a different alternative than the facts: {result['alternative']}"
+    if alt not in ("", "none held") and alt not in lowered:
+        return False, f"card does not name the alternative the facts hold: {result['alternative']}"
 
     # Every month the window names must survive into the card. A window given
     # only as "early season" is not the published window.
@@ -211,12 +357,28 @@ def check_card(card: str, result: dict) -> tuple[bool, str]:
     if missing:
         return False, f"card drops the planting window month(s): {sorted(missing)}"
 
-    # A tie that the facts disclose must appear in the card. Otherwise the one
-    # crop named reads as a finding when the order decided it.
+    # The direction of the facts must read the same way in the card. A
+    # favourable pair that comes back "not suitable" is a changed answer.
+    flip = _polarity_fault(text, result)
+    if flip:
+        return False, f"card reads the pair direction the wrong way: {flip}"
+
+    # The season assumption is a required line. The request holds no season
+    # field, so a card that leaves the assumption out hides the pick the
+    # windows rest on.
     facts = result.get("facts") or {}
+    if facts.get("season_assumption") and "season" not in lowered:
+        return False, "card omits the season assumption"
+
+    # A tie that the facts disclose must appear in the card. Otherwise the one
+    # crop named reads as a finding when the order decided it. The other side
+    # holds too: a tie the facts do not hold must not appear, because a tie
+    # line invented by the card hides which crop the data chose.
     if facts.get("tie_line"):
         if "tie" not in lowered and "order" not in lowered:
             return False, "card omits the tie disclosure"
+    elif re.search(r"\btie", lowered):
+        return False, "card claims a tie that the facts do not hold"
 
     return True, "ok"
 
@@ -267,7 +429,7 @@ def groq_card(result: dict) -> tuple[str | None, str]:
     return card, "Card phrased by the model from the supplied fields, then checked."
 
 
-def check_luganda(card_lg: str, card_en: str, back_text: str, result: dict) -> tuple[bool, str]:
+def check_luganda(card_lg: str, card_en: str, back_text: str, result: dict, crop_lg: str | None = None) -> tuple[bool, str]:
     """Return (ok, reason) for a translated card.
 
     Three things are tested, and each one is a defect a reviewer would catch:
@@ -291,6 +453,19 @@ def check_luganda(card_lg: str, card_en: str, back_text: str, result: dict) -> t
     if len(text.split()) > 160:
         return False, "Luganda card is longer than the limit"
 
+    # The card must name the crop it recommends, in the Luganda name the
+    # translator holds or in the English name. An invented crop word sits
+    # where the real name should be, so a card that carries neither is not
+    # the card the facts built, whatever the round trip makes of it.
+    if crop_lg is None:
+        # No name was supplied, so read one from the translator. Without a
+        # token the lookup returns None and this check is skipped.
+        crop_lg = luganda_crop_name(str(result["recommended_crop"]))
+    if crop_lg:
+        named = crop_lg in text.lower() or result["recommended_crop"].lower() in text.lower()
+        if not named:
+            return False, f"Luganda card never names the recommended crop ({crop_lg} is missing)"
+
     # 1. The months of the window must survive translation.
     missing = _months(card_en) - _months(text)
     if missing:
@@ -304,6 +479,9 @@ def check_luganda(card_lg: str, card_en: str, back_text: str, result: dict) -> t
     for word in BANNED:
         if word in back:
             return False, f"back-translation holds a banned claim: {word}"
+    echo = _prompt_echo(back)
+    if echo:
+        return False, f"back-translation echoes the instructions or the tool: {echo}"
     for word in ("national", "country", "countrywide", "regional", "nationwide"):
         if word in back:
             return False, f"back-translation widens the scale beyond district: {word}"
@@ -313,7 +491,9 @@ def check_luganda(card_lg: str, card_en: str, back_text: str, result: dict) -> t
         if crop in back and crop not in crops:
             return False, f"back-translation names a crop that is not in the facts: {crop}"
 
-    # A favourable reason read as unusable is a reversed direction.
+    # A favourable reason read as unusable is a reversed direction. The phrase
+    # list is a wide net; the sentence check that follows reads the direction
+    # sentence itself, so "not suitable" in it rejects whatever wraps it.
     facts = result.get("facts") or {}
     direction = str(facts.get("pair_direction") or "").lower()
     if direction == "for":
@@ -324,6 +504,26 @@ def check_luganda(card_lg: str, card_en: str, back_text: str, result: dict) -> t
         for phrase in ("good idea", "recommended", "favourable", "favorable", "should follow"):
             if phrase in back:
                 return False, f"back-translation reverses an unfavourable direction: {phrase}"
+
+    flip = _polarity_fault(back, result)
+    if flip:
+        return False, f"back-translation reads the pair direction the wrong way: {flip}"
+
+    # An allowed crop named more often than the card names it is a crop the
+    # facts never held. One extra mention is allowed, because a faithful
+    # rendering may name a crop once where the English card used a pronoun.
+    # More than one extra means an invented crop word came back as an allowed
+    # crop, such as a made-up name that renders as "beans".
+    src_counts = _crop_counts(card_en, result)
+    for name, count in _crop_counts(back, result).items():
+        if count > src_counts.get(name, 0) + 1:
+            return False, f"back-translation names {name} {count} times against {src_counts.get(name, 0)} in the card"
+
+    # A tie the facts do not hold must not appear in the round trip either.
+    # The other side is held on the English card, because a tie reads back in
+    # many forms, such as "the order decided", and this check reads one word.
+    if not facts.get("tie_line") and re.search(r"\btie", back):
+        return False, "back-translation claims a tie that the facts do not hold"
 
     # The window months must survive the round trip too, not only the first leg.
     back_missing = _months(card_en) - _months(back)
@@ -374,36 +574,74 @@ def sunbird_translate(text: str, source: str = "eng", target: str = "lug") -> tu
     return translated, f"translated {source} to {target}."
 
 
+def luganda_crop_name(crop: str) -> str | None:
+    """The Luganda name of a crop, read from the translator the card already uses.
+
+    This asks the service for one crop name; it does not hold a hand-written
+    Luganda word list, because a guessed word list would invent the vocabulary
+    the guard is meant to refuse. The word is then read back: a name that does
+    not return as the same crop is not a name to judge a card by, and the
+    check is skipped. A lookup that fails, returns several words, or returns
+    the English name also carries nothing to check.
+    """
+    lg, _ = sunbird_translate(crop, "eng", "lug")
+    if not lg:
+        return None
+    word = lg.strip().strip(".").strip()
+    if not word or " " in word or word.lower() in crop.lower():
+        return None
+    back, _ = sunbird_translate(word, "lug", "eng")
+    if not back or crop.split()[0].lower() not in back.lower():
+        return None
+    return word.lower()
+
+
+def _translated_card(card_en: str, result: dict, notes: list[str]) -> str | None:
+    """Translate card_en, read it back, and check the reading, with one retry.
+
+    The translator rephrases between calls, so one failed reading does not
+    prove the card is bad. A second reading is taken. A card that fails both
+    readings is left out rather than sent unverified.
+    """
+    for attempt in (1, 2):
+        translated, note = sunbird_translate(card_en)
+        notes.append(note if attempt == 1 else f"second attempt: {note}")
+        if translated is None:
+            return None
+        back, note = sunbird_translate(translated, source="lug", target="eng")
+        notes.append(f"round trip back: {note}")
+        if back is None:
+            notes.append("Luganda card dropped: it could not be read back, so it is unverified.")
+            return None
+        ok, reason = check_luganda(translated, card_en, back, result)
+        if ok:
+            notes.append("Luganda card passed the month and round-trip check.")
+            return translated
+        notes.append(f"Luganda card dropped on reading {attempt}: {reason}.")
+    return None
+
+
 def build_cards(result: dict) -> tuple[str, str | None, list[str]]:
     """Return (card_en, card_lg_or_none, notes). Notes say what each step did."""
     notes: list[str] = []
     card, note = groq_card(result)
+    notes.append(note)
+    if card is not None:
+        ok, reason = check_card(card, result)
+        if not ok:
+            notes.append(f"Draft rejected ({reason}), plain card used.")
+            card = None
     if card is None:
         card = template_card(result)
-    notes.append(note)
-
-    ok, reason = check_card(card, result)
-    if not ok:
-        card = template_card(result)
-        notes.append(f"Draft rejected ({reason}), plain card used.")
 
     # The English card is final at this point. The Luganda card is a copy of it
     # and must prove it says the same thing before it is sent.
-    translated, note = sunbird_translate(card)
-    notes.append(note)
-    if translated is None:
-        return card, None, notes
-
-    back, note = sunbird_translate(translated, source="lug", target="eng")
-    notes.append(f"round trip back: {note}")
-    if back is None:
-        notes.append("Luganda card dropped: it could not be read back, so it is unverified.")
-        return card, None, notes
-
-    ok, reason = check_luganda(translated, card, back, result)
-    if not ok:
-        notes.append(f"Luganda card dropped: {reason}.")
-        return card, None, notes
-
-    notes.append("Luganda card passed the month and round-trip check.")
-    return card, translated, notes
+    card_lg = _translated_card(card, result, notes)
+    if card_lg is None and card != template_card(result):
+        # The model card could not be verified in Luganda. The plain card is
+        # used for both texts, so the Luganda area never disagrees with the
+        # English card.
+        notes.append("The model card fell back to the plain card, so both texts agree.")
+        card = template_card(result)
+        card_lg = _translated_card(card, result, notes)
+    return card, card_lg, notes

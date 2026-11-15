@@ -1,13 +1,22 @@
 # Recommendation service
 
-One HTTP route that answers a crop question from the files the notebook writes.
-It computes nothing from the weather itself and holds no crop numbers of its own.
+HTTP routes that answer a crop question from the files the notebook writes.
+They compute nothing from the weather themselves and hold no crop numbers of
+their own.
 
     python server/app.py            # http://127.0.0.1:8099
     PORT=9000 python server/app.py
 
 Run `python server/test_recommend.py` for the checks. They use no network and
 no credentials.
+
+## Routes
+
+- `POST /recommend` answers one request.
+- `GET /assumption` returns `{"season_assumption": "..."}`, the same sentence
+  the POST response carries. It reads the data file only, with no model call,
+  so the page can show the assumption before any advice is given.
+- `GET /health` returns a fixed word.
 
 ## Request
 
@@ -37,19 +46,22 @@ Crop keys: `maize`, `common_bean`, `finger_millet`, `sorghum`, `groundnut`.
 {
   "recommended_crop": "Maize",
   "when": "15 March to 15 August",
-  "why": "No rotation rule is held for Maize after Sorghum. The pair is unknown.",
+  "why": "No rotation rule is held for Maize after Sorghum; the pair is unknown.",
   "alternative": "Common bean",
   "reasons": ["..."],
+  "season_assumption": "No planting season was entered, so this advice assumes the first rains season, the main season; ...",
   "card_en": "...",
   "card_lg": "..."
 }
 ```
 
-`card_lg` is absent when no translation was made. `reasons` carries the evidence
-for the answer, one sentence each, in the order it was used.
+`card_lg` is absent when no verified translation was made. `season_assumption`
+is always present: it names the season the windows assume and the data fact
+that governs it. `reasons` carries the evidence for the answer, one sentence
+each, in the order it was used.
 
 `422` means the request cannot be answered honestly, and `error` says why.
-`400` means the body is not JSON. `404` means the route is not `/recommend`.
+`400` means the body is not JSON. `404` means the route is not one of the three.
 
 ## Where each answer comes from
 
@@ -62,19 +74,35 @@ for the answer, one sentence each, in the order it was used.
 
 A translated card is checked before it is sent. The window months must survive
 translation, and the card is translated back to English and read again. A crop
-that appeared, a claim, a wider scope or a reversed direction drops the Luganda
-card. An unverified translation is never sent: the English card already carries
-the answer, and the notes say why the Luganda one was dropped.
+that appeared, a claim, a wider scope, a reversed direction, or an allowed crop
+named more often than the card names it drops the Luganda card. The Luganda
+card must also name the recommended crop, in the Luganda name the translator
+holds or in the English name, so an invented crop word cannot hide behind a
+faithful reading. A failed reading is retried once, because the translator
+rephrases between calls. An unverified translation is never sent: the English
+card already carries the answer, and the notes say why the Luganda one was
+dropped. When a model card cannot be verified in Luganda, both texts fall back
+to the plain card, so the Luganda area never disagrees with the English card.
 
-The card step calls a hosted model to phrase the supplied fields. Every draft is
-checked against those fields before it is used. A draft is rejected when it adds
-a number, a crop or a claim that is not in the fields, widens the scale past the
-district, abbreviates a month, names a different alternative, reverses the
-direction of the reason, or drops a month of the published window.
+The plain card is the primary card. It speaks to the farmer, holds one idea per
+sentence, and always states the crop and window, the reason, the alternative,
+the season assumption and the district scale. The card step calls a hosted
+model only to phrase the supplied fields on top of that, and every draft is
+checked against those fields before it is used. A draft is rejected when it
+adds a number, a crop or a claim that is not in the fields, widens the scale
+past the district, abbreviates a month, omits the alternative, omits the season
+assumption, echoes the instructions, speaks about the tool instead of to the
+farmer, reverses the direction of the reason, or drops a month of the published
+window. A rejected draft is never repaired: the plain card is used.
+
+The ranking never offers the crop that was grown last, neither as the
+recommendation nor as the alternative. The reasons state that guard in plain
+words, and the facts carry it so the cards can too.
 
 When the rules leave two or more crops level, the order of the crop list decided
 which one is named. Both cards say so, and a card that leaves the tie out is
-rejected. See `server/card.py`.
+rejected. A card that claims a tie the facts do not hold is rejected as well.
+See `server/card.py`.
 
 ## Credentials
 

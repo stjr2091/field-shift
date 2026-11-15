@@ -3,7 +3,9 @@
     python server/app.py            # http://127.0.0.1:8099
     PORT=9000 python server/app.py
 
-One route: POST /recommend. GET /health returns a fixed word.
+Two routes: POST /recommend answers one request. GET /assumption returns the
+season assumption, so the page can show it before any advice is given. GET
+/health returns a fixed word.
 
 The response carries the agreed fields only. Any extra field the calculation
 needs is removed before the reply is sent, so the frontend contract cannot
@@ -35,6 +37,7 @@ FIELDS = [
     "why",
     "alternative",
     "reasons",
+    "season_assumption",
     "card_en",
     "card_lg",
 ]
@@ -83,6 +86,11 @@ def handle_request(payload: dict) -> dict:
     return {"body": out, "notes": notes}
 
 
+def assumption_response(data: dict | None = None) -> dict:
+    """The body of GET /assumption. Same data file, same sentence, no model."""
+    return {"season_assumption": calc.season_assumption(data if data is not None else calc.load_data())}
+
+
 class Handler(BaseHTTPRequestHandler):
     server_version = "field-shift/1.0"
 
@@ -101,9 +109,12 @@ class Handler(BaseHTTPRequestHandler):
         self._send(204, {})
 
     def do_GET(self) -> None:  # noqa: N802
-        if self.path.rstrip("/") in ("/health", ""):
+        path = self.path.rstrip("/")
+        if path in ("/health", ""):
             return self._send(200, {"status": "ok"})
-        self._send(404, {"error": "Use POST /recommend."})
+        if path == "/assumption":
+            return self._send(200, assumption_response())
+        self._send(404, {"error": "Use POST /recommend or GET /assumption."})
 
     def do_POST(self) -> None:  # noqa: N802
         if self.path.rstrip("/") != "/recommend":
@@ -135,7 +146,7 @@ class Handler(BaseHTTPRequestHandler):
 
 def main() -> None:
     server = ThreadingHTTPServer((HOST, PORT), Handler)
-    print(f"listening on http://{HOST}:{PORT}  POST /recommend", file=sys.stderr)
+    print(f"listening on http://{HOST}:{PORT}  POST /recommend  GET /assumption", file=sys.stderr)
     try:
         server.serve_forever()
     except KeyboardInterrupt:
