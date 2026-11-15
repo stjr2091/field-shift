@@ -377,6 +377,12 @@ def main() -> None:
     }
 
     OUT.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    # The app also tries app/app_data.json when the page is served from app/. That
+    # copy drifted once and showed an old figure. Keep both in step from one build.
+    MIRROR = ROOT / "app" / "app_data.json"
+    if MIRROR.parent.is_dir():
+        MIRROR.write_text(OUT.read_text(encoding="utf-8"), encoding="utf-8")
+        print(f"wrote {MIRROR.relative_to(ROOT)} (copy of the same bytes)")
     digest = hashlib.sha256(OUT.read_bytes()).hexdigest()
     print(f"wrote {OUT.relative_to(ROOT)} ({OUT.stat().st_size} bytes, sha256 {digest[:16]}…)")
     print(f"crops: {len(crops)} — data_status.crop_windows = {payload['data_status']['crop_windows']}")
