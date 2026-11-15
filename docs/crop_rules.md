@@ -25,9 +25,9 @@ coverage table, with the count of sourced rows beside it.
 The four parameters the cut counts are exactly the names in the code:
 `planting_rainfall_threshold`, `season_length`, `ph_range` and `temp_range`.
 Seasonal rainfall figures do not sit under `planting_rainfall_threshold`. They
-are carried as separate rows, because a seasonal total is not a 10-day trigger.
-So the threshold stays unknown for every crop, and each crop clears the cut on
-season length, pH and temperature.
+are carried under `season_water_need_mm`, which is not one of the four, because
+a seasonal total is not a sowing trigger. So the threshold stays unknown for
+every crop, and each crop clears the cut on season length, pH and temperature.
 
 Finger millet's water and planting-window rows are also reference evidence: the
 millet chapter gives 500-1,000 mm for the crop, not a Soroti threshold, and the
@@ -114,12 +114,15 @@ page 11, which is the maturity page; page 9 is where the sentence sits.
 These five lines are also in `results/app_data.json`, in `crop_limitations` and
 in `notes`, so the app can show them beside the crops.
 
-## The water figure is not a 10-day trigger
+## The water figure is not a sowing trigger
 
-Every water row in the table is seasonal millimetres. None is a 10-day rainfall
-trigger, and the app's `rain_threshold_mm_10d` field is therefore null for every
-crop. A seasonal total was not converted into a short-window trigger, because
-that number would not be the number the source states.
+Every water row in the table is seasonal millimetres, carried under
+`season_water_need_mm`. None is a planting rainfall threshold, and the app's
+`rain_threshold_mm_10d` field is therefore null for every crop. The manuals say
+only that planting follows the onset of rains and give no figure for it. A
+seasonal total was not relabelled as a threshold, because that number would not
+be the number the source states. Each crop card says both things: the threshold
+is unknown, and the season water need is a seasonal total.
 
 ## Reading the columns
 

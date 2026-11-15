@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_utc": "2026-11-15T05:27:44Z",
+  "generated_utc": "2026-11-15T05:31:01Z",
   "data_status": {
     "site_climate": "ready",
     "crop_windows": "ready"
@@ -902,17 +902,17 @@
         "maize/planting_window/planting_window",
         "maize/soil/soil_type",
         "maize/temperature/temp_range",
-        "maize/water/water_need_mm",
-        "maize/water/water_need_mm",
-        "maize/water/water_need_mm"
+        "maize/water/season_water_need_mm",
+        "maize/water/season_water_need_mm",
+        "maize/water/season_water_need_mm"
       ],
       "unknown_rules": [
         "planting_rainfall_threshold"
       ],
       "unknown_notes": {
-        "planting_rainfall_threshold": "no 10-day rainfall threshold is published for this crop, so this value stays unknown rather than guessed"
+        "planting_rainfall_threshold": "no planting rainfall threshold is published for this crop, so this value stays unknown rather than guessed. The season water need is a seasonal total, not a sowing trigger."
       },
-      "source_label": "unknown: no 10-day rainfall threshold",
+      "source_label": "threshold unknown: no planting rainfall figure is published. Season water need is a seasonal total, not a sowing trigger",
       "rule_rows": [
         {
           "crop": "maize",
@@ -968,7 +968,7 @@
         {
           "crop": "maize",
           "stage": "water",
-          "parameter": "water_need_mm",
+          "parameter": "season_water_need_mm",
           "rule": "rain needed per season",
           "value": "600-1200 (optimum), 400-1800 (absolute)",
           "value_min": "600",
@@ -985,7 +985,7 @@
         {
           "crop": "maize",
           "stage": "water",
-          "parameter": "water_need_mm",
+          "parameter": "season_water_need_mm",
           "rule": "annual rainfall",
           "value": "optimum 600-1200, absolute 400-1800",
           "value_min": "600",
@@ -1070,7 +1070,7 @@
         {
           "crop": "maize",
           "stage": "water",
-          "parameter": "water_need_mm",
+          "parameter": "season_water_need_mm",
           "rule": "rainfall per season (maize manual)",
           "value": "500 to 600",
           "value_min": "500",
@@ -1132,16 +1132,16 @@
         "common_bean/planting_window/season_spans",
         "common_bean/soil/soil_type",
         "common_bean/temperature/temp_range",
-        "common_bean/water/water_need_mm",
-        "common_bean/water/water_need_mm"
+        "common_bean/water/season_water_need_mm",
+        "common_bean/water/season_water_need_mm"
       ],
       "unknown_rules": [
         "planting_rainfall_threshold"
       ],
       "unknown_notes": {
-        "planting_rainfall_threshold": "no 10-day rainfall threshold is published for this crop, so this value stays unknown rather than guessed"
+        "planting_rainfall_threshold": "no planting rainfall threshold is published for this crop, so this value stays unknown rather than guessed. The season water need is a seasonal total, not a sowing trigger."
       },
-      "source_label": "unknown: no 10-day rainfall threshold",
+      "source_label": "threshold unknown: no planting rainfall figure is published. Season water need is a seasonal total, not a sowing trigger",
       "rule_rows": [
         {
           "crop": "common_bean",
@@ -1231,7 +1231,7 @@
         {
           "crop": "common_bean",
           "stage": "water",
-          "parameter": "water_need_mm",
+          "parameter": "season_water_need_mm",
           "rule": "rain needed per season",
           "value": "500-2000 (optimum), 300-4300 (absolute)",
           "value_min": "500",
@@ -1248,7 +1248,7 @@
         {
           "crop": "common_bean",
           "stage": "water",
-          "parameter": "water_need_mm",
+          "parameter": "season_water_need_mm",
           "rule": "annual rainfall",
           "value": "optimum 500-2000, absolute 300-4300",
           "value_min": "500",
@@ -1360,17 +1360,17 @@
         "finger_millet/soil/soil_type",
         "finger_millet/temperature/temp_range",
         "finger_millet/temperature/temp_range",
-        "finger_millet/water/water_need_mm",
-        "finger_millet/water/water_need_mm",
-        "finger_millet/water/water_need_mm"
+        "finger_millet/water/season_water_need_mm",
+        "finger_millet/water/season_water_need_mm",
+        "finger_millet/water/season_water_need_mm"
       ],
       "unknown_rules": [
         "planting_rainfall_threshold"
       ],
       "unknown_notes": {
-        "planting_rainfall_threshold": "no 10-day rainfall threshold is published for this crop, so this value stays unknown rather than guessed"
+        "planting_rainfall_threshold": "no planting rainfall threshold is published for this crop, so this value stays unknown rather than guessed. The season water need is a seasonal total, not a sowing trigger."
       },
-      "source_label": "unknown: no 10-day rainfall threshold",
+      "source_label": "threshold unknown: no planting rainfall figure is published. Season water need is a seasonal total, not a sowing trigger",
       "rule_rows": [
         {
           "crop": "finger_millet",
@@ -1426,7 +1426,7 @@
         {
           "crop": "finger_millet",
           "stage": "water",
-          "parameter": "water_need_mm",
+          "parameter": "season_water_need_mm",
           "rule": "rain needed per season",
           "value": "500-1100 (optimum), 300-4300 (absolute)",
           "value_min": "500",
@@ -1443,7 +1443,7 @@
         {
           "crop": "finger_millet",
           "stage": "water",
-          "parameter": "water_need_mm",
+          "parameter": "season_water_need_mm",
           "rule": "annual rainfall",
           "value": "optimum 500-1100, absolute 300-4300",
           "value_min": "500",
@@ -1511,7 +1511,7 @@
         {
           "crop": "finger_millet",
           "stage": "water",
-          "parameter": "water_need_mm",
+          "parameter": "season_water_need_mm",
           "rule": "rainfall per season (millet chapter)",
           "value": "500-1,000",
           "value_min": "500",

@@ -183,14 +183,16 @@ def build_crops(rules_by_crop):
                 # instead of leaving a cell blank. The threshold sentence is the
                 # same for every crop, because no crop has a 10-day figure.
                 "unknown_notes": {
-                    name: "no 10-day rainfall threshold is published for this crop, "
-                    "so this value stays unknown rather than guessed"
+                    name: "no planting rainfall threshold is published for this crop, "
+                    "so this value stays unknown rather than guessed. "
+                    "The season water need is a seasonal total, not a sowing trigger."
                     if name == "planting_rainfall_threshold"
                     else "no sourced value in the released table"
                     for name in unknown
                 },
                 "source_label": (
-                    "unknown: no 10-day rainfall threshold"
+                    "threshold unknown: no planting rainfall figure is published. "
+                    "Season water need is a seasonal total, not a sowing trigger"
                     if "planting_rainfall_threshold" in unknown and len(unknown) == 1
                     else None
                 ),
