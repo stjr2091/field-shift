@@ -236,6 +236,22 @@ def main() -> int:
     ok, reason = card.check_luganda(made_up_en, made_up_en, made_up_en, made_up, crop_lg="kasooli")
     check("a genuine Luganda card passes when the crop name is confirmed", ok, reason)
 
+    # A confirmed name may hold several words. The card must carry that
+    # phrase or the English name; a card that holds neither still drops.
+    bean_result = calc.recommend(["maize"], data=data)
+    bean_phrase = "ebikoola by'ebijanjaalo ebya bulijjo"
+    bean_card_with = "Okusimba " + bean_phrase + ". Ekiseera ky'okusimba kiri mu March na April."
+    bean_card_without = "Okusimba ebirime ebirala. Ekiseera ky'okusimba kiri mu March na April."
+    saved_lookup = card.luganda_crop_name
+    try:
+        card.luganda_crop_name = lambda crop: (bean_phrase, True)
+        ok, reason = card.check_luganda(bean_card_with, bean_card_with, bean_card_with, bean_result)
+        check("a multi-word confirmed name passes a card that holds it", ok, reason)
+        ok, reason = card.check_luganda(bean_card_without, bean_card_without, bean_card_without, bean_result)
+        check("a card without the confirmed multi-word name drops", not ok, reason)
+    finally:
+        card.luganda_crop_name = saved_lookup
+
     # A tie line on a history that holds no tie.
     two_crops = calc.recommend(["maize", "common_bean"], data=data)
     check("the two-crop history holds no tie", not two_crops["facts"].get("tie_line"))
