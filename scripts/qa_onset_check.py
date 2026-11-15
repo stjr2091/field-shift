@@ -1,4 +1,4 @@
-"""Independent onset cross-check for Field Shift (QA, GIS Analyst).
+"""Independent onset cross-check for Field Shift.
 
 Re-implements onset detection from scratch against the raw NASA POWER CSV and
 compares every date with the notebook's committed results/site_climate.json.
