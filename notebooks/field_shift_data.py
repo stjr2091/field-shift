@@ -378,6 +378,16 @@ def onset_summary(onsets: list[dict], daily: pd.DataFrame) -> list[dict]:
 
 
 # --- Onset trend and year-to-year dependence --------------------------------
+def _round(value: float, places: int) -> float:
+    """Round for display, but never return a signed zero.
+
+    A small negative number rounds to -0.0 and prints as "-0.0", which reads as
+    a defect rather than a near-zero. Adding 0.0 turns -0.0 into 0.0 without
+    changing any other value. A real negative stays negative.
+    """
+    return round(float(value), places) + 0.0
+
+
 def _calendar_offset(on_date: date) -> int:
     """Day offset on a non-leap calendar, so leap years do not shift a date."""
     month, day = on_date.month, on_date.day
@@ -467,12 +477,14 @@ def onset_trend_summary(onsets: list[dict]) -> list[dict]:
                 "n_years_detected": n,
                 "years_used_from": int(years[0]),
                 "years_used_to": int(years[-1]),
-                "sen_slope_days_per_decade": round(slope * 10, 1),
-                "sen_ci_low_days_per_decade": round(ci_low * 10, 1),
-                "sen_ci_high_days_per_decade": round(ci_high * 10, 1),
-                "mann_kendall_tau": round(tau, 2),
-                "mann_kendall_p": round(p_value, 3),
-                "lag1_autocorrelation": round(lag1, 2),
+                "sen_slope_days_per_decade": _round(slope * 10, 1),
+                "sen_ci_low_days_per_decade": _round(ci_low * 10, 1),
+                "sen_ci_high_days_per_decade": _round(ci_high * 10, 1),
+                "mann_kendall_tau": _round(tau, 2),
+                "mann_kendall_p": _round(p_value, 3),
+                # Three places, so a small real value keeps its sign instead of
+                # collapsing to a signed zero at two places.
+                "lag1_autocorrelation": _round(lag1, 3),
                 "date_frame": "non-leap calendar offset",
             }
         )
