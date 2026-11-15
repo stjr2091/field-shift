@@ -12,8 +12,10 @@ soil estimate for one point in Soroti district, then shows:
 - which crops the sourced evidence supports,
 - and what the app cannot tell you.
 
-The app shows no yield figure. It does not predict a harvest. It puts a planting window
-next to the rain record and shows where the two disagree.
+The app shows no yield figure. It does not predict a harvest. It shows the date the
+rain record supports and lists the crops the sourced evidence covers, and it states
+where the two are not joined: no crop has a sourced planting rainfall threshold, so
+no crop's window is compared with the rain record.
 
 ## The site
 
@@ -146,6 +148,9 @@ The check record is `qa/app_rebuild/check_soroti_app_numbers.md`.
   the region.
 - No computed season length. Cessation is not implemented, so a crop's published duration is
   never compared with a season we measured.
+- No per-crop window comparison. The app has a table for it, but the rainfall-supported window
+  and the gap in days are not computed, so that table reads "no data" for every crop. It is
+  not filled in with a rule that does not exist.
 - No field measurement of soil. The pH and texture are model estimates.
 - No causal claim that an onset date leads to a good crop. The link is not tested.
 
@@ -160,6 +165,9 @@ The check record is `qa/app_rebuild/check_soroti_app_numbers.md`.
   never compared.
 - The CHIRPS record is shown beside POWER but no record is chosen as primary. The two
   disagree.
+- Rotation is recorded as a direction only, with no number. The two crop-pair rows have no
+  source, so they are not published. No rotation effect is tested, because no nitrogen, yield
+  or trial data is held.
 
 ## Sources
 
