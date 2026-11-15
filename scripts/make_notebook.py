@@ -106,7 +106,32 @@ onset_df = pd.DataFrame(onsets)
 display(onset_df.pivot(index="year", columns="season", values="onset_date").tail(10))
 display(pd.DataFrame(fs.onset_summary(onsets, daily)).set_index("season"))"""
     ),
-    md("## 5. Soil at the point (SoilGrids, 0–30 cm depth-weighted)"),
+    md(
+        """## 5. Onset trend and year-to-year dependence
+
+One row per season. The trend is a Sen slope in days per decade with a 95%
+confidence interval, tested with the two-sided Mann-Kendall test. The
+dependence measure is the lag-1 autocorrelation of the yearly dates. Dates are
+counted on a non-leap calendar, so a fixed day number compares years without a
+leap-day shift. Years with no detected onset are left out, and the count is
+printed beside the result.
+
+Read this as a description of the record, not as a forecast.
+
+These figures come from the onset series in section 4, which uses the 10-day
+rain sum rule. The separate shared analysis uses a cumulative-anomaly rule and
+reports its own figures. The two series differ, so do not compare the numbers
+here with that note without checking which rule produced them."""
+    ),
+    code(
+        """trend = pd.DataFrame(fs.onset_trend_summary(onsets))
+display(trend.set_index("season"))
+frames = sorted(set(trend["date_frame"].dropna()))
+print("date frame:", ", ".join(frames) if frames else "not stated")
+print("lag-1 autocorrelation is shown to three places.")
+print("trend is reported only. No correction is applied for serial correlation.")"""
+    ),
+    md("## 5b. Soil at the point (SoilGrids, 0–30 cm depth-weighted)"),
     code(
         """soil = fs.read_soilgrids()
 display(pd.Series(soil["summary_0_30cm"]))

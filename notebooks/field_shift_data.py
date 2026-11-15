@@ -23,6 +23,7 @@ from __future__ import annotations
 import hashlib
 import io
 import json
+import math
 from dataclasses import dataclass
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
@@ -371,6 +372,132 @@ def onset_summary(onsets: list[dict], daily: pd.DataFrame) -> list[dict]:
                     )
                 ),
                 "threshold_sensitivity": sensitivity,
+            }
+        )
+    return summaries
+
+
+# --- Onset trend and year-to-year dependence --------------------------------
+def _round(value: float, places: int) -> float:
+    """Round for display, but never return a signed zero.
+
+    A small negative number rounds to -0.0 and prints as "-0.0", which reads as
+    a defect rather than a near-zero. Adding 0.0 turns -0.0 into 0.0 without
+    changing any other value. A real negative stays negative.
+    """
+    return round(float(value), places) + 0.0
+
+
+def _calendar_offset(on_date: date) -> int:
+    """Day offset on a non-leap calendar, so leap years do not shift a date."""
+    month, day = on_date.month, on_date.day
+    if month == 2 and day == 29:
+        day = 28
+    return (date(2001, month, day) - date(2001, 1, 1)).days
+
+
+def _sen_slope(y: list[float], x: list[float]) -> tuple[float, float, float]:
+    """Sen slope per unit of x, with the 95% confidence interval of the slope."""
+    n = len(y)
+    slopes = sorted(
+        (y[j] - y[i]) / (x[j] - x[i])
+        for i in range(n - 1)
+        for j in range(i + 1, n)
+        if x[j] != x[i]
+    )
+    median = float(pd.Series(slopes).median())
+    count = len(slopes)
+    c_alpha = 1.959964 * math.sqrt(n * (n - 1) * (2 * n + 5) / 18.0)
+    lo_rank = int((count - c_alpha) / 2.0)
+    hi_rank = int((count + c_alpha) / 2.0) + 1
+    lo = slopes[max(0, min(lo_rank, count - 1))]
+    hi = slopes[max(0, min(hi_rank - 1, count - 1))]
+    return median, lo, hi
+
+
+def _mann_kendall(y: list[float]) -> tuple[float, float]:
+    """Two-sided Mann-Kendall: Kendall tau and p.
+
+    The tau returned is tau-a, the untied form. Ties are corrected in the
+    variance only. That variance sets the p value, and it does not change the
+    tau.
+    """
+    n = len(y)
+    s = sum(
+        int((y[j] > y[i]) - (y[j] < y[i]))
+        for i in range(n - 1)
+        for j in range(i + 1, n)
+    )
+    counts = pd.Series(y).value_counts().to_numpy()
+    var = (
+        n * (n - 1) * (2 * n + 5)
+        - float((counts * (counts - 1) * (2 * counts + 5)).sum())
+    ) / 18.0
+    if var <= 0:
+        return 0.0, 1.0
+    if s > 0:
+        z = (s - 1) / math.sqrt(var)
+    elif s < 0:
+        z = (s + 1) / math.sqrt(var)
+    else:
+        z = 0.0
+    p = math.erfc(abs(z) / math.sqrt(2.0))
+    tau = s / (n * (n - 1) / 2.0)
+    return float(tau), float(p)
+
+
+def onset_trend_summary(onsets: list[dict]) -> list[dict]:
+    """Trend and year-to-year dependence for each season, from the onset series.
+
+    One row per season. Years with no detected onset are left out, and the
+    years used are stated so the count is visible beside the result.
+
+    The trend is the Sen slope in days per decade, with its 95% confidence
+    interval, and the two-sided Mann-Kendall test. The dependence measure is
+    the lag-1 autocorrelation of the yearly series: the correlation between
+    each year and the year after it.
+
+    Dates are counted on a non-leap calendar, so a fixed day number compares
+    years without a leap-day shift. No serial-correlation correction is applied
+    to the trend test; the lag-1 figure is reported so a reader can see it.
+    """
+    summaries = []
+    for season in SEASONS:
+        rows = sorted(
+            (r for r in onsets if r["season"] == season and r["onset_found"]),
+            key=lambda r: r["year"],
+        )
+        years = [float(r["year"]) for r in rows]
+        offsets = [float(_calendar_offset(date.fromisoformat(r["onset_date"]))) for r in rows]
+        n = len(offsets)
+        if n < 3:
+            summaries.append(
+                {
+                    "season": season,
+                    "n_years_detected": n,
+                    "note": "too few years for a trend",
+                    "date_frame": "non-leap calendar offset",
+                }
+            )
+            continue
+        slope, ci_low, ci_high = _sen_slope(offsets, years)
+        tau, p_value = _mann_kendall(offsets)
+        lag1 = float(pd.Series(offsets).autocorr(lag=1))
+        summaries.append(
+            {
+                "season": season,
+                "n_years_detected": n,
+                "years_used_from": int(years[0]),
+                "years_used_to": int(years[-1]),
+                "sen_slope_days_per_decade": _round(slope * 10, 1),
+                "sen_ci_low_days_per_decade": _round(ci_low * 10, 1),
+                "sen_ci_high_days_per_decade": _round(ci_high * 10, 1),
+                "mann_kendall_tau": _round(tau, 2),
+                "mann_kendall_p": _round(p_value, 3),
+                # Three places, so a small real dependence keeps its sign. The
+                # helper keeps a near-zero from printing as a signed zero.
+                "lag1_autocorrelation": _round(lag1, 3),
+                "date_frame": "non-leap calendar offset",
             }
         )
     return summaries
