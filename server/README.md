@@ -27,7 +27,7 @@ no credentials.
 | `previous_crops` | yes | Crop keys, newest last. Send `[]` for no history. A blank entry is dropped. A crop outside the five is refused. |
 | `soil_ph` | no | Number, 0 to 14. Compared with the sourced pH range of each crop. |
 | `moisture` | no | Free text, reported in the reasons. The table holds no moisture threshold, so it never ranks a crop. |
-| `district` | no | The data file holds one site. A different name is refused rather than answered with another district's numbers. |
+| `district` | no | `"auto"` or a blank entry uses the one site the data file holds. A different name is refused rather than answered with another district's numbers. |
 
 Crop keys: `maize`, `common_bean`, `finger_millet`, `sorghum`, `groundnut`.
 

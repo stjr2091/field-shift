@@ -116,6 +116,32 @@ def main() -> int:
     check("no Luganda card without a token", card_lg is None)
     check("notes say what fell back", len(notes) == len(card.build_cards(res)[2]))
 
+    # "auto" and a blank district mean the one site the data file holds. A
+    # different name is refused, because answering it would use another
+    # district's numbers.
+    import app as service  # noqa: E402
+
+    for value in ("auto", "", None):
+        payload = {"previous_crops": ["sorghum"]}
+        if value is not None:
+            payload["district"] = value
+        out = service.handle_request(payload)["body"]
+        check(f"district {value!r} uses the data file site", bool(out["recommended_crop"]))
+
+    try:
+        service.handle_request({"previous_crops": [], "district": "Nakasongola"})
+        check("a different district is refused", False)
+    except calc.RequestError:
+        check("a different district is refused", True)
+
+    # The response carries the agreed fields and no others.
+    out = service.handle_request({"previous_crops": ["maize"]})["body"]
+    check(
+        "response carries the agreed fields only",
+        set(out) <= {"recommended_crop", "when", "why", "alternative", "reasons", "card_en", "card_lg"},
+        str(sorted(out)),
+    )
+
     print()
     if FAILURES:
         print(f"{len(FAILURES)} check(s) failed")
