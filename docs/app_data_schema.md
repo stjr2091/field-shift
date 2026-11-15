@@ -252,10 +252,28 @@ single-crop request returns an empty result rather than a missing key.
    held for that pair. Do not remove the repeat.
 4. Join the rest with `>`, newest last.
 
+## Order matters, and a wrong order does not fail
+
+The three fields on the page are ordered newest first. The newest crop is
+`prev-1`, labelled "This season follows". The oldest is `prev-3`. The key runs
+the other way, oldest first and newest last.
+
+A handler must reverse the field order, or build from `prev-3` to `prev-1`.
+
+This is the one mistake the index cannot catch. A reversed key is still a real
+crop path, so it exists in the index and the lookup succeeds. It returns a
+different pairing with no error. For example, `sorghum>finger_millet` reports
+one reason against, and `finger_millet>sorghum` reports none. Both keys are
+present. Only the first carries the warning that finger millet should not
+follow sorghum.
+
+So a lookup that succeeds is not proof that the order is right.
+
 The index holds no empty-key entry and no key with an empty segment.
 
 If the lookup finds no entry, the screen says no comparison is available for
-that path. Do not invent a result and do not fall back to a shorter path.
+that path. Do not invent a result and do not fall back to a shorter path. Use
+that message for a real miss only. It must not absorb a reversed key.
 
 `scripts/qa_path_index_check.py` checks the file against the live model.
 
