@@ -1,3 +1,5 @@
+This pass audited the data layer at the previous site. Its figures are kept as a record of that audit. They are superseded for the current site by the check of 15 Nov 2026.
+
 # Field Shift — independent QA report (first pass)
 
 Audit date: **2026-11-14**, first pass due 23:00 EAT.
