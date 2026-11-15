@@ -1,0 +1,4623 @@
+{
+  "schema_version": "1.0",
+  "key_format": "crop keys joined by '>', newest last",
+  "min_length": 1,
+  "max_length": 3,
+  "crop_keys": [
+    "maize",
+    "common_bean",
+    "finger_millet",
+    "sorghum",
+    "groundnut"
+  ],
+  "blank_handling": "Drop blanks before building a key. This index carries no entry for an empty path and no key with an empty segment.",
+  "model": "Each entry is produced by the ordered-path model in notebooks/crop_path.py. The index is a projection of that model, not a second implementation.",
+  "paths": {
+    "maize": {
+      "steps": [],
+      "n_steps": 0,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 0,
+      "path_labels": [
+        "Maize"
+      ]
+    },
+    "common_bean": {
+      "steps": [],
+      "n_steps": 0,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 0,
+      "path_labels": [
+        "Common bean"
+      ]
+    },
+    "finger_millet": {
+      "steps": [],
+      "n_steps": 0,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 0,
+      "path_labels": [
+        "Finger millet"
+      ]
+    },
+    "sorghum": {
+      "steps": [],
+      "n_steps": 0,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 0,
+      "path_labels": [
+        "Sorghum"
+      ]
+    },
+    "groundnut": {
+      "steps": [],
+      "n_steps": 0,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 0,
+      "path_labels": [
+        "Groundnut"
+      ]
+    },
+    "maize>maize": {
+      "steps": [
+        {
+          "from": "maize",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Maize.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 1,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Maize",
+        "Maize"
+      ]
+    },
+    "maize>common_bean": {
+      "steps": [
+        {
+          "from": "maize",
+          "to": "common_bean",
+          "matched": true,
+          "label": "assumption",
+          "direction": "for",
+          "reason": "Maize before Common bean is neutral to favourable.",
+          "note": "Team expertise, used as a prototype assumption. Direction only, no number. Not tested."
+        }
+      ],
+      "n_steps": 1,
+      "n_matched": 1,
+      "n_for": 1,
+      "n_against": 0,
+      "n_unmatched": 0,
+      "path_labels": [
+        "Maize",
+        "Common bean"
+      ]
+    },
+    "maize>finger_millet": {
+      "steps": [
+        {
+          "from": "maize",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Maize.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 1,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Maize",
+        "Finger millet"
+      ]
+    },
+    "maize>sorghum": {
+      "steps": [
+        {
+          "from": "maize",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Maize.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 1,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Maize",
+        "Sorghum"
+      ]
+    },
+    "maize>groundnut": {
+      "steps": [
+        {
+          "from": "maize",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Maize.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 1,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Maize",
+        "Groundnut"
+      ]
+    },
+    "common_bean>maize": {
+      "steps": [
+        {
+          "from": "common_bean",
+          "to": "maize",
+          "matched": true,
+          "label": "assumption",
+          "direction": "for",
+          "reason": "Common bean before Maize is favourable.",
+          "note": "Team expertise, used as a prototype assumption. Direction only, no number. Not tested."
+        }
+      ],
+      "n_steps": 1,
+      "n_matched": 1,
+      "n_for": 1,
+      "n_against": 0,
+      "n_unmatched": 0,
+      "path_labels": [
+        "Common bean",
+        "Maize"
+      ]
+    },
+    "common_bean>common_bean": {
+      "steps": [
+        {
+          "from": "common_bean",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Common bean.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 1,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Common bean",
+        "Common bean"
+      ]
+    },
+    "common_bean>finger_millet": {
+      "steps": [
+        {
+          "from": "common_bean",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Common bean.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 1,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Common bean",
+        "Finger millet"
+      ]
+    },
+    "common_bean>sorghum": {
+      "steps": [
+        {
+          "from": "common_bean",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Common bean.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 1,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Common bean",
+        "Sorghum"
+      ]
+    },
+    "common_bean>groundnut": {
+      "steps": [
+        {
+          "from": "common_bean",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Common bean.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 1,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Common bean",
+        "Groundnut"
+      ]
+    },
+    "finger_millet>maize": {
+      "steps": [
+        {
+          "from": "finger_millet",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 1,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Finger millet",
+        "Maize"
+      ]
+    },
+    "finger_millet>common_bean": {
+      "steps": [
+        {
+          "from": "finger_millet",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 1,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Finger millet",
+        "Common bean"
+      ]
+    },
+    "finger_millet>finger_millet": {
+      "steps": [
+        {
+          "from": "finger_millet",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 1,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Finger millet",
+        "Finger millet"
+      ]
+    },
+    "finger_millet>sorghum": {
+      "steps": [
+        {
+          "from": "finger_millet",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 1,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Finger millet",
+        "Sorghum"
+      ]
+    },
+    "finger_millet>groundnut": {
+      "steps": [
+        {
+          "from": "finger_millet",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 1,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Finger millet",
+        "Groundnut"
+      ]
+    },
+    "sorghum>maize": {
+      "steps": [
+        {
+          "from": "sorghum",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 1,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Sorghum",
+        "Maize"
+      ]
+    },
+    "sorghum>common_bean": {
+      "steps": [
+        {
+          "from": "sorghum",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 1,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Sorghum",
+        "Common bean"
+      ]
+    },
+    "sorghum>finger_millet": {
+      "steps": [
+        {
+          "from": "sorghum",
+          "to": "finger_millet",
+          "matched": true,
+          "label": "survey",
+          "direction": "against",
+          "reason": "Finger millet should not follow Sorghum.",
+          "note": "R8030 Final Technical Report. PDF p50. Farmer knowledge from a survey, not a trial. Same page: 'The order of rotation was not consistent'. Not tested: no weed counts are held."
+        }
+      ],
+      "n_steps": 1,
+      "n_matched": 1,
+      "n_for": 0,
+      "n_against": 1,
+      "n_unmatched": 0,
+      "path_labels": [
+        "Sorghum",
+        "Finger millet"
+      ]
+    },
+    "sorghum>sorghum": {
+      "steps": [
+        {
+          "from": "sorghum",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 1,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Sorghum",
+        "Sorghum"
+      ]
+    },
+    "sorghum>groundnut": {
+      "steps": [
+        {
+          "from": "sorghum",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 1,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Sorghum",
+        "Groundnut"
+      ]
+    },
+    "groundnut>maize": {
+      "steps": [
+        {
+          "from": "groundnut",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 1,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Groundnut",
+        "Maize"
+      ]
+    },
+    "groundnut>common_bean": {
+      "steps": [
+        {
+          "from": "groundnut",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 1,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Groundnut",
+        "Common bean"
+      ]
+    },
+    "groundnut>finger_millet": {
+      "steps": [
+        {
+          "from": "groundnut",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 1,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Groundnut",
+        "Finger millet"
+      ]
+    },
+    "groundnut>sorghum": {
+      "steps": [
+        {
+          "from": "groundnut",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 1,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Groundnut",
+        "Sorghum"
+      ]
+    },
+    "groundnut>groundnut": {
+      "steps": [
+        {
+          "from": "groundnut",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 1,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Groundnut",
+        "Groundnut"
+      ]
+    },
+    "maize>maize>maize": {
+      "steps": [
+        {
+          "from": "maize",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Maize.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "maize",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Maize.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Maize",
+        "Maize",
+        "Maize"
+      ]
+    },
+    "maize>maize>common_bean": {
+      "steps": [
+        {
+          "from": "maize",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Maize.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "maize",
+          "to": "common_bean",
+          "matched": true,
+          "label": "assumption",
+          "direction": "for",
+          "reason": "Maize before Common bean is neutral to favourable.",
+          "note": "Team expertise, used as a prototype assumption. Direction only, no number. Not tested."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 1,
+      "n_for": 1,
+      "n_against": 0,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Maize",
+        "Maize",
+        "Common bean"
+      ]
+    },
+    "maize>maize>finger_millet": {
+      "steps": [
+        {
+          "from": "maize",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Maize.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "maize",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Maize.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Maize",
+        "Maize",
+        "Finger millet"
+      ]
+    },
+    "maize>maize>sorghum": {
+      "steps": [
+        {
+          "from": "maize",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Maize.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "maize",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Maize.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Maize",
+        "Maize",
+        "Sorghum"
+      ]
+    },
+    "maize>maize>groundnut": {
+      "steps": [
+        {
+          "from": "maize",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Maize.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "maize",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Maize.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Maize",
+        "Maize",
+        "Groundnut"
+      ]
+    },
+    "maize>common_bean>maize": {
+      "steps": [
+        {
+          "from": "maize",
+          "to": "common_bean",
+          "matched": true,
+          "label": "assumption",
+          "direction": "for",
+          "reason": "Maize before Common bean is neutral to favourable.",
+          "note": "Team expertise, used as a prototype assumption. Direction only, no number. Not tested."
+        },
+        {
+          "from": "common_bean",
+          "to": "maize",
+          "matched": true,
+          "label": "assumption",
+          "direction": "for",
+          "reason": "Common bean before Maize is favourable.",
+          "note": "Team expertise, used as a prototype assumption. Direction only, no number. Not tested."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 2,
+      "n_for": 2,
+      "n_against": 0,
+      "n_unmatched": 0,
+      "path_labels": [
+        "Maize",
+        "Common bean",
+        "Maize"
+      ]
+    },
+    "maize>common_bean>common_bean": {
+      "steps": [
+        {
+          "from": "maize",
+          "to": "common_bean",
+          "matched": true,
+          "label": "assumption",
+          "direction": "for",
+          "reason": "Maize before Common bean is neutral to favourable.",
+          "note": "Team expertise, used as a prototype assumption. Direction only, no number. Not tested."
+        },
+        {
+          "from": "common_bean",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Common bean.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 1,
+      "n_for": 1,
+      "n_against": 0,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Maize",
+        "Common bean",
+        "Common bean"
+      ]
+    },
+    "maize>common_bean>finger_millet": {
+      "steps": [
+        {
+          "from": "maize",
+          "to": "common_bean",
+          "matched": true,
+          "label": "assumption",
+          "direction": "for",
+          "reason": "Maize before Common bean is neutral to favourable.",
+          "note": "Team expertise, used as a prototype assumption. Direction only, no number. Not tested."
+        },
+        {
+          "from": "common_bean",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Common bean.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 1,
+      "n_for": 1,
+      "n_against": 0,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Maize",
+        "Common bean",
+        "Finger millet"
+      ]
+    },
+    "maize>common_bean>sorghum": {
+      "steps": [
+        {
+          "from": "maize",
+          "to": "common_bean",
+          "matched": true,
+          "label": "assumption",
+          "direction": "for",
+          "reason": "Maize before Common bean is neutral to favourable.",
+          "note": "Team expertise, used as a prototype assumption. Direction only, no number. Not tested."
+        },
+        {
+          "from": "common_bean",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Common bean.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 1,
+      "n_for": 1,
+      "n_against": 0,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Maize",
+        "Common bean",
+        "Sorghum"
+      ]
+    },
+    "maize>common_bean>groundnut": {
+      "steps": [
+        {
+          "from": "maize",
+          "to": "common_bean",
+          "matched": true,
+          "label": "assumption",
+          "direction": "for",
+          "reason": "Maize before Common bean is neutral to favourable.",
+          "note": "Team expertise, used as a prototype assumption. Direction only, no number. Not tested."
+        },
+        {
+          "from": "common_bean",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Common bean.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 1,
+      "n_for": 1,
+      "n_against": 0,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Maize",
+        "Common bean",
+        "Groundnut"
+      ]
+    },
+    "maize>finger_millet>maize": {
+      "steps": [
+        {
+          "from": "maize",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Maize.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "finger_millet",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Maize",
+        "Finger millet",
+        "Maize"
+      ]
+    },
+    "maize>finger_millet>common_bean": {
+      "steps": [
+        {
+          "from": "maize",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Maize.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "finger_millet",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Maize",
+        "Finger millet",
+        "Common bean"
+      ]
+    },
+    "maize>finger_millet>finger_millet": {
+      "steps": [
+        {
+          "from": "maize",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Maize.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "finger_millet",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Maize",
+        "Finger millet",
+        "Finger millet"
+      ]
+    },
+    "maize>finger_millet>sorghum": {
+      "steps": [
+        {
+          "from": "maize",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Maize.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "finger_millet",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Maize",
+        "Finger millet",
+        "Sorghum"
+      ]
+    },
+    "maize>finger_millet>groundnut": {
+      "steps": [
+        {
+          "from": "maize",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Maize.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "finger_millet",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Maize",
+        "Finger millet",
+        "Groundnut"
+      ]
+    },
+    "maize>sorghum>maize": {
+      "steps": [
+        {
+          "from": "maize",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Maize.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "sorghum",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Maize",
+        "Sorghum",
+        "Maize"
+      ]
+    },
+    "maize>sorghum>common_bean": {
+      "steps": [
+        {
+          "from": "maize",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Maize.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "sorghum",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Maize",
+        "Sorghum",
+        "Common bean"
+      ]
+    },
+    "maize>sorghum>finger_millet": {
+      "steps": [
+        {
+          "from": "maize",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Maize.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "sorghum",
+          "to": "finger_millet",
+          "matched": true,
+          "label": "survey",
+          "direction": "against",
+          "reason": "Finger millet should not follow Sorghum.",
+          "note": "R8030 Final Technical Report. PDF p50. Farmer knowledge from a survey, not a trial. Same page: 'The order of rotation was not consistent'. Not tested: no weed counts are held."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 1,
+      "n_for": 0,
+      "n_against": 1,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Maize",
+        "Sorghum",
+        "Finger millet"
+      ]
+    },
+    "maize>sorghum>sorghum": {
+      "steps": [
+        {
+          "from": "maize",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Maize.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "sorghum",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Maize",
+        "Sorghum",
+        "Sorghum"
+      ]
+    },
+    "maize>sorghum>groundnut": {
+      "steps": [
+        {
+          "from": "maize",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Maize.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "sorghum",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Maize",
+        "Sorghum",
+        "Groundnut"
+      ]
+    },
+    "maize>groundnut>maize": {
+      "steps": [
+        {
+          "from": "maize",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Maize.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "groundnut",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Maize",
+        "Groundnut",
+        "Maize"
+      ]
+    },
+    "maize>groundnut>common_bean": {
+      "steps": [
+        {
+          "from": "maize",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Maize.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "groundnut",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Maize",
+        "Groundnut",
+        "Common bean"
+      ]
+    },
+    "maize>groundnut>finger_millet": {
+      "steps": [
+        {
+          "from": "maize",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Maize.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "groundnut",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Maize",
+        "Groundnut",
+        "Finger millet"
+      ]
+    },
+    "maize>groundnut>sorghum": {
+      "steps": [
+        {
+          "from": "maize",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Maize.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "groundnut",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Maize",
+        "Groundnut",
+        "Sorghum"
+      ]
+    },
+    "maize>groundnut>groundnut": {
+      "steps": [
+        {
+          "from": "maize",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Maize.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "groundnut",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Maize",
+        "Groundnut",
+        "Groundnut"
+      ]
+    },
+    "common_bean>maize>maize": {
+      "steps": [
+        {
+          "from": "common_bean",
+          "to": "maize",
+          "matched": true,
+          "label": "assumption",
+          "direction": "for",
+          "reason": "Common bean before Maize is favourable.",
+          "note": "Team expertise, used as a prototype assumption. Direction only, no number. Not tested."
+        },
+        {
+          "from": "maize",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Maize.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 1,
+      "n_for": 1,
+      "n_against": 0,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Common bean",
+        "Maize",
+        "Maize"
+      ]
+    },
+    "common_bean>maize>common_bean": {
+      "steps": [
+        {
+          "from": "common_bean",
+          "to": "maize",
+          "matched": true,
+          "label": "assumption",
+          "direction": "for",
+          "reason": "Common bean before Maize is favourable.",
+          "note": "Team expertise, used as a prototype assumption. Direction only, no number. Not tested."
+        },
+        {
+          "from": "maize",
+          "to": "common_bean",
+          "matched": true,
+          "label": "assumption",
+          "direction": "for",
+          "reason": "Maize before Common bean is neutral to favourable.",
+          "note": "Team expertise, used as a prototype assumption. Direction only, no number. Not tested."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 2,
+      "n_for": 2,
+      "n_against": 0,
+      "n_unmatched": 0,
+      "path_labels": [
+        "Common bean",
+        "Maize",
+        "Common bean"
+      ]
+    },
+    "common_bean>maize>finger_millet": {
+      "steps": [
+        {
+          "from": "common_bean",
+          "to": "maize",
+          "matched": true,
+          "label": "assumption",
+          "direction": "for",
+          "reason": "Common bean before Maize is favourable.",
+          "note": "Team expertise, used as a prototype assumption. Direction only, no number. Not tested."
+        },
+        {
+          "from": "maize",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Maize.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 1,
+      "n_for": 1,
+      "n_against": 0,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Common bean",
+        "Maize",
+        "Finger millet"
+      ]
+    },
+    "common_bean>maize>sorghum": {
+      "steps": [
+        {
+          "from": "common_bean",
+          "to": "maize",
+          "matched": true,
+          "label": "assumption",
+          "direction": "for",
+          "reason": "Common bean before Maize is favourable.",
+          "note": "Team expertise, used as a prototype assumption. Direction only, no number. Not tested."
+        },
+        {
+          "from": "maize",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Maize.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 1,
+      "n_for": 1,
+      "n_against": 0,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Common bean",
+        "Maize",
+        "Sorghum"
+      ]
+    },
+    "common_bean>maize>groundnut": {
+      "steps": [
+        {
+          "from": "common_bean",
+          "to": "maize",
+          "matched": true,
+          "label": "assumption",
+          "direction": "for",
+          "reason": "Common bean before Maize is favourable.",
+          "note": "Team expertise, used as a prototype assumption. Direction only, no number. Not tested."
+        },
+        {
+          "from": "maize",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Maize.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 1,
+      "n_for": 1,
+      "n_against": 0,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Common bean",
+        "Maize",
+        "Groundnut"
+      ]
+    },
+    "common_bean>common_bean>maize": {
+      "steps": [
+        {
+          "from": "common_bean",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Common bean.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "common_bean",
+          "to": "maize",
+          "matched": true,
+          "label": "assumption",
+          "direction": "for",
+          "reason": "Common bean before Maize is favourable.",
+          "note": "Team expertise, used as a prototype assumption. Direction only, no number. Not tested."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 1,
+      "n_for": 1,
+      "n_against": 0,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Common bean",
+        "Common bean",
+        "Maize"
+      ]
+    },
+    "common_bean>common_bean>common_bean": {
+      "steps": [
+        {
+          "from": "common_bean",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Common bean.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "common_bean",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Common bean.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Common bean",
+        "Common bean",
+        "Common bean"
+      ]
+    },
+    "common_bean>common_bean>finger_millet": {
+      "steps": [
+        {
+          "from": "common_bean",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Common bean.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "common_bean",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Common bean.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Common bean",
+        "Common bean",
+        "Finger millet"
+      ]
+    },
+    "common_bean>common_bean>sorghum": {
+      "steps": [
+        {
+          "from": "common_bean",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Common bean.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "common_bean",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Common bean.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Common bean",
+        "Common bean",
+        "Sorghum"
+      ]
+    },
+    "common_bean>common_bean>groundnut": {
+      "steps": [
+        {
+          "from": "common_bean",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Common bean.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "common_bean",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Common bean.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Common bean",
+        "Common bean",
+        "Groundnut"
+      ]
+    },
+    "common_bean>finger_millet>maize": {
+      "steps": [
+        {
+          "from": "common_bean",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Common bean.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "finger_millet",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Common bean",
+        "Finger millet",
+        "Maize"
+      ]
+    },
+    "common_bean>finger_millet>common_bean": {
+      "steps": [
+        {
+          "from": "common_bean",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Common bean.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "finger_millet",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Common bean",
+        "Finger millet",
+        "Common bean"
+      ]
+    },
+    "common_bean>finger_millet>finger_millet": {
+      "steps": [
+        {
+          "from": "common_bean",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Common bean.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "finger_millet",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Common bean",
+        "Finger millet",
+        "Finger millet"
+      ]
+    },
+    "common_bean>finger_millet>sorghum": {
+      "steps": [
+        {
+          "from": "common_bean",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Common bean.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "finger_millet",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Common bean",
+        "Finger millet",
+        "Sorghum"
+      ]
+    },
+    "common_bean>finger_millet>groundnut": {
+      "steps": [
+        {
+          "from": "common_bean",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Common bean.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "finger_millet",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Common bean",
+        "Finger millet",
+        "Groundnut"
+      ]
+    },
+    "common_bean>sorghum>maize": {
+      "steps": [
+        {
+          "from": "common_bean",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Common bean.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "sorghum",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Common bean",
+        "Sorghum",
+        "Maize"
+      ]
+    },
+    "common_bean>sorghum>common_bean": {
+      "steps": [
+        {
+          "from": "common_bean",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Common bean.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "sorghum",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Common bean",
+        "Sorghum",
+        "Common bean"
+      ]
+    },
+    "common_bean>sorghum>finger_millet": {
+      "steps": [
+        {
+          "from": "common_bean",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Common bean.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "sorghum",
+          "to": "finger_millet",
+          "matched": true,
+          "label": "survey",
+          "direction": "against",
+          "reason": "Finger millet should not follow Sorghum.",
+          "note": "R8030 Final Technical Report. PDF p50. Farmer knowledge from a survey, not a trial. Same page: 'The order of rotation was not consistent'. Not tested: no weed counts are held."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 1,
+      "n_for": 0,
+      "n_against": 1,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Common bean",
+        "Sorghum",
+        "Finger millet"
+      ]
+    },
+    "common_bean>sorghum>sorghum": {
+      "steps": [
+        {
+          "from": "common_bean",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Common bean.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "sorghum",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Common bean",
+        "Sorghum",
+        "Sorghum"
+      ]
+    },
+    "common_bean>sorghum>groundnut": {
+      "steps": [
+        {
+          "from": "common_bean",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Common bean.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "sorghum",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Common bean",
+        "Sorghum",
+        "Groundnut"
+      ]
+    },
+    "common_bean>groundnut>maize": {
+      "steps": [
+        {
+          "from": "common_bean",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Common bean.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "groundnut",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Common bean",
+        "Groundnut",
+        "Maize"
+      ]
+    },
+    "common_bean>groundnut>common_bean": {
+      "steps": [
+        {
+          "from": "common_bean",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Common bean.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "groundnut",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Common bean",
+        "Groundnut",
+        "Common bean"
+      ]
+    },
+    "common_bean>groundnut>finger_millet": {
+      "steps": [
+        {
+          "from": "common_bean",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Common bean.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "groundnut",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Common bean",
+        "Groundnut",
+        "Finger millet"
+      ]
+    },
+    "common_bean>groundnut>sorghum": {
+      "steps": [
+        {
+          "from": "common_bean",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Common bean.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "groundnut",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Common bean",
+        "Groundnut",
+        "Sorghum"
+      ]
+    },
+    "common_bean>groundnut>groundnut": {
+      "steps": [
+        {
+          "from": "common_bean",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Common bean.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "groundnut",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Common bean",
+        "Groundnut",
+        "Groundnut"
+      ]
+    },
+    "finger_millet>maize>maize": {
+      "steps": [
+        {
+          "from": "finger_millet",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "maize",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Maize.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Finger millet",
+        "Maize",
+        "Maize"
+      ]
+    },
+    "finger_millet>maize>common_bean": {
+      "steps": [
+        {
+          "from": "finger_millet",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "maize",
+          "to": "common_bean",
+          "matched": true,
+          "label": "assumption",
+          "direction": "for",
+          "reason": "Maize before Common bean is neutral to favourable.",
+          "note": "Team expertise, used as a prototype assumption. Direction only, no number. Not tested."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 1,
+      "n_for": 1,
+      "n_against": 0,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Finger millet",
+        "Maize",
+        "Common bean"
+      ]
+    },
+    "finger_millet>maize>finger_millet": {
+      "steps": [
+        {
+          "from": "finger_millet",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "maize",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Maize.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Finger millet",
+        "Maize",
+        "Finger millet"
+      ]
+    },
+    "finger_millet>maize>sorghum": {
+      "steps": [
+        {
+          "from": "finger_millet",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "maize",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Maize.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Finger millet",
+        "Maize",
+        "Sorghum"
+      ]
+    },
+    "finger_millet>maize>groundnut": {
+      "steps": [
+        {
+          "from": "finger_millet",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "maize",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Maize.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Finger millet",
+        "Maize",
+        "Groundnut"
+      ]
+    },
+    "finger_millet>common_bean>maize": {
+      "steps": [
+        {
+          "from": "finger_millet",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "common_bean",
+          "to": "maize",
+          "matched": true,
+          "label": "assumption",
+          "direction": "for",
+          "reason": "Common bean before Maize is favourable.",
+          "note": "Team expertise, used as a prototype assumption. Direction only, no number. Not tested."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 1,
+      "n_for": 1,
+      "n_against": 0,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Finger millet",
+        "Common bean",
+        "Maize"
+      ]
+    },
+    "finger_millet>common_bean>common_bean": {
+      "steps": [
+        {
+          "from": "finger_millet",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "common_bean",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Common bean.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Finger millet",
+        "Common bean",
+        "Common bean"
+      ]
+    },
+    "finger_millet>common_bean>finger_millet": {
+      "steps": [
+        {
+          "from": "finger_millet",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "common_bean",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Common bean.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Finger millet",
+        "Common bean",
+        "Finger millet"
+      ]
+    },
+    "finger_millet>common_bean>sorghum": {
+      "steps": [
+        {
+          "from": "finger_millet",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "common_bean",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Common bean.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Finger millet",
+        "Common bean",
+        "Sorghum"
+      ]
+    },
+    "finger_millet>common_bean>groundnut": {
+      "steps": [
+        {
+          "from": "finger_millet",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "common_bean",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Common bean.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Finger millet",
+        "Common bean",
+        "Groundnut"
+      ]
+    },
+    "finger_millet>finger_millet>maize": {
+      "steps": [
+        {
+          "from": "finger_millet",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "finger_millet",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Finger millet",
+        "Finger millet",
+        "Maize"
+      ]
+    },
+    "finger_millet>finger_millet>common_bean": {
+      "steps": [
+        {
+          "from": "finger_millet",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "finger_millet",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Finger millet",
+        "Finger millet",
+        "Common bean"
+      ]
+    },
+    "finger_millet>finger_millet>finger_millet": {
+      "steps": [
+        {
+          "from": "finger_millet",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "finger_millet",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Finger millet",
+        "Finger millet",
+        "Finger millet"
+      ]
+    },
+    "finger_millet>finger_millet>sorghum": {
+      "steps": [
+        {
+          "from": "finger_millet",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "finger_millet",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Finger millet",
+        "Finger millet",
+        "Sorghum"
+      ]
+    },
+    "finger_millet>finger_millet>groundnut": {
+      "steps": [
+        {
+          "from": "finger_millet",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "finger_millet",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Finger millet",
+        "Finger millet",
+        "Groundnut"
+      ]
+    },
+    "finger_millet>sorghum>maize": {
+      "steps": [
+        {
+          "from": "finger_millet",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "sorghum",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Finger millet",
+        "Sorghum",
+        "Maize"
+      ]
+    },
+    "finger_millet>sorghum>common_bean": {
+      "steps": [
+        {
+          "from": "finger_millet",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "sorghum",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Finger millet",
+        "Sorghum",
+        "Common bean"
+      ]
+    },
+    "finger_millet>sorghum>finger_millet": {
+      "steps": [
+        {
+          "from": "finger_millet",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "sorghum",
+          "to": "finger_millet",
+          "matched": true,
+          "label": "survey",
+          "direction": "against",
+          "reason": "Finger millet should not follow Sorghum.",
+          "note": "R8030 Final Technical Report. PDF p50. Farmer knowledge from a survey, not a trial. Same page: 'The order of rotation was not consistent'. Not tested: no weed counts are held."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 1,
+      "n_for": 0,
+      "n_against": 1,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Finger millet",
+        "Sorghum",
+        "Finger millet"
+      ]
+    },
+    "finger_millet>sorghum>sorghum": {
+      "steps": [
+        {
+          "from": "finger_millet",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "sorghum",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Finger millet",
+        "Sorghum",
+        "Sorghum"
+      ]
+    },
+    "finger_millet>sorghum>groundnut": {
+      "steps": [
+        {
+          "from": "finger_millet",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "sorghum",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Finger millet",
+        "Sorghum",
+        "Groundnut"
+      ]
+    },
+    "finger_millet>groundnut>maize": {
+      "steps": [
+        {
+          "from": "finger_millet",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "groundnut",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Finger millet",
+        "Groundnut",
+        "Maize"
+      ]
+    },
+    "finger_millet>groundnut>common_bean": {
+      "steps": [
+        {
+          "from": "finger_millet",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "groundnut",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Finger millet",
+        "Groundnut",
+        "Common bean"
+      ]
+    },
+    "finger_millet>groundnut>finger_millet": {
+      "steps": [
+        {
+          "from": "finger_millet",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "groundnut",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Finger millet",
+        "Groundnut",
+        "Finger millet"
+      ]
+    },
+    "finger_millet>groundnut>sorghum": {
+      "steps": [
+        {
+          "from": "finger_millet",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "groundnut",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Finger millet",
+        "Groundnut",
+        "Sorghum"
+      ]
+    },
+    "finger_millet>groundnut>groundnut": {
+      "steps": [
+        {
+          "from": "finger_millet",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "groundnut",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Finger millet",
+        "Groundnut",
+        "Groundnut"
+      ]
+    },
+    "sorghum>maize>maize": {
+      "steps": [
+        {
+          "from": "sorghum",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "maize",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Maize.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Sorghum",
+        "Maize",
+        "Maize"
+      ]
+    },
+    "sorghum>maize>common_bean": {
+      "steps": [
+        {
+          "from": "sorghum",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "maize",
+          "to": "common_bean",
+          "matched": true,
+          "label": "assumption",
+          "direction": "for",
+          "reason": "Maize before Common bean is neutral to favourable.",
+          "note": "Team expertise, used as a prototype assumption. Direction only, no number. Not tested."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 1,
+      "n_for": 1,
+      "n_against": 0,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Sorghum",
+        "Maize",
+        "Common bean"
+      ]
+    },
+    "sorghum>maize>finger_millet": {
+      "steps": [
+        {
+          "from": "sorghum",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "maize",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Maize.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Sorghum",
+        "Maize",
+        "Finger millet"
+      ]
+    },
+    "sorghum>maize>sorghum": {
+      "steps": [
+        {
+          "from": "sorghum",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "maize",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Maize.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Sorghum",
+        "Maize",
+        "Sorghum"
+      ]
+    },
+    "sorghum>maize>groundnut": {
+      "steps": [
+        {
+          "from": "sorghum",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "maize",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Maize.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Sorghum",
+        "Maize",
+        "Groundnut"
+      ]
+    },
+    "sorghum>common_bean>maize": {
+      "steps": [
+        {
+          "from": "sorghum",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "common_bean",
+          "to": "maize",
+          "matched": true,
+          "label": "assumption",
+          "direction": "for",
+          "reason": "Common bean before Maize is favourable.",
+          "note": "Team expertise, used as a prototype assumption. Direction only, no number. Not tested."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 1,
+      "n_for": 1,
+      "n_against": 0,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Sorghum",
+        "Common bean",
+        "Maize"
+      ]
+    },
+    "sorghum>common_bean>common_bean": {
+      "steps": [
+        {
+          "from": "sorghum",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "common_bean",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Common bean.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Sorghum",
+        "Common bean",
+        "Common bean"
+      ]
+    },
+    "sorghum>common_bean>finger_millet": {
+      "steps": [
+        {
+          "from": "sorghum",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "common_bean",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Common bean.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Sorghum",
+        "Common bean",
+        "Finger millet"
+      ]
+    },
+    "sorghum>common_bean>sorghum": {
+      "steps": [
+        {
+          "from": "sorghum",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "common_bean",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Common bean.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Sorghum",
+        "Common bean",
+        "Sorghum"
+      ]
+    },
+    "sorghum>common_bean>groundnut": {
+      "steps": [
+        {
+          "from": "sorghum",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "common_bean",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Common bean.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Sorghum",
+        "Common bean",
+        "Groundnut"
+      ]
+    },
+    "sorghum>finger_millet>maize": {
+      "steps": [
+        {
+          "from": "sorghum",
+          "to": "finger_millet",
+          "matched": true,
+          "label": "survey",
+          "direction": "against",
+          "reason": "Finger millet should not follow Sorghum.",
+          "note": "R8030 Final Technical Report. PDF p50. Farmer knowledge from a survey, not a trial. Same page: 'The order of rotation was not consistent'. Not tested: no weed counts are held."
+        },
+        {
+          "from": "finger_millet",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 1,
+      "n_for": 0,
+      "n_against": 1,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Sorghum",
+        "Finger millet",
+        "Maize"
+      ]
+    },
+    "sorghum>finger_millet>common_bean": {
+      "steps": [
+        {
+          "from": "sorghum",
+          "to": "finger_millet",
+          "matched": true,
+          "label": "survey",
+          "direction": "against",
+          "reason": "Finger millet should not follow Sorghum.",
+          "note": "R8030 Final Technical Report. PDF p50. Farmer knowledge from a survey, not a trial. Same page: 'The order of rotation was not consistent'. Not tested: no weed counts are held."
+        },
+        {
+          "from": "finger_millet",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 1,
+      "n_for": 0,
+      "n_against": 1,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Sorghum",
+        "Finger millet",
+        "Common bean"
+      ]
+    },
+    "sorghum>finger_millet>finger_millet": {
+      "steps": [
+        {
+          "from": "sorghum",
+          "to": "finger_millet",
+          "matched": true,
+          "label": "survey",
+          "direction": "against",
+          "reason": "Finger millet should not follow Sorghum.",
+          "note": "R8030 Final Technical Report. PDF p50. Farmer knowledge from a survey, not a trial. Same page: 'The order of rotation was not consistent'. Not tested: no weed counts are held."
+        },
+        {
+          "from": "finger_millet",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 1,
+      "n_for": 0,
+      "n_against": 1,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Sorghum",
+        "Finger millet",
+        "Finger millet"
+      ]
+    },
+    "sorghum>finger_millet>sorghum": {
+      "steps": [
+        {
+          "from": "sorghum",
+          "to": "finger_millet",
+          "matched": true,
+          "label": "survey",
+          "direction": "against",
+          "reason": "Finger millet should not follow Sorghum.",
+          "note": "R8030 Final Technical Report. PDF p50. Farmer knowledge from a survey, not a trial. Same page: 'The order of rotation was not consistent'. Not tested: no weed counts are held."
+        },
+        {
+          "from": "finger_millet",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 1,
+      "n_for": 0,
+      "n_against": 1,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Sorghum",
+        "Finger millet",
+        "Sorghum"
+      ]
+    },
+    "sorghum>finger_millet>groundnut": {
+      "steps": [
+        {
+          "from": "sorghum",
+          "to": "finger_millet",
+          "matched": true,
+          "label": "survey",
+          "direction": "against",
+          "reason": "Finger millet should not follow Sorghum.",
+          "note": "R8030 Final Technical Report. PDF p50. Farmer knowledge from a survey, not a trial. Same page: 'The order of rotation was not consistent'. Not tested: no weed counts are held."
+        },
+        {
+          "from": "finger_millet",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 1,
+      "n_for": 0,
+      "n_against": 1,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Sorghum",
+        "Finger millet",
+        "Groundnut"
+      ]
+    },
+    "sorghum>sorghum>maize": {
+      "steps": [
+        {
+          "from": "sorghum",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "sorghum",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Sorghum",
+        "Sorghum",
+        "Maize"
+      ]
+    },
+    "sorghum>sorghum>common_bean": {
+      "steps": [
+        {
+          "from": "sorghum",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "sorghum",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Sorghum",
+        "Sorghum",
+        "Common bean"
+      ]
+    },
+    "sorghum>sorghum>finger_millet": {
+      "steps": [
+        {
+          "from": "sorghum",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "sorghum",
+          "to": "finger_millet",
+          "matched": true,
+          "label": "survey",
+          "direction": "against",
+          "reason": "Finger millet should not follow Sorghum.",
+          "note": "R8030 Final Technical Report. PDF p50. Farmer knowledge from a survey, not a trial. Same page: 'The order of rotation was not consistent'. Not tested: no weed counts are held."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 1,
+      "n_for": 0,
+      "n_against": 1,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Sorghum",
+        "Sorghum",
+        "Finger millet"
+      ]
+    },
+    "sorghum>sorghum>sorghum": {
+      "steps": [
+        {
+          "from": "sorghum",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "sorghum",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Sorghum",
+        "Sorghum",
+        "Sorghum"
+      ]
+    },
+    "sorghum>sorghum>groundnut": {
+      "steps": [
+        {
+          "from": "sorghum",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "sorghum",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Sorghum",
+        "Sorghum",
+        "Groundnut"
+      ]
+    },
+    "sorghum>groundnut>maize": {
+      "steps": [
+        {
+          "from": "sorghum",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "groundnut",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Sorghum",
+        "Groundnut",
+        "Maize"
+      ]
+    },
+    "sorghum>groundnut>common_bean": {
+      "steps": [
+        {
+          "from": "sorghum",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "groundnut",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Sorghum",
+        "Groundnut",
+        "Common bean"
+      ]
+    },
+    "sorghum>groundnut>finger_millet": {
+      "steps": [
+        {
+          "from": "sorghum",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "groundnut",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Sorghum",
+        "Groundnut",
+        "Finger millet"
+      ]
+    },
+    "sorghum>groundnut>sorghum": {
+      "steps": [
+        {
+          "from": "sorghum",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "groundnut",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Sorghum",
+        "Groundnut",
+        "Sorghum"
+      ]
+    },
+    "sorghum>groundnut>groundnut": {
+      "steps": [
+        {
+          "from": "sorghum",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "groundnut",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Sorghum",
+        "Groundnut",
+        "Groundnut"
+      ]
+    },
+    "groundnut>maize>maize": {
+      "steps": [
+        {
+          "from": "groundnut",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "maize",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Maize.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Groundnut",
+        "Maize",
+        "Maize"
+      ]
+    },
+    "groundnut>maize>common_bean": {
+      "steps": [
+        {
+          "from": "groundnut",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "maize",
+          "to": "common_bean",
+          "matched": true,
+          "label": "assumption",
+          "direction": "for",
+          "reason": "Maize before Common bean is neutral to favourable.",
+          "note": "Team expertise, used as a prototype assumption. Direction only, no number. Not tested."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 1,
+      "n_for": 1,
+      "n_against": 0,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Groundnut",
+        "Maize",
+        "Common bean"
+      ]
+    },
+    "groundnut>maize>finger_millet": {
+      "steps": [
+        {
+          "from": "groundnut",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "maize",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Maize.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Groundnut",
+        "Maize",
+        "Finger millet"
+      ]
+    },
+    "groundnut>maize>sorghum": {
+      "steps": [
+        {
+          "from": "groundnut",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "maize",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Maize.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Groundnut",
+        "Maize",
+        "Sorghum"
+      ]
+    },
+    "groundnut>maize>groundnut": {
+      "steps": [
+        {
+          "from": "groundnut",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "maize",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Maize.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Groundnut",
+        "Maize",
+        "Groundnut"
+      ]
+    },
+    "groundnut>common_bean>maize": {
+      "steps": [
+        {
+          "from": "groundnut",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "common_bean",
+          "to": "maize",
+          "matched": true,
+          "label": "assumption",
+          "direction": "for",
+          "reason": "Common bean before Maize is favourable.",
+          "note": "Team expertise, used as a prototype assumption. Direction only, no number. Not tested."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 1,
+      "n_for": 1,
+      "n_against": 0,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Groundnut",
+        "Common bean",
+        "Maize"
+      ]
+    },
+    "groundnut>common_bean>common_bean": {
+      "steps": [
+        {
+          "from": "groundnut",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "common_bean",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Common bean.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Groundnut",
+        "Common bean",
+        "Common bean"
+      ]
+    },
+    "groundnut>common_bean>finger_millet": {
+      "steps": [
+        {
+          "from": "groundnut",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "common_bean",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Common bean.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Groundnut",
+        "Common bean",
+        "Finger millet"
+      ]
+    },
+    "groundnut>common_bean>sorghum": {
+      "steps": [
+        {
+          "from": "groundnut",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "common_bean",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Common bean.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Groundnut",
+        "Common bean",
+        "Sorghum"
+      ]
+    },
+    "groundnut>common_bean>groundnut": {
+      "steps": [
+        {
+          "from": "groundnut",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "common_bean",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Common bean.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Groundnut",
+        "Common bean",
+        "Groundnut"
+      ]
+    },
+    "groundnut>finger_millet>maize": {
+      "steps": [
+        {
+          "from": "groundnut",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "finger_millet",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Groundnut",
+        "Finger millet",
+        "Maize"
+      ]
+    },
+    "groundnut>finger_millet>common_bean": {
+      "steps": [
+        {
+          "from": "groundnut",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "finger_millet",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Groundnut",
+        "Finger millet",
+        "Common bean"
+      ]
+    },
+    "groundnut>finger_millet>finger_millet": {
+      "steps": [
+        {
+          "from": "groundnut",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "finger_millet",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Groundnut",
+        "Finger millet",
+        "Finger millet"
+      ]
+    },
+    "groundnut>finger_millet>sorghum": {
+      "steps": [
+        {
+          "from": "groundnut",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "finger_millet",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Groundnut",
+        "Finger millet",
+        "Sorghum"
+      ]
+    },
+    "groundnut>finger_millet>groundnut": {
+      "steps": [
+        {
+          "from": "groundnut",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "finger_millet",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Finger millet.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Groundnut",
+        "Finger millet",
+        "Groundnut"
+      ]
+    },
+    "groundnut>sorghum>maize": {
+      "steps": [
+        {
+          "from": "groundnut",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "sorghum",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Groundnut",
+        "Sorghum",
+        "Maize"
+      ]
+    },
+    "groundnut>sorghum>common_bean": {
+      "steps": [
+        {
+          "from": "groundnut",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "sorghum",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Groundnut",
+        "Sorghum",
+        "Common bean"
+      ]
+    },
+    "groundnut>sorghum>finger_millet": {
+      "steps": [
+        {
+          "from": "groundnut",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "sorghum",
+          "to": "finger_millet",
+          "matched": true,
+          "label": "survey",
+          "direction": "against",
+          "reason": "Finger millet should not follow Sorghum.",
+          "note": "R8030 Final Technical Report. PDF p50. Farmer knowledge from a survey, not a trial. Same page: 'The order of rotation was not consistent'. Not tested: no weed counts are held."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 1,
+      "n_for": 0,
+      "n_against": 1,
+      "n_unmatched": 1,
+      "path_labels": [
+        "Groundnut",
+        "Sorghum",
+        "Finger millet"
+      ]
+    },
+    "groundnut>sorghum>sorghum": {
+      "steps": [
+        {
+          "from": "groundnut",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "sorghum",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Groundnut",
+        "Sorghum",
+        "Sorghum"
+      ]
+    },
+    "groundnut>sorghum>groundnut": {
+      "steps": [
+        {
+          "from": "groundnut",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "sorghum",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Sorghum.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Groundnut",
+        "Sorghum",
+        "Groundnut"
+      ]
+    },
+    "groundnut>groundnut>maize": {
+      "steps": [
+        {
+          "from": "groundnut",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "groundnut",
+          "to": "maize",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Maize after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Groundnut",
+        "Groundnut",
+        "Maize"
+      ]
+    },
+    "groundnut>groundnut>common_bean": {
+      "steps": [
+        {
+          "from": "groundnut",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "groundnut",
+          "to": "common_bean",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Common bean after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Groundnut",
+        "Groundnut",
+        "Common bean"
+      ]
+    },
+    "groundnut>groundnut>finger_millet": {
+      "steps": [
+        {
+          "from": "groundnut",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "groundnut",
+          "to": "finger_millet",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Finger millet after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Groundnut",
+        "Groundnut",
+        "Finger millet"
+      ]
+    },
+    "groundnut>groundnut>sorghum": {
+      "steps": [
+        {
+          "from": "groundnut",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "groundnut",
+          "to": "sorghum",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Sorghum after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Groundnut",
+        "Groundnut",
+        "Sorghum"
+      ]
+    },
+    "groundnut>groundnut>groundnut": {
+      "steps": [
+        {
+          "from": "groundnut",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        },
+        {
+          "from": "groundnut",
+          "to": "groundnut",
+          "matched": false,
+          "label": "none",
+          "direction": "unknown",
+          "reason": "No rotation rule is held for Groundnut after Groundnut.",
+          "note": "No row in the released table covers this pair."
+        }
+      ],
+      "n_steps": 2,
+      "n_matched": 0,
+      "n_for": 0,
+      "n_against": 0,
+      "n_unmatched": 2,
+      "path_labels": [
+        "Groundnut",
+        "Groundnut",
+        "Groundnut"
+      ]
+    }
+  },
+  "n_paths": 155
+}

@@ -217,6 +217,31 @@ different order give a different result.
 The model assumes each crop affects only the crop that follows it. It does not
 test a crop against a crop two steps back.
 
+## The path index
+
+`results/path_index.json` is a build-time lookup for screens that need the
+ordered-path comparison without a server. One build writes it with
+`results/app_data.json`, so the two cannot drift.
+
+The key is the crop path, newest last, with segments joined by `>`. For example
+`maize>common_bean>finger_millet`.
+
+Each value carries the fields a screen renders, under the same names the model
+returns: `steps`, `n_steps`, `n_matched`, `n_for`, `n_against`, `n_unmatched`
+and `path_labels`. Each step carries `from`, `to`, `matched`, `label`,
+`direction`, `reason` and `note`. There is no translation layer.
+
+Every entry is produced by calling the model. The index is a projection of
+`notebooks/crop_path.py`, not a second implementation.
+
+It covers the five crop keys at lengths 1 to 3. Length 1 is included, so a
+single-crop request returns an empty result rather than a missing key.
+
+The screen drops blanks before it builds a key. The index therefore holds no
+empty-key entry and no key with an empty segment.
+
+`scripts/qa_path_index_check.py` checks the file against the live model.
+
 ## Example top-level skeleton
 
 ```json
