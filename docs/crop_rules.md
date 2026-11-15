@@ -1,8 +1,8 @@
 # Crop rules — what the table holds and what it cannot support
 
-Thirty-three rows, one per rule, in `rules/rules.csv`. Each row carries a tag:
-`sourced`, `assumed` or `unknown`. A row is `sourced` only when it has a link,
-a page and the line quoted as printed.
+Thirty-five rule rows, one per rule, in `rules/rules.csv`. Each row carries a
+tag: `sourced`, `assumed` or `unknown`. A row is `sourced` only when it has a
+link, a page and the line quoted as printed.
 
 The app counts four parameters per crop: season length, water, pH and
 temperature. A crop appears only when at least three of the four have a sourced
@@ -57,8 +57,8 @@ should see the earlier assumption and the later evidence together.
 
 ## Temperature
 
-The workbook has no temperature row for any crop. Two manuals give one, and both
-are quoted as printed, including their `oC` form:
+The workbook has no temperature row for any crop. Two manuals and the EcoCrop
+data sheet give one, and each is quoted as printed, including the `oC` form:
 
 - Maize, PDF page 8: "It is well adapted in warm condition with optimum
   temperature for plant growth ranges of 30oC – 34oC. Temperatures below 10oC
@@ -74,10 +74,12 @@ are quoted as printed, including their `oC` form:
   average minimum does not fall below 18°C."
 
 Each is one row. For maize and beans the optimum range is the value and the
-outer limits sit in the note. For finger millet the two ends are not an optimum:
-18 is the Uganda average-minimum floor and 35 is the growth ceiling. Its note
-says so, and the Uganda optimum line stays in the quote rather than being
-converted into a range.
+outer limits sit in the note. Finger millet has two rows. EcoCrop gives its
+optimum, 18-30, with 8 and 35 as the absolute limits in the note, and the app
+reads that pair. The millet chapter row sits beside it as a cross-check and
+carries no range, because 18 is the Uganda average-minimum floor and 35 is the
+growth ceiling, which is not an optimum pair. The Uganda optimum line stays in
+that row's quote rather than being converted into a range.
 
 ## pH
 

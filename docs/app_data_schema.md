@@ -28,7 +28,7 @@ tonight. Anything not listed here does not go in the file.
 | `monthly_climatology` | yes | NASA POWER daily 1991–2025 |
 | `onset` | yes | this notebook, stated assumption |
 | `soil` | yes | SoilGrids v2.0 point extract |
-| `crops` | yes, from `rules/rules.csv` | rules table; two crops pass the three-of-four cut |
+| `crops` | yes, from `rules/rules.csv` | rules table; three crops pass the three-of-four cut |
 
 `data_status` tells the app which blocks are real. A crop appears only when at
 least three of its four parameters have a sourced row, per `docs/plan.md`. A crop
@@ -156,6 +156,8 @@ this file is written, so the array length is 3–5.
 | `temp_range_c` | [number, number]\|null | °C | |
 | `rules_used` | array[string] | | `rules.csv` row ids or `crop/stage/parameter` keys |
 | `unknown_rules` | array[string] | | parameters with no source, shown as "unknown" in the app |
+| `unknown_notes` | object | | one plain sentence per unknown parameter, so a gap is stated and not left blank |
+| `source_label` | string\|null | | short line the app prints in place of the rule source; set when the only gap is the rainfall threshold |
 
 `gap_days` is the point of the app: positive means our supported window starts
 later than documented practice.
