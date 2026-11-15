@@ -72,6 +72,86 @@ The default API address is `http://127.0.0.1:8099`. The `HOST` and `PORT` enviro
 
 The advice service can return a plain English card without Groq or Sunbird credentials. External integrations are optional; see [API integrations](#-optional-api-integrations).
 
+### Optional voice questions
+
+The web interface can ask the field questions aloud with Piper, transcribe
+answers with DeepSpeech, and read the resulting English advice. Voice models
+run locally with the recommendation service; the voice dependencies are
+optional and DeepSpeech 0.9.3 requires a compatible older Python runtime.
+See [voice setup and routes](server/README.md#optional-voice-routes) for model
+configuration and installation details.
+
+To enable voice on Linux or macOS, create a separate Python 3.9 environment
+and install the optional dependencies:
+
+```bash
+python3.9 -m venv .venv-voice
+.venv-voice/bin/python -m pip install -r requirements-voice.txt
+```
+
+In the terminal running the recommendation service, start it with that
+environment. The scorer is optional, but can improve transcription:
+
+```bash
+DEEPSPEECH_SCORER_PATH=DeepSpeech/deepspeech-0.9.3-models.scorer \
+  .venv-voice/bin/python server/app.py
+```
+
+Then open the local API page above, choose **Start voice questions**, allow
+microphone access, and answer each prompt. Check the recognized crop history,
+pH and moisture in the form before choosing **Get advice**. Use **Listen to
+this advice** to hear the English response. The microphone works on localhost
+or an HTTPS site; browser voice controls need the recommendation service
+running with the voice dependencies and model files available.
+
+## 🧪 Run and test
+
+The quickest check is to run the app in two terminals from the project root.
+Start the API in one:
+
+```bash
+python3 server/app.py
+```
+
+Start the static web server in another:
+
+```bash
+python3 -m http.server 8000 --bind 127.0.0.1
+```
+
+Open [the live local app](http://127.0.0.1:8000/app/index.html?api=http://127.0.0.1:8099/recommend).
+For a frontend-only demo using fixed sample responses, open
+[sample mode](http://127.0.0.1:8000/app/index.html?api=mock) instead. Sample
+mode does not calculate advice from the submitted values, and voice routes
+still require the API service.
+
+Run the offline recommendation and voice-input validation checks from the
+project root:
+
+```bash
+python3 server/test_recommend.py
+python3 server/test_voice.py
+```
+
+The voice validation tests do not load either model. To verify the actual
+local speech engines, install the optional voice dependencies as described
+above, then use the voice UI or call both routes while the service is running.
+Transcription quality depends on the recording and model; check the displayed
+transcript before submitting.
+
+For frontend syntax and data QA, run:
+
+```bash
+node --check app/app.js
+python3 scripts/qa_path_check.py
+python3 scripts/qa_path_index_check.py
+python3 scripts/qa_onset_check.py
+```
+
+The onset check requires the raw NASA POWER input. The three data checks
+validate committed or downloaded project data; rebuilding that data is a
+separate step in [Reproduce the analysis](#-reproduce-the-analysis).
+
 ## 🔬 Reproduce the analysis
 
 ### Install the scientific dependencies

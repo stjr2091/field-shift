@@ -10,6 +10,32 @@ their own.
 Run `python server/test_recommend.py` for the checks. They use no network and
 no credentials.
 
+## Optional voice routes
+
+The page can use local DeepSpeech transcription and Piper speech synthesis:
+
+- `POST /voice/transcribe` accepts a mono, 16 kHz, 16-bit PCM WAV body and
+  returns `{"transcript": "..."}`.
+- `POST /voice/speak` accepts `{"text": "..."}` and returns a WAV audio body.
+
+Voice processing is local to this service. The included English DeepSpeech
+model and Piper test voice are used by default. Set `DEEPSPEECH_MODEL_PATH` or
+`PIPER_MODEL_PATH` to use different models; the Piper model needs a matching
+`.json` configuration file. `DEEPSPEECH_SCORER_PATH` is optional.
+
+The voice dependencies are separate from the main app requirements. DeepSpeech
+0.9.3 needs an older Python runtime than the main app; install
+`requirements-voice.txt` in a compatible environment. Missing packages or
+models produce an explicit `503` response, not a sample transcription or
+silent fallback. Run `python server/test_voice.py` for WAV validation checks;
+they do not require the speech models or packages.
+
+In the UI, choose **Start voice questions**, answer the spoken prompts for crop
+history, soil pH and moisture, then check the transcriptions before submitting.
+The spoken questions and advice are in English. A browser microphone requires
+HTTPS or localhost access. With a custom API, set `?voice=<service-base-url>`
+if its voice routes are hosted somewhere other than the recommendation API.
+
 ## Routes
 
 - `POST /recommend` answers one request.

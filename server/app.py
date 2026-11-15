@@ -28,6 +28,7 @@ sys.path.insert(0, str(ROOT / "notebooks"))
 
 import card  # noqa: E402
 import recommend as calc  # noqa: E402
+import voice  # noqa: E402
 
 HOST = os.environ.get("HOST", "127.0.0.1")
 PORT = int(os.environ.get("PORT", "8099"))
@@ -118,6 +119,14 @@ class Handler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(body)
 
+    def _send_audio(self, payload: bytes) -> None:
+        self.send_response(200)
+        self.send_header("Content-Type", "audio/wav")
+        self.send_header("Content-Length", str(len(payload)))
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.end_headers()
+        self.wfile.write(payload)
+
     def do_OPTIONS(self) -> None:  # noqa: N802
         self._send(204, {})
 
@@ -136,11 +145,18 @@ class Handler(BaseHTTPRequestHandler):
                 return self._send(200, assumption_response(planting_date=raw))
             except calc.RequestError as error:
                 return self._send(422, {"error": str(error)})
-        self._send(404, {"error": "Use POST /recommend or GET /assumption."})
+        self._send(404, {"error": "Use POST /recommend, /voice/transcribe, /voice/speak, or GET /assumption."})
 
     def do_POST(self) -> None:  # noqa: N802
-        if self.path.rstrip("/") != "/recommend":
-            return self._send(404, {"error": "Use POST /recommend."})
+        path = self.path.rstrip("/")
+        if path == "/voice/transcribe":
+            self._transcribe_voice()
+            return
+        if path == "/voice/speak":
+            self._speak_voice()
+            return
+        if path != "/recommend":
+            return self._send(404, {"error": "Use POST /recommend, /voice/transcribe, or /voice/speak."})
 
         length = int(self.headers.get("Content-Length") or 0)
         if length <= 0:
@@ -161,6 +177,44 @@ class Handler(BaseHTTPRequestHandler):
         for note in outcome["notes"]:
             print(f"note: {note}", file=sys.stderr)
         self._send(200, outcome["body"])
+
+    def _transcribe_voice(self) -> None:
+        length = int(self.headers.get("Content-Length") or 0)
+        if length <= 0:
+            return self._send(400, {"error": "The audio body is empty."})
+        if length > voice.MAX_AUDIO_BYTES:
+            return self._send(413, {"error": "The recording is too large."})
+        if self.headers.get_content_type() != "audio/wav":
+            return self._send(415, {"error": "Send the recording as audio/wav."})
+        try:
+            transcript = voice.transcribe(self.rfile.read(length))
+        except voice.VoiceRequestError as error:
+            return self._send(422, {"error": str(error)})
+        except voice.VoiceUnavailableError as error:
+            print(f"voice error: {error} ({error.__cause__})", file=sys.stderr)
+            return self._send(503, {"error": str(error)})
+        self._send(200, {"transcript": transcript})
+
+    def _speak_voice(self) -> None:
+        length = int(self.headers.get("Content-Length") or 0)
+        if length <= 0:
+            return self._send(400, {"error": "The request body is empty."})
+        if length > voice.MAX_SPEECH_CHARACTERS * 4 + 128:
+            return self._send(413, {"error": "The text is too large."})
+        try:
+            payload = json.loads(self.rfile.read(length).decode("utf-8"))
+        except (json.JSONDecodeError, UnicodeDecodeError):
+            return self._send(400, {"error": "The body is not valid JSON."})
+        if not isinstance(payload, dict) or set(payload) != {"text"} or not isinstance(payload["text"], str):
+            return self._send(422, {"error": "Send a JSON object with one text string."})
+        try:
+            audio = voice.synthesize(payload["text"])
+        except voice.VoiceRequestError as error:
+            return self._send(422, {"error": str(error)})
+        except voice.VoiceUnavailableError as error:
+            print(f"voice error: {error} ({error.__cause__})", file=sys.stderr)
+            return self._send(503, {"error": str(error)})
+        self._send_audio(audio)
 
     def log_message(self, fmt: str, *args) -> None:
         print(f"{self.address_string()} {fmt % args}", file=sys.stderr)

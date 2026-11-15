@@ -24,6 +24,13 @@ python server/app.py
 
 Then open [AgriCloud with the local backend](http://127.0.0.1:8000/app/index.html?api=http://127.0.0.1:8099/recommend).
 
+The voice questions use the same local service. Install the optional
+dependencies in a DeepSpeech-compatible Python environment, then choose
+**Start voice questions** to answer the prompts using the microphone. Review
+the transcribed crop history, pH and moisture before submitting; the result
+card has a **Listen to this advice** control. Voice input/output is English.
+See the [voice routes and setup](../server/README.md#optional-voice-routes).
+
 ## Backend
 
 The form sends crop history, optional soil pH, moisture, planting date and district to `POST /recommend`. The service validates the inputs and returns advice and supporting evidence. `GET /assumption` provides the season assumption.

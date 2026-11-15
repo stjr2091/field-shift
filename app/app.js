@@ -27,6 +27,8 @@
   /* The advice base: the POST URL without its endpoint, e.g. the ?api= URL
      minus a trailing /recommend. The pre-submit assumption reads from here. */
   var API_BASE = API_URL.replace(/\/recommend\/?$/, "");
+  var VOICE_API_BASE = (new URLSearchParams(window.location.search).get("voice") ||
+    (USE_MOCK ? "http://127.0.0.1:8099" : API_BASE)).replace(/\/+$/, "");
 
   var state = { crops: [], district: "" };
 
@@ -60,6 +62,17 @@
   var seasonEl = document.getElementById("season");
   var seasonNote = document.getElementById("season-note");
   var seasonNoteText = document.getElementById("season-note-text");
+  var voiceStart = document.getElementById("voice-start");
+  var voiceRepeat = document.getElementById("voice-repeat");
+  var voiceRecord = document.getElementById("voice-record");
+  var voiceStop = document.getElementById("voice-stop");
+  var voiceCancel = document.getElementById("voice-cancel");
+  var voiceQuestion = document.getElementById("voice-question");
+  var voiceTranscript = document.getElementById("voice-transcript");
+  var voiceStatus = document.getElementById("voice-status");
+  var voiceAssistant = document.getElementById("voice-assistant");
+  var voiceProgress = document.getElementById("voice-progress");
+  var voiceAnswer = document.getElementById("voice-answer");
 
   /* ── previous crops ─────────────────────────────────────────── */
 
@@ -297,6 +310,7 @@
     showSeasonNote(data.season_assumption);
 
     badge.hidden = !USE_MOCK;
+    voiceAnswer.hidden = false;
 
     result.hidden = false;
     resultTitle.setAttribute("tabindex", "-1");
@@ -321,11 +335,307 @@
           return;
         }
         renderCard(data);
+        if (state.voiceSession) {
+          setVoiceState("speaking", "Playing your advice");
+          playVoice(cardEn.textContent).catch(function () {
+            setVoiceState("error", "Advice playback unavailable");
+            voiceStatus.textContent = "Advice is ready. Choose “Listen to this advice” to hear it.";
+          }).then(function () {
+            if (voiceAssistant.getAttribute("data-state") === "speaking") {
+              setVoiceState("complete", "Advice playback complete");
+            }
+          });
+        }
       })
       .catch(function () {
         showError("The advice service did not answer. Check the connection and try again.");
       })
       .then(function () { setLoading(false); });
+  });
+
+  /* ── guided voice questions ─────────────────────────────────── */
+
+  var voiceQuestions = [
+    {
+      prompt: "Which crops have you grown, from oldest to most recent? Name maize, common bean, finger millet, sorghum, or groundnut. Say none if you have no crop history.",
+      read: function (transcript) {
+        var text = transcript.toLowerCase();
+        if (/\b(none|no crops?|nothing|not grown)\b/.test(text)) {
+          state.crops = [];
+          drawCrops();
+          return;
+        }
+        var matches = [
+          { key: "maize", pattern: /\b(maize|corn)\b/ },
+          { key: "common_bean", pattern: /\b(common\s+beans?|beans?)\b/ },
+          { key: "finger_millet", pattern: /\b(finger\s+millet|millet)\b/ },
+          { key: "sorghum", pattern: /\bsorghum\b/ },
+          { key: "groundnut", pattern: /\b(ground\s*nuts?|peanuts?)\b/ }
+        ].map(function (crop) {
+          var match = crop.pattern.exec(text);
+          return match ? { key: crop.key, index: match.index } : null;
+        }).filter(Boolean).sort(function (a, b) { return a.index - b.index; });
+        if (!matches.length) throw new Error("I could not identify a supported crop. Please answer with one or more crop names, or say none.");
+        state.crops = matches.map(function (crop) { return crop.key; });
+        drawCrops();
+      }
+    },
+    {
+      prompt: "What is the soil pH? Say a number from zero to fourteen, such as six point one. Say skip if you do not know.",
+      read: function (transcript) {
+        if (/\b(skip|unknown|do not know|don't know)\b/i.test(transcript)) {
+          soilPh.value = "";
+          return;
+        }
+        var value = spokenNumber(transcript);
+        if (value === null || value < 0 || value > 14) {
+          throw new Error("I could not identify a pH from zero to fourteen. Please say the number again, or say skip.");
+        }
+        soilPh.value = String(value);
+      }
+    },
+    {
+      prompt: "How is the soil moisture? Describe it briefly, or say skip if you do not know.",
+      read: function (transcript) {
+        moisture.value = /\b(skip|unknown|do not know|don't know)\b/i.test(transcript) ? "" : transcript;
+      }
+    }
+  ];
+  var voiceQuestionIndex = 0;
+  var recordedStream = null;
+  var recordedContext = null;
+  var recordedProcessor = null;
+  var recordedGain = null;
+  var recordedChunks = [];
+  var currentAudio = null;
+
+  function voiceRequest(path, options) {
+    return fetch(VOICE_API_BASE + path, options).then(function (response) {
+      if (!response.ok) {
+        return response.json().catch(function () { return {}; }).then(function (data) {
+          throw new Error(data.error || "Voice service returned HTTP " + response.status + ".");
+        });
+      }
+      return response;
+    });
+  }
+
+  function playVoice(text) {
+    return voiceRequest("/voice/speak", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text: text })
+    }).then(function (response) { return response.blob(); })
+      .then(function (blob) {
+        if (currentAudio) {
+          currentAudio.pause();
+          URL.revokeObjectURL(currentAudio.src);
+        }
+        currentAudio = new Audio(URL.createObjectURL(blob));
+        return currentAudio.play();
+      });
+  }
+
+  function currentVoicePrompt() {
+    return voiceQuestions[voiceQuestionIndex].prompt;
+  }
+
+  function setVoiceState(stateName, progress) {
+    voiceAssistant.setAttribute("data-state", stateName);
+    voiceProgress.textContent = progress || "";
+    voiceProgress.hidden = !progress;
+  }
+
+  function askCurrentVoiceQuestion() {
+    voiceQuestion.textContent = currentVoicePrompt();
+    setVoiceState("speaking", "Question " + (voiceQuestionIndex + 1) + " of " + voiceQuestions.length);
+    voiceRecord.hidden = true;
+    voiceRepeat.hidden = false;
+    voiceCancel.hidden = false;
+    voiceStatus.textContent = "Playing the question…";
+    playVoice(currentVoicePrompt()).then(function () {
+      setVoiceState("ready", "Question " + (voiceQuestionIndex + 1) + " of " + voiceQuestions.length);
+      voiceStatus.textContent = "Press Record answer when you are ready.";
+      voiceRecord.hidden = false;
+    }).catch(function (error) {
+      setVoiceState("error", "Question " + (voiceQuestionIndex + 1) + " of " + voiceQuestions.length);
+      voiceStatus.textContent = "Voice question could not be played: " + error.message;
+      voiceRecord.hidden = false;
+    });
+  }
+
+  function beginVoiceRecording() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || !window.AudioContext) {
+      voiceStatus.textContent = "This browser cannot record audio. Use a current browser on HTTPS or localhost.";
+      return;
+    }
+    navigator.mediaDevices.getUserMedia({ audio: { channelCount: 1 } }).then(function (stream) {
+      recordedStream = stream;
+      recordedContext = new AudioContext();
+      recordedChunks = [];
+      var source = recordedContext.createMediaStreamSource(stream);
+      recordedProcessor = recordedContext.createScriptProcessor(4096, 1, 1);
+      recordedGain = recordedContext.createGain();
+      recordedGain.gain.value = 0;
+      recordedProcessor.onaudioprocess = function (event) {
+        recordedChunks.push(new Float32Array(event.inputBuffer.getChannelData(0)));
+      };
+      source.connect(recordedProcessor);
+      recordedProcessor.connect(recordedGain);
+      recordedGain.connect(recordedContext.destination);
+      setVoiceState("listening", "Listening · question " + (voiceQuestionIndex + 1) + " of " + voiceQuestions.length);
+      voiceRecord.hidden = true;
+      voiceStop.hidden = false;
+      voiceStatus.textContent = "Listening… Press Finish answer when you are done.";
+    }).catch(function () {
+      setVoiceState("error", "Question " + (voiceQuestionIndex + 1) + " of " + voiceQuestions.length);
+      voiceStatus.textContent = "Microphone access was not available. Allow microphone access and try again.";
+      voiceRecord.hidden = false;
+    });
+  }
+
+  function wavFromRecording(chunks, sampleRate) {
+    var totalLength = chunks.reduce(function (sum, chunk) { return sum + chunk.length; }, 0);
+    var source = new Float32Array(totalLength);
+    var offset = 0;
+    chunks.forEach(function (chunk) {
+      source.set(chunk, offset);
+      offset += chunk.length;
+    });
+    var targetRate = 16000;
+    var targetLength = Math.floor(source.length * targetRate / sampleRate);
+    var samples = new DataView(new ArrayBuffer(44 + targetLength * 2));
+    var writeText = function (position, text) {
+      for (var i = 0; i < text.length; i += 1) samples.setUint8(position + i, text.charCodeAt(i));
+    };
+    writeText(0, "RIFF");
+    samples.setUint32(4, 36 + targetLength * 2, true);
+    writeText(8, "WAVE");
+    writeText(12, "fmt ");
+    samples.setUint32(16, 16, true);
+    samples.setUint16(20, 1, true);
+    samples.setUint16(22, 1, true);
+    samples.setUint32(24, targetRate, true);
+    samples.setUint32(28, targetRate * 2, true);
+    samples.setUint16(32, 2, true);
+    samples.setUint16(34, 16, true);
+    writeText(36, "data");
+    samples.setUint32(40, targetLength * 2, true);
+    var ratio = sampleRate / targetRate;
+    for (var j = 0; j < targetLength; j += 1) {
+      var position = j * ratio;
+      var left = Math.floor(position);
+      var fraction = position - left;
+      var value = source[left] * (1 - fraction) + (source[left + 1] || 0) * fraction;
+      value = Math.max(-1, Math.min(1, value));
+      samples.setInt16(44 + j * 2, value < 0 ? value * 32768 : value * 32767, true);
+    }
+    return new Blob([samples.buffer], { type: "audio/wav" });
+  }
+
+  function spokenNumber(text) {
+    var normalized = text.toLowerCase().replace(/-/g, " ");
+    var digits = normalized.match(/\b\d+(?:\.\d+)?\b/);
+    if (digits) return Number(digits[0]);
+    var words = {
+      zero: 0, oh: 0, one: 1, two: 2, three: 3, four: 4, five: 5,
+      six: 6, seven: 7, eight: 8, nine: 9, ten: 10, eleven: 11,
+      twelve: 12, thirteen: 13, fourteen: 14
+    };
+    var decimal = normalized.match(/\b(zero|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen)\s+point\s+(zero|one|two|three|four|five|six|seven|eight|nine)\b/);
+    if (decimal) return words[decimal[1]] + words[decimal[2]] / 10;
+    var match = normalized.match(/\b(zero|oh|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen)\b/);
+    return match ? words[match[1]] : null;
+  }
+
+  function stopVoiceRecording() {
+    if (!recordedContext) return;
+    var sampleRate = recordedContext.sampleRate;
+    recordedProcessor.disconnect();
+    recordedGain.disconnect();
+    recordedStream.getTracks().forEach(function (track) { track.stop(); });
+    var context = recordedContext;
+    recordedProcessor = null;
+    recordedGain = null;
+    recordedStream = null;
+    recordedContext = null;
+    voiceStop.hidden = true;
+    setVoiceState("transcribing", "Transcribing your answer");
+    voiceStatus.textContent = "Transcribing your answer…";
+    context.close().then(function () {
+      return voiceRequest("/voice/transcribe", {
+        method: "POST",
+        headers: { "Content-Type": "audio/wav" },
+        body: wavFromRecording(recordedChunks, sampleRate)
+      });
+    }).then(function (response) { return response.json(); })
+      .then(function (data) {
+        var transcript = String(data.transcript || "").trim();
+        if (!transcript) throw new Error("No speech was recognized. Please try again.");
+        voiceTranscript.textContent = "Heard: “" + transcript + "”";
+        voiceTranscript.hidden = false;
+        voiceQuestions[voiceQuestionIndex].read(transcript);
+        voiceQuestionIndex += 1;
+        if (voiceQuestionIndex < voiceQuestions.length) {
+          askCurrentVoiceQuestion();
+        } else {
+          state.voiceSession = true;
+          voiceStart.hidden = false;
+          voiceStart.textContent = "Start over";
+          voiceRepeat.hidden = true;
+          voiceRecord.hidden = true;
+          voiceCancel.hidden = true;
+          setVoiceState("complete", "All " + voiceQuestions.length + " questions complete");
+          voiceQuestion.textContent = "Your answers are in the form. Review them, then choose Get advice.";
+          voiceStatus.textContent = "Check the crop history, pH, and moisture above. Your planting date stays optional.";
+          playVoice(voiceQuestion.textContent).catch(function () {});
+        }
+      }).catch(function (error) {
+        setVoiceState("ready", "Question " + (voiceQuestionIndex + 1) + " of " + voiceQuestions.length);
+        voiceStatus.textContent = error.message;
+        voiceRecord.hidden = false;
+      });
+  }
+
+  voiceStart.addEventListener("click", function () {
+    state.voiceSession = false;
+    voiceQuestionIndex = 0;
+    voiceStart.textContent = "Start voice questions";
+    voiceTranscript.hidden = true;
+    voiceStart.hidden = true;
+    askCurrentVoiceQuestion();
+  });
+  voiceRepeat.addEventListener("click", askCurrentVoiceQuestion);
+  voiceRecord.addEventListener("click", beginVoiceRecording);
+  voiceStop.addEventListener("click", stopVoiceRecording);
+  voiceCancel.addEventListener("click", function () {
+    if (recordedStream) recordedStream.getTracks().forEach(function (track) { track.stop(); });
+    if (recordedContext) recordedContext.close();
+    recordedStream = null;
+    recordedContext = null;
+    recordedProcessor = null;
+    recordedGain = null;
+    voiceStart.hidden = false;
+    voiceRepeat.hidden = true;
+    voiceRecord.hidden = true;
+    voiceStop.hidden = true;
+    voiceCancel.hidden = true;
+    voiceQuestion.textContent = "";
+    voiceStatus.textContent = "Voice questions cancelled.";
+    voiceStart.textContent = "Start voice questions";
+    setVoiceState("idle", "");
+    state.voiceSession = false;
+  });
+  voiceAnswer.addEventListener("click", function () {
+    setVoiceState("speaking", "Playing the advice");
+    voiceStatus.textContent = "Playing the advice…";
+    playVoice(cardEn.textContent).then(function () {
+      setVoiceState("complete", "Advice playback complete");
+      voiceStatus.textContent = "Advice playback finished.";
+    }).catch(function (error) {
+      setVoiceState("error", "Advice playback unavailable");
+      voiceStatus.textContent = "Advice could not be played: " + error.message;
+    });
   });
 
   drawCrops();
