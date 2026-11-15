@@ -137,7 +137,9 @@ def template_card(result: dict) -> str:
     crop = result["recommended_crop"]
     when = str(result["when"])
     if when.startswith("no sourced"):
-        parts = [f"Plant {crop}. {when}."]
+        # The window sentence is carried as it is written, and the crop and
+        # window hold one sentence between them, so the card stays short.
+        parts = [f"Plant {crop}: {when}."]
     else:
         parts = [f"Plant {crop} from {when}."]
     if facts.get("tie_line"):

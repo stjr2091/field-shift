@@ -15,7 +15,11 @@ no credentials.
 - `POST /recommend` answers one request.
 - `GET /assumption` returns `{"season_assumption": "..."}`, the same sentence
   the POST response carries. It reads the data file only, with no model call,
-  so the page can show the assumption before any advice is given.
+  so the page can show the assumption before any advice is given. An optional
+  `?date=YYYY-MM-DD` names the season that date implies, by the same picking
+  rule the route uses, so a form can show what a chosen date means before it
+  is submitted. Without the parameter it answers for today's date. A date
+  that is not a real calendar day is refused with `422`.
 - `GET /health` returns a fixed word.
 
 ## Request
@@ -27,7 +31,8 @@ no credentials.
   "previous_crops": ["sorghum"],
   "soil_ph": 6.1,
   "moisture": "dry",
-  "district": "Soroti"
+  "district": "Soroti",
+  "planting_date": "2026-08-20"
 }
 ```
 
@@ -37,6 +42,7 @@ no credentials.
 | `soil_ph` | no | Number, 0 to 14. Compared with the sourced pH range of each crop. |
 | `moisture` | no | Free text, reported in the reasons. The table holds no moisture threshold, so it never ranks a crop. |
 | `district` | no | `"auto"` or a blank entry uses the one site the data file holds. A different name is refused rather than answered with another district's numbers. |
+| `planting_date` | no | ISO date, `YYYY-MM-DD`. It picks the season whose window the date falls in, or the next one to come. Absent or blank means today's date (Africa/Kampala) makes that pick. A date that is not a real calendar day is refused. |
 
 Crop keys: `maize`, `common_bean`, `finger_millet`, `sorghum`, `groundnut`.
 
@@ -49,16 +55,29 @@ Crop keys: `maize`, `common_bean`, `finger_millet`, `sorghum`, `groundnut`.
   "why": "No rotation rule is held for Maize after Sorghum; the pair is unknown.",
   "alternative": "Common bean",
   "reasons": ["..."],
-  "season_assumption": "No planting season was entered, so this advice assumes the first rains season, the main season; ...",
+  "season_assumption": "No planting date was entered, so today's date (15 November 2026) picks the second rains season (August to November); ...",
   "card_en": "...",
   "card_lg": "..."
 }
 ```
 
 `card_lg` is absent when no verified translation was made. `season_assumption`
-is always present: it names the season the windows assume and the data fact
-that governs it. `reasons` carries the evidence for the answer, one sentence
-each, in the order it was used.
+is always present: it names the season the windows assume, the date that made
+the pick, and the data fact that governs it. `reasons` carries the evidence
+for the answer, one sentence each, in the order it was used.
+
+## How the season is picked
+
+The data file holds a window for each season from the same NASA POWER onset
+analysis the reasons report. A request with a `planting_date` uses the season
+whose window the date falls in; a date between windows, or after both, uses
+the season whose window opens next, which after the second rains is the next
+year's first rains. A request with no date lets today's date, read in
+Africa/Kampala, make the same pick, and the response says so in
+`season_assumption`. The windows shown are the chosen season's: a crop with
+no sourced window for that season is told so, and is never shown another
+season's window instead. The crop ranking, the rotation guards and the card
+checks run the same way for either season.
 
 `422` means the request cannot be answered honestly, and `error` says why.
 `400` means the body is not JSON. `404` means the route is not one of the three.

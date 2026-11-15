@@ -12,8 +12,9 @@ pair model does not hold is reported as unknown, never guessed.
 from __future__ import annotations
 
 import json
+import re
 import sys
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -36,6 +37,106 @@ RANK_AGAINST = 2
 
 class RequestError(ValueError):
     """The caller sent a request this service cannot answer honestly."""
+
+
+# The service runs where the farmers are, so "today" means Kampala time. The
+# offset is fixed at three hours: the zone holds no daylight saving change.
+KAMPALA = timezone(timedelta(hours=3))
+
+# A date arrives as text, so it is read strictly. A looser read would turn
+# "2026-8-2" into a date the sender did not write.
+_DATE_TEXT = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+
+
+def kampala_today() -> date:
+    """Today's date in Africa/Kampala, the zone the site sits in."""
+    return datetime.now(KAMPALA).date()
+
+
+def normalise_planting_date(raw) -> date | None:
+    """Read the optional planting date, or return None when none was given.
+
+    A blank entry means the same as no entry. Anything else must be an ISO
+    date, YYYY-MM-DD, and a real calendar day, or the request is refused
+    rather than answered with a guessed date.
+    """
+    if raw is None:
+        return None
+    text = str(raw).strip()
+    if not text:
+        return None
+    if not _DATE_TEXT.match(text):
+        raise RequestError("planting_date must be an ISO date, YYYY-MM-DD.")
+    try:
+        return date.fromisoformat(text)
+    except ValueError:
+        raise RequestError(f"planting_date is not a real calendar date: {text}.")
+
+
+def _season_rows(data: dict) -> list[dict]:
+    """The season windows the data file holds, with a start and an end."""
+    rows = []
+    for row in (data.get("onset") or {}).get("summary") or []:
+        start = str(row.get("window_start_md") or "").strip()
+        end = str(row.get("window_end_md") or "").strip()
+        if row.get("season") and len(start) == 5 and len(end) == 5:
+            rows.append(row)
+    return rows
+
+
+def _md(day: date) -> str:
+    """The month and day of a date, in the form the data file uses."""
+    return day.strftime("%m-%d")
+
+
+def _in_window(day: date, start_md: str, end_md: str) -> bool:
+    """Does the day sit inside the season window? A window may span new year."""
+    d = _md(day)
+    if start_md <= end_md:
+        return start_md <= d <= end_md
+    return d >= start_md or d <= end_md
+
+
+def _next_start(day: date, start_md: str) -> date:
+    """The next time this season starts, on or after the day given."""
+    try:
+        start = date(day.year, int(start_md[:2]), int(start_md[3:]))
+    except ValueError:
+        start = date(day.year, 3, 1)
+    if start < day:
+        try:
+            start = date(day.year + 1, int(start_md[:2]), int(start_md[3:]))
+        except ValueError:
+            start = date(day.year + 1, 3, 1)
+    return start
+
+
+def pick_season(data: dict, planting_date: date | None = None, today: date | None = None):
+    """The season the request date falls in, or the next one to come.
+
+    The season windows come from the same onset analysis the reasons report,
+    so the pick uses no new source. A date inside a window picks that season.
+    A date outside picks the season whose window opens next, which after the
+    second rains is the next year's first rains.
+    """
+    day = planting_date or today or kampala_today()
+    rows = _season_rows(data)
+    if not rows:
+        return None, day
+    for row in rows:
+        if _in_window(day, row["window_start_md"], row["window_end_md"]):
+            return row, day
+    return min(rows, key=lambda row: _next_start(day, row["window_start_md"])), day
+
+
+def _season_name(row: dict) -> str:
+    """The season's name in plain words, from the data file's season key."""
+    return str(row.get("season") or "").replace("_", " ").strip()
+
+
+def _month_name(md: str) -> str:
+    """The month word for a MM-DD value, with no day claimed."""
+    return date(2001, int(md[:2]), 1).strftime("%B")
 
 
 def load_data(path: Path = DATA) -> dict:
@@ -97,63 +198,64 @@ def _doy_label(doy: int, year: int = 2021) -> str:
     return day.strftime("%-d %B")
 
 
-def _month_window(row: dict) -> str | None:
-    """The planted month range a sourced row states, if the table holds one.
+def _window_text(row: dict, season_key: str) -> tuple[str, str]:
+    """The planting window of the chosen season, and the basis it rests on.
 
-    Some crops are documented by month, not by day. A month range is reported
-    as month words, because turning "March to mid-April" into a single day
-    would invent a precision the source does not have. A crop with two seasons
-    reports both, so the reader is not shown one and left to think it is all.
+    The second rains are advised from the second-season window rows only. A
+    crop with no row for the chosen season is told so: a first-season window
+    shown for a second-season request would promise a season the table does
+    not hold. Some crops are documented by month, not by day; a month range is
+    reported as month words, because turning "March to mid-April" into a
+    single day would invent a precision the source does not have.
     """
+    second = season_key == "second_rains"
+    if not second:
+        start = row.get("documented_window_start_doy")
+        end = row.get("documented_window_end_doy")
+        if start and end:
+            return (
+                f"{_doy_label(start)} to {_doy_label(end)}",
+                "A sourced planting window is held for this crop. It gives the "
+                "season's planting range, not a date to sow.",
+            )
+    wanted = "planting_window_second" if second else "planting_window"
     windows = []
     for rule_row in row.get("rule_rows", []):
         if rule_row.get("tag") != "sourced":
             continue
-        if rule_row.get("parameter") not in ("planting_window", "planting_window_second"):
+        if rule_row.get("parameter") != wanted:
             continue
         value = (rule_row.get("value") or "").strip()
         if value and value not in windows:
             windows.append(value)
-    return ", or ".join(windows) if windows else None
-
-
-def _window_text(row: dict) -> tuple[str, str]:
-    """The planting window, and the basis it rests on."""
-    start = row.get("documented_window_start_doy")
-    end = row.get("documented_window_end_doy")
-    if start and end:
+    if windows:
         return (
-            f"{_doy_label(start)} to {_doy_label(end)}",
-            "A sourced planting window is held for this crop. It gives the "
-            "season's planting range, not a date to sow.",
-        )
-    months = _month_window(row)
-    if months:
-        return (
-            months,
+            ", or ".join(windows),
             "Only a month-level planting window is published for this crop, so "
             "no single day is named.",
         )
+    season_word = _season_name({"season": season_key})
     return (
-        "no sourced planting window is held",
-        "This crop has no sourced planting window in the released table, so "
-        "none is given. The site's rain onset is reported instead.",
+        f"no sourced planting window is held for the {season_word} season",
+        f"This crop has no sourced planting window for the {season_word} season "
+        "in the released table, so none is given. The site's rain onset is "
+        "reported instead.",
     )
 
 
-def _onset_text(data: dict) -> str:
-    """The site onset sentence, straight from the data file."""
+def _onset_text(data: dict, season_key: str = "first_rains") -> str:
+    """The site onset sentence for the chosen season, from the data file."""
     summary = (data.get("onset") or {}).get("summary") or []
-    first = next((r for r in summary if r.get("season") == "first_rains"), None)
-    if not first or first.get("onset_doy_median") is None:
-        return "The data file holds no rain onset figure for this site."
-    median = int(round(first["onset_doy_median"]))
-    found = first.get("years_found")
-    years = first.get("years_evaluated")
+    row = next((r for r in summary if r.get("season") == season_key), None)
+    if not row or row.get("onset_doy_median") is None:
+        return "The data file holds no rain onset figure for this season."
+    median = int(round(row["onset_doy_median"]))
+    found = row.get("years_found")
+    years = row.get("years_evaluated")
     return (
-        f"The first rains start at about {_doy_label(median)} in a median year "
-        f"({found} of {years} years). This is a district-scale figure from one "
-        "weather cell, not a field reading."
+        f"The {_season_name(row)} start at about {_doy_label(median)} in a "
+        f"median year ({found} of {years} years). This is a district-scale "
+        "figure from one weather cell, not a field reading."
     )
 
 
@@ -258,24 +360,49 @@ def _pair_reason(item: dict, last) -> str:
     return f"{pair_row['reason'].rstrip('.')}; this is a direction only, with no measured number."
 
 
-def season_assumption(data: dict) -> str:
+def season_assumption(data: dict, planting_date=None, today=None) -> str:
     """The one sentence that states which season this advice assumes.
 
-    The request holds no season field, so every window is built on the first
-    rains season. The sentence names that pick and the data fact that governs
-    it, so the assumption is never silent. It is built from the data file
+    The pick is the request's planting date, or, when none was entered,
+    today's date in Africa/Kampala. The date either falls inside a season
+    window or sits before the next one to come; both are said, with the data
+    fact that governs the windows. The sentence is built from the data file
     only, with no model call.
     """
-    head = (
-        "No planting season was entered, so this advice assumes the first rains "
-        "season, the main season"
-    )
-    summary = (data.get("onset") or {}).get("summary") or []
-    first = next((r for r in summary if r.get("season") == "first_rains"), None)
-    if not first or first.get("onset_doy_median") is None:
+    wanted = planting_date if isinstance(planting_date, date) else normalise_planting_date(planting_date)
+    season, day = pick_season(data, wanted, today)
+    rows = _season_rows(data)
+    if season is None:
         return (
-            head + "; the data file holds no rain onset figure, so the window rests "
-            "on the crop's sourced planting window alone."
+            "No planting season windows are held in the data file, so this "
+            "advice rests on the crop's sourced planting window alone."
+        )
+    name = _season_name(season)
+    span = (
+        f"{_month_name(season['window_start_md'])} to "
+        f"{_month_name(season['window_end_md'])}"
+    )
+    shown = day.strftime("%-d %B %Y")
+    if wanted is not None:
+        if _in_window(day, season["window_start_md"], season["window_end_md"]):
+            head = (
+                f"Planting date {shown} falls in the {name} season ({span}), "
+                f"so this advice uses the {name} windows"
+            )
+        else:
+            head = (
+                f"Planting date {shown} falls outside the planting windows held, "
+                f"so this advice uses the next season to come, the {name} ({span})"
+            )
+    else:
+        head = (
+            f"No planting date was entered, so today's date ({shown}) picks the "
+            f"{name} season ({span})"
+        )
+    if season.get("onset_doy_median") is None:
+        return (
+            head + "; the data file holds no rain onset figure for this season, "
+            "so the window rests on the crop's sourced planting window alone."
         )
     source_name = ""
     for source in (data.get("meta") or {}).get("sources") or []:
@@ -283,26 +410,37 @@ def season_assumption(data: dict) -> str:
             source_name = str(source["name"]).split(" (")[0]
             break
     period = data.get("period") or {}
-    span = f"{str(period.get('start_date', ''))[:4]} to {str(period.get('end_date', ''))[:4]}"
-    median = int(round(first["onset_doy_median"]))
-    found = first.get("years_found")
-    years = first.get("years_evaluated")
+    years = f"{str(period.get('start_date', ''))[:4]} to {str(period.get('end_date', ''))[:4]}"
+    median = int(round(season["onset_doy_median"]))
+    found = season.get("years_found")
+    evaluated = season.get("years_evaluated")
     return (
-        head + "; the window rests on the crop's sourced planting window and the "
-        f"site's rain onset analysis of {source_name}, {span} "
-        f"(the middle start date was about {_doy_label(median)}, and an onset was "
-        f"found in {found} of {years} years)."
+        head + "; the windows rest on the crop's sourced planting window and "
+        f"the site's rain onset analysis of {source_name}, {years} "
+        f"(the middle start date of the {name} was about {_doy_label(median)}, "
+        f"and an onset was found in {found} of {evaluated} years)."
     )
 
 
-def recommend(previous_crops, soil_ph=None, moisture=None, data: dict | None = None) -> dict:
+def recommend(
+    previous_crops,
+    soil_ph=None,
+    moisture=None,
+    data: dict | None = None,
+    planting_date=None,
+    today: date | None = None,
+) -> dict:
     """Return the five fields the service promises, plus the evidence used.
 
     Every field is computed here. No sentence in this result is written by a
-    language model.
+    language model. The season comes from the planting date, or from today's
+    date when none was given, and the windows shown are that season's.
     """
     data = data if data is not None else load_data()
     history = normalise_history(previous_crops)
+    wanted = normalise_planting_date(planting_date)
+    season_row, _ = pick_season(data, wanted, today)
+    season_key = str((season_row or {}).get("season") or "first_rains")
 
     if soil_ph is not None:
         try:
@@ -340,9 +478,9 @@ def recommend(previous_crops, soil_ph=None, moisture=None, data: dict | None = N
             f"Tied: {names}."
         )
 
-    window, window_basis = _window_text(row)
-    onset = _onset_text(data)
-    season_line = season_assumption(data)
+    window, window_basis = _window_text(row, season_key)
+    onset = _onset_text(data, season_key)
+    season_line = season_assumption(data, wanted, today)
     last_label = crop_path.CROP_LABELS.get(last, last) if last else None
     last_crop_guard = (
         f"{last_label} was the last crop; this tool does not advise the same crop "
@@ -366,7 +504,7 @@ def recommend(previous_crops, soil_ph=None, moisture=None, data: dict | None = N
         reasons.append(note)
     if alternative is not None:
         alt_row = alternative["row"]
-        alt_window, _ = _window_text(alt_row)
+        alt_window, _ = _window_text(alt_row, season_key)
         reasons.append(
             f"Alternative: {alt_row['crop_label']}, window {alt_window}. "
             + _pair_reason(alternative, last)
@@ -389,6 +527,8 @@ def recommend(previous_crops, soil_ph=None, moisture=None, data: dict | None = N
         # Evidence a card writer may use. Never shown as advice on its own.
         "facts": {
             "previous_crops": history,
+            "season": season_key,
+            "planting_date": wanted.isoformat() if wanted else None,
             "site": (data.get("site") or {}).get("name"),
             "site_scale_note": (data.get("site") or {}).get("scale_note"),
             "window": window,
