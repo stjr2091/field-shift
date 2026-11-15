@@ -458,9 +458,14 @@ def check_luganda(card_lg: str, card_en: str, back_text: str, result: dict, crop
     # where the real name should be, so a card that carries neither is not
     # the card the facts built, whatever the round trip makes of it.
     if crop_lg is None:
-        # No name was supplied, so read one from the translator. Without a
-        # token the lookup returns None and this check is skipped.
-        crop_lg = luganda_crop_name(str(result["recommended_crop"]))
+        # No name was supplied, so read one from the translator. A reachable
+        # translator that yields no confirmed name fails closed: the card is
+        # unverifiable in exactly the window where an invented crop word
+        # hides. Without a token no lookup was possible, and the card is
+        # judged without the name check.
+        crop_lg, looked_up = luganda_crop_name(str(result["recommended_crop"]))
+        if looked_up and not crop_lg:
+            return False, "the Luganda name of the recommended crop could not be confirmed, so the card is unverified"
     if crop_lg:
         named = crop_lg in text.lower() or result["recommended_crop"].lower() in text.lower()
         if not named:
@@ -574,26 +579,29 @@ def sunbird_translate(text: str, source: str = "eng", target: str = "lug") -> tu
     return translated, f"translated {source} to {target}."
 
 
-def luganda_crop_name(crop: str) -> str | None:
-    """The Luganda name of a crop, read from the translator the card already uses.
+def luganda_crop_name(crop: str) -> tuple[str | None, bool]:
+    """The Luganda name of a crop, and whether the lookup could be judged.
 
-    This asks the service for one crop name; it does not hold a hand-written
-    Luganda word list, because a guessed word list would invent the vocabulary
-    the guard is meant to refuse. The word is then read back: a name that does
-    not return as the same crop is not a name to judge a card by, and the
-    check is skipped. A lookup that fails, returns several words, or returns
-    the English name also carries nothing to check.
+    The name is read from the translator the card already uses, then read
+    back: a name that does not return as the same crop is not a name to judge
+    a card by. The second value says whether the lookup was judged at all. A
+    reachable translator that yields no confirmed name fails closed: an
+    invented crop word could hide in that window, so the card that depends on
+    it is unverifiable. No token means no lookup was possible, and the card
+    is judged without the name check.
     """
+    if not os.environ.get("SUNBIRD_API_TOKEN", "").strip():
+        return None, False
     lg, _ = sunbird_translate(crop, "eng", "lug")
     if not lg:
-        return None
+        return None, True
     word = lg.strip().strip(".").strip()
     if not word or " " in word or word.lower() in crop.lower():
-        return None
+        return None, True
     back, _ = sunbird_translate(word, "lug", "eng")
     if not back or crop.split()[0].lower() not in back.lower():
-        return None
-    return word.lower()
+        return None, True
+    return word.lower(), True
 
 
 def _translated_card(card_en: str, result: dict, notes: list[str]) -> str | None:

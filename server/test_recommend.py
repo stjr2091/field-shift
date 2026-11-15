@@ -217,6 +217,25 @@ def main() -> int:
     ok, reason = card.check_luganda(made_up_lg, made_up_en, made_up_en, made_up, crop_lg="kasooli")
     check("Luganda guard rejects a card that never names the recommended crop", not ok, reason)
 
+    # Fail closed. The crop name comes from a live lookup, and the window
+    # where that lookup cannot confirm a name is exactly where an invented
+    # crop word hides. A lookup that was judged but not confirmed drops the
+    # card; a lookup that never ran, because no token is set, does not.
+    saved_lookup = card.luganda_crop_name
+    try:
+        card.luganda_crop_name = lambda crop: (None, True)
+        ok, reason = card.check_luganda(made_up_en, made_up_en, made_up_en, made_up)
+        check("Luganda guard fails closed when the crop name cannot be confirmed", not ok, reason)
+        card.luganda_crop_name = lambda crop: (None, False)
+        ok, reason = card.check_luganda(made_up_en, made_up_en, made_up_en, made_up)
+        check("Luganda guard skips the name check when no lookup was possible", ok, reason)
+    finally:
+        card.luganda_crop_name = saved_lookup
+
+    # A genuine card still passes when the lookup confirms the name.
+    ok, reason = card.check_luganda(made_up_en, made_up_en, made_up_en, made_up, crop_lg="kasooli")
+    check("a genuine Luganda card passes when the crop name is confirmed", ok, reason)
+
     # A tie line on a history that holds no tie.
     two_crops = calc.recommend(["maize", "common_bean"], data=data)
     check("the two-crop history holds no tie", not two_crops["facts"].get("tie_line"))
