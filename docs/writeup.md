@@ -147,7 +147,10 @@ The check record is `qa/app_rebuild/check_soroti_app_numbers.md`.
   comparison the papers describe is not done. This does not mean no gauge record exists for
   the region.
 - No computed season length. Cessation is not implemented, so a crop's published duration is
-  never compared with a season we measured.
+  never compared with a season we measured. Where the app compares a duration with the next
+  rains, it uses the shortest published duration, and it states the longest beside it. For
+  finger millet the two ends disagree: 75 days ends 1 June and fits, 180 days ends
+  14 September and overlaps the second rains. The page says so rather than showing one end.
 - No per-crop window comparison. The rainfall-supported window and the gap in days are not
   computed, so no such table is shown. It is not filled in with a rule that does not exist.
 - No field measurement of soil. The pH and texture are model estimates.

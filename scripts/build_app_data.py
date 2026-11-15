@@ -181,6 +181,7 @@ def build_crops(rules_by_crop):
             return [low, high]
 
         season_length = first("season_length", "value_min")
+        season_length_max = first("season_length", "value_max")
         # A planting window reaches the app only from a sourced row. The
         # workbook states one window per crop, so value_min and value_max hold
         # the start and end as day-of-year. A month-level row stays null,
@@ -211,6 +212,12 @@ def build_crops(rules_by_crop):
                 # stays null and the season figure is kept in its own row.
                 "rain_threshold_mm_10d": None,
                 "season_length_days": int(season_length) if season_length else None,
+                # The low end of the published duration range, by design. The
+                # high end is carried so the page can say what the answer would
+                # be at the other end rather than implying one number is a rule.
+                "season_length_days_max": (
+                    int(season_length_max) if season_length_max else None
+                ),
                 "ph_range": pair("ph_range"),
                 "temp_range_c": pair("temp_range"),
                 "rules_used": sorted(

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_utc": "2026-11-15T06:14:25Z",
+  "generated_utc": "2026-11-15T06:19:05Z",
   "data_status": {
     "site_climate": "ready",
     "crop_windows": "ready"
@@ -886,6 +886,7 @@
       "gap_days": null,
       "rain_threshold_mm_10d": null,
       "season_length_days": 110,
+      "season_length_days_max": 120,
       "ph_range": [
         5.5,
         7.0
@@ -1115,6 +1116,7 @@
       "gap_days": null,
       "rain_threshold_mm_10d": null,
       "season_length_days": 58,
+      "season_length_days_max": 120,
       "ph_range": [
         5.8,
         6.5
@@ -1344,6 +1346,7 @@
       "gap_days": null,
       "rain_threshold_mm_10d": null,
       "season_length_days": 75,
+      "season_length_days_max": 180,
       "ph_range": [
         6.0,
         7.0

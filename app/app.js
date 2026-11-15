@@ -495,19 +495,38 @@
         });
       }
 
-      /* Season length against the second-rains window opening. */
+      /* Season length against the second-rains window opening.
+         The low end of the published range is used. Where the high end gives a
+         different answer, the reason says so, because one end alone would imply
+         a precision the range does not have. */
       if (first && first.onset_doy_median != null &&
           crop.season_length_days != null && secondStart != null) {
-        var end = Math.round(first.onset_doy_median) + crop.season_length_days;
+        var startDoy = Math.round(first.onset_doy_median);
+        var end = startDoy + crop.season_length_days;
         var fits = end <= secondStart;
+        var highEnd = crop.season_length_days_max != null
+          ? startDoy + crop.season_length_days_max
+          : null;
+        var highFits = highEnd != null ? highEnd <= secondStart : null;
+        var disagree = highEnd != null && highFits !== fits;
         reasons.push({
           label: "computed",
           direction: fits ? "for" : "against",
-          text: "Onset " + doyLabel(first.onset_doy_median) + " plus " +
-            crop.season_length_days + " days ends " + doyLabel(end) + ". It " +
-            (fits ? "fits" : "overlaps") + " the second-rains window that opens " +
-            doyLabel(secondStart) + ".",
-          detail: "Computed from the median onset and the crop season length in the data."
+          text: "Onset " + doyLabel(startDoy) + " plus " +
+            crop.season_length_days + " days, the shortest published duration, ends " +
+            doyLabel(end) + ". It " + (fits ? "fits" : "overlaps") +
+            " the second-rains window that opens " + doyLabel(secondStart) + "." +
+            (disagree
+              ? " At the longest published duration, " + crop.season_length_days_max +
+                " days, it ends " + doyLabel(highEnd) + " and " +
+                (highFits ? "still fits" : "overlaps that window") +
+                ". The two ends do not agree."
+              : (highEnd != null
+                  ? " At the longest published duration, " + crop.season_length_days_max +
+                    " days, it ends " + doyLabel(highEnd) + " and the answer is the same."
+                  : "")),
+          detail: "Computed from the median onset and the crop season length in the data. " +
+            "The shortest published duration is used, not the whole range."
         });
       } else if (crop.season_length_days == null) {
         reasons.push({

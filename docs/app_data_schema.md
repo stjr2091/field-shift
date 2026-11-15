@@ -153,7 +153,8 @@ this file is written, so the array length is 3–5.
 | `supported_window_end_doy` | int\|null | DOY | |
 | `gap_days` | int\|null | days | `supported start − documented start`, signed |
 | `rain_threshold_mm_10d` | number\|null | mm | the sourced rule used |
-| `season_length_days` | int\|null | days | to maturity |
+| `season_length_days` | int\|null | days | shortest published duration, to maturity |
+| `season_length_days_max` | int\|null | days | longest published duration, so the page can state both ends |
 | `ph_range` | [number, number]\|null | pH | |
 | `temp_range_c` | [number, number]\|null | °C | |
 | `rules_used` | array[string] | | `rules.csv` row ids or `crop/stage/parameter` keys |
