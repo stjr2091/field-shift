@@ -127,8 +127,9 @@
         "In " + data.site.name + ", the rains arrive in a known range, and " +
         "that range is the useful part: " + doyLabel(first.onset_doy_p25) +
         " to " + doyLabel(first.onset_doy_p75) + " in half of years. " +
-        "Which crop to plant is <strong>not yet</strong> answerable, because no " +
-        "crop requirement in this build has a source.";
+        "Which crop to plant is answerable only in part: three crops are shown, " +
+        "and none has a sourced planting rainfall threshold, so the rain record " +
+        "and the crop rules are not joined by a number.";
 
       $("#answer-caveat").innerHTML =
         "The trigger that defines the date is still unsourced, and it matters: " +
@@ -411,6 +412,35 @@
     });
   }
 
+  function renderRotation(data) {
+    var rows = data.crop_rotation || [];
+    var panel = $("#panel-rotation");
+    if (!panel) return;
+    if (!rows.length) {
+      panel.hidden = true;
+      return;
+    }
+    panel.hidden = false;
+    var body = $("#table-rotation tbody");
+    body.innerHTML = "";
+    rows.forEach(function (r) {
+      var tr = document.createElement("tr");
+      tr.className = "is-open";
+      var subject = r.subject === "finger_millet" ? "Finger millet" : r.subject;
+      tr.innerHTML =
+        "<td>" + subject + "</td>" +
+        "<td>" + (r.direction || "unknown") + "</td>" +
+        "<td class=\"unknown\">no</td>" +
+        "<td>" + (r.source || "<span class=\"unknown\">none</span>") +
+        (r.page_or_quote ? "<br><span class=\"note\">" + r.page_or_quote + "</span>" : "") +
+        "</td>";
+      body.appendChild(tr);
+    });
+    $("#rotation-note").textContent =
+      "Not tested. No nitrogen, yield or trial data is held, so a rotation effect " +
+      "cannot be measured here. This page shows direction only.";
+  }
+
   function renderWindows(data) {
     var body = $("#table-windows tbody");
     body.innerHTML = "";
@@ -515,6 +545,7 @@
     renderDry(data);
     renderSecond(data);
     renderCoverage(data);
+    renderRotation(data);
     renderWindows(data);
     renderSoil(data);
     renderProvenance(data);

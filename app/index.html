@@ -44,12 +44,13 @@
       </article>
 
       <article class="panel panel--blocked">
-        <h3><span class="tag tag--blocked">Not answerable yet</span> What to plant</h3>
+        <h3><span class="tag tag--known">Partly answerable</span> What to plant</h3>
         <p class="lede">
-          No crop is shown. The crop rule table has
-          <strong id="answer-rules">no sourced rows yet</strong>, so there is no
-          crop threshold, season length, pH range or temperature range to test
-          the rainfall against.
+          Crops are shown where the tagged rules support them, and cut where they
+          do not. The rule table has
+          <strong id="answer-rules">no sourced rows yet</strong>. No crop has a
+          planting rainfall threshold, so no crop is tested against the rain
+          record.
         </p>
         <p class="note">
           A number without a source does not go on this page. That is a decision,
@@ -141,18 +142,18 @@
     <h2 id="h-crops">Crops and rules</h2>
 
     <article class="panel panel--blocked panel--wide">
-      <h3><span class="tag tag--blocked">Waiting on evidence</span> The crop half is empty on purpose</h3>
+      <h3><span class="tag tag--blocked">Partly answered</span> Crops shown, thresholds not</h3>
       <p class="lede">
         Each crop needs four sourced rules: a planting rainfall threshold, a
         season length, a soil pH range and a temperature range. The rule table has
-        <strong id="crops-sourced">no sourced rows yet</strong>, so there is no
-        threshold to test the rainfall against. A crop with fewer than three
-        sourced rules is cut, so no crop can appear.
+        <strong id="crops-sourced">no sourced rows yet</strong>. Three crops clear
+        three of four and are shown. No crop has a planting rainfall threshold, so
+        no crop is tested against the rain record.
       </p>
       <p class="note">
-        The screen is built and reads the file. The moment the rules land, the
-        table below fills from <code>results/app_data.json</code> with no code
-        change. Until then, an empty table is the true answer.
+        The cut is shown rather than hidden: sorghum and groundnut have no sourced
+        rows in the released table, so they do not appear. The table below reads
+        <code>results/app_data.json</code> and computes nothing.
       </p>
     </article>
 
@@ -166,6 +167,26 @@
         <thead><tr><th scope="col">Crop</th><th scope="col">Sourced</th><th scope="col">Status</th></tr></thead>
         <tbody></tbody>
       </table>
+    </article>
+
+    <article class="panel" id="panel-rotation" hidden>
+      <header class="panel-head">
+        <h3>Rotation</h3>
+        <p class="panel-sub">Direction where a source backs it. Not a comparison and not a result: no study data is held to test any of it.</p>
+      </header>
+      <table class="grid grid--wide" id="table-rotation">
+        <caption class="sr">Rotation direction and what backs it</caption>
+        <thead>
+          <tr>
+            <th scope="col">Crop or pair</th>
+            <th scope="col">Direction</th>
+            <th scope="col">Tested</th>
+            <th scope="col">Source</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <p class="note" id="rotation-note"></p>
     </article>
 
     <article class="panel" id="panel-windows" hidden>
