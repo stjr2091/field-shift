@@ -22,7 +22,12 @@ The form posts JSON to the advice service:
 The response shape the card expects:
 
     {recommended_crop: string, when: string, why: string, alternative: string,
-     reasons: string[], card_en: string, card_lg?: string}
+     reasons: string[], card_en: string, card_lg?: string, season_assumption: string}
+
+`season_assumption` is one plain sentence naming the season the advice assumes.
+The card shows it on the result and next to the submit button before the advice
+is requested. When `card_lg` is missing, the Luganda area says so in one line
+instead of staying blank.
 
 `previous_crops` carries crop keys, oldest first, newest last:
 `maize`, `common_bean`, `finger_millet`, `sorghum`, `groundnut`, `other`.
@@ -33,6 +38,12 @@ By default the page uses `mock_response.json`, a local sample, so the card can
 be tested before the service exists. Add the flag to use the real address:
 
     http://localhost:8000/app/index.html?api=https://example.org/advice
+
+Two samples cover the Luganda paths: the default shows the Luganda card, and
+
+    http://localhost:8000/app/index.html?api=mock-nolg
+
+shows the missing-card note instead.
 
 The service must allow the browser's origin (CORS) and answer with the JSON
 shape above. No other setting is needed.
