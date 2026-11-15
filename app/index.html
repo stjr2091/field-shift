@@ -169,46 +169,76 @@
       </table>
     </article>
 
-    <article class="panel" id="panel-rotation" hidden>
+    <article class="panel" id="panel-sequence">
       <header class="panel-head">
-        <h3>Rotation</h3>
-        <p class="panel-sub">Direction where a source backs it. Not a comparison and not a result: no study data is held to test any of it.</p>
+        <h3>Previous crops, next crop</h3>
+        <p class="panel-sub">
+          Choose up to three crops you grew last, most recent first. Each candidate
+          is read against the site record and the crop rules. Nothing here is a
+          yield estimate.
+        </p>
       </header>
-      <table class="grid grid--wide" id="table-rotation">
-        <caption class="sr">Rotation direction and what backs it</caption>
-        <thead>
-          <tr>
-            <th scope="col">Crop or pair</th>
-            <th scope="col">Direction</th>
-            <th scope="col">Tested</th>
-            <th scope="col">Source</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-      <p class="note" id="rotation-note"></p>
-    </article>
 
-    <article class="panel" id="panel-windows" hidden>
-      <header class="panel-head">
-        <h3>Window comparison</h3>
-        <p class="panel-sub">What practice says against what the rainfall supports, same years, same rule.</p>
-      </header>
-      <table class="grid grid--wide" id="table-windows">
-        <caption class="sr">Documented against computed planting windows</caption>
+      <div class="sequence-input">
+        <p class="sequence-label" id="sequence-input-label">What did you grow last?</p>
+        <div class="sequence-fields" role="group" aria-labelledby="sequence-input-label">
+          <label>Most recent
+            <select id="prev-1">
+              <option value="">Not chosen</option>
+              <option value="maize">Maize</option>
+              <option value="common_bean">Common bean</option>
+              <option value="finger_millet">Finger millet</option>
+              <option value="sorghum">Sorghum</option>
+              <option value="groundnut">Groundnut</option>
+              <option value="other">Other</option>
+              <option value="unsure">Unsure</option>
+            </select>
+          </label>
+          <label>One before
+            <select id="prev-2">
+              <option value="">Not chosen</option>
+              <option value="maize">Maize</option>
+              <option value="common_bean">Common bean</option>
+              <option value="finger_millet">Finger millet</option>
+              <option value="sorghum">Sorghum</option>
+              <option value="groundnut">Groundnut</option>
+              <option value="other">Other</option>
+              <option value="unsure">Unsure</option>
+            </select>
+          </label>
+          <label>Two before
+            <select id="prev-3">
+              <option value="">Not chosen</option>
+              <option value="maize">Maize</option>
+              <option value="common_bean">Common bean</option>
+              <option value="finger_millet">Finger millet</option>
+              <option value="sorghum">Sorghum</option>
+              <option value="groundnut">Groundnut</option>
+              <option value="other">Other</option>
+              <option value="unsure">Unsure</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <p class="sequence-rank">
+        Ranked by the reasons below. Not a yield prediction and not a
+        recommendation of best practice.
+      </p>
+
+      <table class="grid grid--wide" id="table-sequence">
+        <caption class="sr">Previous-crop sequence compared with each candidate</caption>
         <thead>
           <tr>
-            <th scope="col">Crop</th>
-            <th scope="col">Practice says</th>
-            <th scope="col">Rain record says</th>
-            <th scope="col">Gap</th>
-            <th scope="col">Holds across trigger band</th>
-            <th scope="col">Source</th>
+            <th scope="col">Candidate</th>
+            <th scope="col">Supporting</th>
+            <th scope="col">Reasons for and against</th>
           </tr>
         </thead>
         <tbody></tbody>
       </table>
-      <p class="note" id="windows-note">…</p>
+      <p class="note" id="sequence-rotation-note"></p>
+      <p class="note" id="sequence-caveat"></p>
     </article>
 
     <article class="panel">
