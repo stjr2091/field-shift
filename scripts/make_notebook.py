@@ -126,7 +126,8 @@ here with that note without checking which rule produced them."""
     code(
         """trend = pd.DataFrame(fs.onset_trend_summary(onsets))
 display(trend.set_index("season"))
-print("date frame:", trend["date_frame"].iloc[0])
+frames = sorted(set(trend["date_frame"].dropna()))
+print("date frame:", ", ".join(frames) if frames else "not stated")
 print("trend is reported only. No correction is applied for serial correlation.")"""
     ),
     md("## 5b. Soil at the point (SoilGrids, 0–30 cm depth-weighted)"),

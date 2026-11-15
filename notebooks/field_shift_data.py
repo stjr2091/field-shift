@@ -416,7 +416,12 @@ def _sen_slope(y: list[float], x: list[float]) -> tuple[float, float, float]:
 
 
 def _mann_kendall(y: list[float]) -> tuple[float, float]:
-    """Two-sided Mann-Kendall: Kendall tau and p, with the tie correction."""
+    """Two-sided Mann-Kendall: Kendall tau and p.
+
+    The tau returned is tau-a, the untied form. Ties are corrected in the
+    variance only. That variance sets the p value, and it does not change the
+    tau.
+    """
     n = len(y)
     s = sum(
         int((y[j] > y[i]) - (y[j] < y[i]))
@@ -466,7 +471,14 @@ def onset_trend_summary(onsets: list[dict]) -> list[dict]:
         offsets = [float(_calendar_offset(date.fromisoformat(r["onset_date"]))) for r in rows]
         n = len(offsets)
         if n < 3:
-            summaries.append({"season": season, "n_years_detected": n, "note": "too few years for a trend"})
+            summaries.append(
+                {
+                    "season": season,
+                    "n_years_detected": n,
+                    "note": "too few years for a trend",
+                    "date_frame": "non-leap calendar offset",
+                }
+            )
             continue
         slope, ci_low, ci_high = _sen_slope(offsets, years)
         tau, p_value = _mann_kendall(offsets)
