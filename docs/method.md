@@ -19,9 +19,9 @@ Site: 1.79 N, 33.50 E (Soroti), NASA POWER daily 1991–2025, SoilGrids point ex
 - **Missing is never a number.** POWER's −999 sentinel becomes NaN before any sum; a rolling 10-day sum over a window containing a NaN is NaN, so that day is skipped as an onset candidate, never counted as dry. This pull has zero sentinels and zero missing days (12,784 of 12,784 present), so the rule is dormant today but must stay in place — source: `scripts/download_data.py` and `notebooks/field_shift_data.py::read_power_csv`.
 - **Months and years.** Monthly climatology and annual totals use only complete months/years (every day present, no missing rain) — source: `notebooks/field_shift_data.py::monthly_total_series`.
 
-## D4. Does the ~50 km POWER cell support the Soroti claim?
+## D4. Does the POWER cell support the Soroti claim?
 
-- **Yes at district scale, no below it.** One POWER cell is ~0.5° × 0.625° (roughly 50–55 km), about the size of the district (about 53 km across), so one cell spans the district — a district-level onset and window statement is defensible; a parish-, farm- or parcel-level claim is not. — Rejected: calling it "parcel-scale" — contradicted by the MERRA-2 grid. Source: `SOURCES.md` and POWER documentation (MERRA-2 native grid).
+- **Yes at district scale, no below it.** One POWER cell is ~0.5° × 0.625°, about 55 km by 70 km at this latitude, larger than the district (about 53 km across), so one cell covers the whole district — a district-level onset and window statement is defensible; a parish-, farm- or parcel-level claim is not. — Rejected: calling it "parcel-scale" — contradicted by the MERRA-2 grid. Source: `SOURCES.md` and POWER documentation (MERRA-2 native grid).
 - **Consequences.** All results carry the district-scale caveat; no interpolation between cells (we have one point, not a grid); and the demo must not show parcel boundaries next to these numbers without the caveat on the same screen.
 
 ## D5. What SoilGrids pH and texture at 0–30 cm can and cannot support

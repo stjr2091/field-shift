@@ -461,7 +461,7 @@ def build_site_climate() -> dict:
                 "latitude": LAT,
                 "longitude": LON,
                 "scale_note": (
-                    "One NASA POWER grid cell (0.5 x 0.625 deg, ~50 km). "
+                    "One NASA POWER grid cell (0.5 x 0.625 deg, about 55 by 70 km). "
                     "District-scale, not parcel-scale."
                 ),
             },

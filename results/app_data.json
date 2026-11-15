@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_utc": "2026-11-15T05:39:30Z",
+  "generated_utc": "2026-11-15T05:54:08Z",
   "data_status": {
     "site_climate": "ready",
     "crop_windows": "ready"
@@ -29,7 +29,7 @@
     "name": "Soroti",
     "lat": 1.79,
     "lon": 33.5,
-    "scale_note": "One NASA POWER grid cell (0.5 x 0.625 deg, ~50 km). District-scale, not parcel-scale."
+    "scale_note": "One NASA POWER grid cell (0.5 x 0.625 deg, about 55 by 70 km). District-scale, not parcel-scale."
   },
   "period": {
     "start_date": "1991-01-01",
@@ -1647,7 +1647,7 @@
     "gwetroot_gate_note": "GWETROOT fell below the 0.40 gate on some days; those days cannot be an onset."
   },
   "notes": [
-    "One NASA POWER cell covers about 50 km. District-scale, not parcel-scale.",
+    "One NASA POWER cell covers about 55 by 70 km. District-scale, not parcel-scale.",
     "Missing days are shown, never filled. This record has none.",
     "Zero rain is a real dry day and stays in every sum.",
     "The rainfall rule for each crop is a seasonal total in millimetres. No crop in this table has a 10-day rainfall trigger, so the 10-day threshold field is null for every crop and nothing is guessed into it.",

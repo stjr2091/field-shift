@@ -5,7 +5,7 @@
       "name": "Soroti",
       "latitude": 1.79,
       "longitude": 33.5,
-      "scale_note": "One NASA POWER grid cell (0.5 x 0.625 deg, ~50 km). District-scale, not parcel-scale."
+      "scale_note": "One NASA POWER grid cell (0.5 x 0.625 deg, about 55 by 70 km). District-scale, not parcel-scale."
     },
     "generated_utc": "2026-11-15T04:42:24Z",
     "period": {

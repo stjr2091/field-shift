@@ -16,7 +16,7 @@ One question: **what do I plant, and when.** One district, five crops (four if t
 ## Calls I am making now (say so by 16:30 if you object)
 
 - **Crops:** maize, common bean, finger millet, sorghum, groundnut. Two cereals, a legume, a pulse and a drought-tolerant small grain; all have extension guidance and all fit a one-season planting window.
-- **Site:** Soroti, one point. NASA POWER is a ~50 km grid cell, so we say **district-scale**, never parcel-scale. That is a limit we state, not a problem we hide.
+- **Site:** Soroti, one point. NASA POWER is a 0.5 by 0.625 degree grid cell, about 55 by 70 km, so we say **district-scale**, never parcel-scale. That is a limit we state, not a problem we hide.
 - **Data:** NASA POWER daily (rain, temperature, root-zone soil wetness) and SoilGrids static soil (pH, texture). Both free, no key, both checked answering today. One source each, no parallel ingests.
 - **Cut list, frozen:** Landsat greenness, yield prediction, login/auth, a database, dashboards, extra districts, extra crops, any paid tool.
 

@@ -364,7 +364,7 @@ def main() -> None:
         "crop_limitations": CROP_LIMITATIONS,
         "data_quality": climate["data_quality"],
         "notes": [
-            "One NASA POWER cell covers about 50 km. District-scale, not parcel-scale.",
+            "One NASA POWER cell covers about 55 by 70 km. District-scale, not parcel-scale.",
             "Missing days are shown, never filled. This record has none.",
             "Zero rain is a real dry day and stays in every sum.",
             "The rainfall rule for each crop is a seasonal total in millimetres. "

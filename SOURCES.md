@@ -18,7 +18,7 @@ Checked so far (links to be added as each is pulled into the repo):
   - `T2M` — MERRA-2 temperature at 2 m, °C
   - `GWETROOT` — MERRA-2 root-zone soil wetness, 0–1 (fraction of saturation)
 - **Point:** latitude 1.79, longitude 33.50 (Soroti). POWER serves one
-  MERRA-2 grid cell of about 0.5° × 0.625° (roughly 50 km), so every value is
+  MERRA-2 grid cell of about 0.5° × 0.625° (roughly 55 by 70 km), so every value is
   **district-scale, not parcel-scale**. This is a limit we state, not hide.
 - **Period:** 1991-01-01 to 2025-12-31 (12,784 days, complete, no sentinels).
 - **Access:** no key, no login. 14 Nov 2026.

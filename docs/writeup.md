@@ -21,7 +21,7 @@ no crop's window is compared with the rain record.
 
 Soroti district, one point: 1.79 N, 33.50 E.
 
-One NASA POWER grid cell covers about 50 by 70 km. That is about the size of the district.
+One NASA POWER grid cell covers about 55 by 70 km. That is about the size of the district.
 The statements here are district-scale. They are not farm-scale and not parcel-scale.
 
 ## The rain record
