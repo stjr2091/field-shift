@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_utc": "2026-11-15T05:56:34Z",
+  "generated_utc": "2026-11-15T06:01:41Z",
   "data_status": {
     "site_climate": "ready",
     "crop_windows": "ready"
@@ -1158,7 +1158,7 @@
           "source_url": "https://www.agriculture.go.ug/wp-content/uploads/2019/09/Beans-training-manual-for-extension-workers-in-Uganda.pdf",
           "page_or_quote": "PDF p11: 'Beans have a short maturity period of 58 to 120 days from planting time'",
           "basis": "",
-          "note": "national, not Soroti-specific. The released table value is kept. A variety-level 80-95 figure was looked for in the annexes and not found, so none is recorded"
+          "note": "national, not Soroti-specific. The released table value is kept. Annex 3, PDF p72, lists a duration for each released variety, and they run 80-95 days. The 58-120 headline figure from p11 is kept as the row value."
         },
         {
           "crop": "common_bean",
@@ -1504,7 +1504,7 @@
           "tag": "sourced",
           "source": "R8030 Final Technical Report",
           "source_url": "",
-          "page_or_quote": "PDF p50: 'Some farmers especially in Teso were aware that millet should not follow sorghum because of the striga weed'",
+          "page_or_quote": "PDF p50: 'Some farmers especially in Teso were aware that millet should not follow sorghum because of the striga weed'. Source is a survey of farmers in Teso and Lango, not a trial. Report R8030 (ZA0482) Final Technical Report, 1 April 2001 to 30 November 2004, DFID Crop Protection Programme. A copy is held locally; there is no public link,",
           "basis": "",
           "note": "farmer knowledge from a survey, not a trial. Same page: 'The order of rotation was not consistent'"
         },
@@ -1555,9 +1555,9 @@
           "tag": "sourced",
           "source": "National Research Council (1996), Lost Crops of Africa Vol. I, chapter 2",
           "source_url": "https://nap.nationalacademies.org/read/2305/chapter/5",
-          "page_or_quote": "Page 57, section High Temperature: \"Finger millet thrives under hot conditions. It can grow where temperatures are as high as 35°C. In Uganda, the crop grows best where the average maximum temperature exceeds 27°C and the average minimum does not fall below 18°C.\"",
+          "page_or_quote": "Page 57, section High Temperature: \"Finger millet thrives under hot conditions. It can grow where temperatures are as high as 35°C. [...] In Uganda, the crop grows best where the average maximum temperature exceeds 27°C and the average minimum does not fall below 18°C.\"",
           "basis": "",
-          "note": "cross-check row, not a range. The chapter gives a growth ceiling of 35 C and a Uganda average-minimum floor of 18 C, which is not an optimum pair, so it is left out of value_min and value_max. The EcoCrop row beside it supplies the range the app reads"
+          "note": "cross-check row, not a range. The chapter gives a growth ceiling of 35 C and a Uganda average-minimum floor of 18 C, which is not an optimum pair, so it is left out of value_min and value_max. The EcoCrop row beside it supplies the range the app reads. The source prints reference numbers inside these sentences; both are omitted and the first elision is marked"
         }
       ]
     }
@@ -1611,7 +1611,7 @@
       "rule": "rotation: not after sorghum",
       "source": "R8030 Final Technical Report",
       "source_url": null,
-      "page_or_quote": "PDF p50: 'Some farmers especially in Teso were aware that millet should not follow sorghum because of the striga weed'",
+      "page_or_quote": "PDF p50: 'Some farmers especially in Teso were aware that millet should not follow sorghum because of the striga weed'. Source is a survey of farmers in Teso and Lango, not a trial. Report R8030 (ZA0482) Final Technical Report, 1 April 2001 to 30 November 2004, DFID Crop Protection Programme. A copy is held locally; there is no public link,",
       "note": "farmer knowledge from a survey, not a trial. Same page: 'The order of rotation was not consistent'",
       "tested": false,
       "test_note": "Not tested. No nitrogen, yield or trial data is held, so a rotation effect cannot be measured here."
