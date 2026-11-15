@@ -14,13 +14,19 @@ row. That rule is fixed in `docs/plan.md` and this table does not change it.
 | --- | --- | --- | --- |
 | Maize | 4 | none | yes |
 | Common bean | 3 | water | yes |
-| Finger millet | 3 | temperature | yes |
+| Finger millet | 2 | water, temperature | no, cut |
 | Sorghum | 0 | all four | no, not in the table |
 | Groundnut | 0 | all four | no, not in the table |
 
 Sorghum and groundnut are not in the released table, so they are not in this
 file and they do not appear in the app. The app shows the cut on its rules
 coverage table, with the count of sourced rows beside it.
+
+Finger millet is cut for a second reason, and the app data states it in
+`cut_reason`. Two of its four parameters have a sourced row: duration and pH.
+Its water row is reference evidence from the millet chapter, 500-1,000 mm, and
+is not a Soroti threshold. Its planting window is borrowed from the maize row.
+Two sourced parameters is under the three-of-four rule, so the crop is cut.
 
 ## Two later sources, added beside the table
 
@@ -37,6 +43,11 @@ should see the earlier assumption and the later evidence together.
    with an absence of prolonged droughts." The caveat travels with the number:
    no prolonged drought, and dry weather at harvest. This is a seasonal water
    requirement, not a planting threshold, and it is not used as one.
+
+   The quote is checked word for word, and it is carried as `assumed`, not
+   `sourced`. It is the chapter's single millimetre figure for the crop, not a
+   threshold for this site and not a release of the crop table. So it does not
+   count toward the three of four, and finger millet is cut.
 
 ## Temperature
 

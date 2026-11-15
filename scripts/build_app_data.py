@@ -49,6 +49,15 @@ CROP_LABELS = {
 
 MIN_SOURCED_RULES = 3
 
+# Why a crop with rows is still cut. Keyed by crop, so the app can state the
+# reason rather than only the count. Kept beside the cut rule it explains.
+CUT_REASONS = {
+    "finger_millet": "Two of the four parameters have a sourced row: duration and pH. "
+    "The water row is reference evidence from the millet chapter, 500-1,000 mm, and is "
+    "not a Soroti threshold. The planting window is borrowed from the maize row. "
+    "Under the three-of-four rule this crop is cut.",
+}
+
 # The five limitation lines from the released crop rules workbook. They travel
 # with the crop rows, so a reader sees them beside the numbers they qualify.
 CROP_LIMITATIONS = [
@@ -195,6 +204,11 @@ def main() -> None:
             "crop_label": label,
             "n_rules_sourced": len(sourced_parameters(rules_by_crop.get(crop, []))),
             "n_rules_expected": len(RULE_PARAMETERS),
+            "appears": len(sourced_parameters(rules_by_crop.get(crop, [])))
+            >= MIN_SOURCED_RULES,
+            "cut_reason": CUT_REASONS.get(crop, "")
+            if len(sourced_parameters(rules_by_crop.get(crop, []))) < MIN_SOURCED_RULES
+            else "",
         }
         for crop, label in CROP_LABELS.items()
     ]

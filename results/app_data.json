@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_utc": "2026-11-15T05:11:42Z",
+  "generated_utc": "2026-11-15T05:14:52Z",
   "data_status": {
     "site_climate": "ready",
     "crop_windows": "ready"
@@ -1321,192 +1321,6 @@
           "note": "optimum range in value_min and value_max; outer limits 15 and 32 degrees C in this note, read as one requirement"
         }
       ]
-    },
-    {
-      "crop": "finger_millet",
-      "crop_label": "Finger millet",
-      "status": "partial",
-      "documented_window_start_doy": null,
-      "documented_window_end_doy": null,
-      "supported_window_start_doy": null,
-      "supported_window_end_doy": null,
-      "gap_days": null,
-      "rain_threshold_mm_10d": null,
-      "season_length_days": 75,
-      "ph_range": [
-        6.0,
-        7.0
-      ],
-      "temp_range_c": null,
-      "rules_used": [
-        "finger_millet/duration/days_to_maturity",
-        "finger_millet/duration/season_length",
-        "finger_millet/ph/ph_range",
-        "finger_millet/planting_window/planting_window",
-        "finger_millet/rotation/rotation",
-        "finger_millet/soil/soil_type",
-        "finger_millet/water/annual_rainfall",
-        "finger_millet/water/planting_rainfall_threshold",
-        "finger_millet/water/planting_rainfall_threshold"
-      ],
-      "unknown_rules": [
-        "temp_range"
-      ],
-      "rule_rows": [
-        {
-          "crop": "finger_millet",
-          "stage": "duration",
-          "parameter": "season_length",
-          "rule": "crop cycle (EcoCrop)",
-          "value": "75-180",
-          "value_min": "75",
-          "value_max": "180",
-          "unit": "days",
-          "window": "",
-          "tag": "sourced",
-          "source": "FAO EcoCrop data sheet",
-          "source_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=5657",
-          "page_or_quote": "EcoCrop data sheet, crop cycle",
-          "basis": "",
-          "note": "global range"
-        },
-        {
-          "crop": "finger_millet",
-          "stage": "duration",
-          "parameter": "days_to_maturity",
-          "rule": "days to maturity, Soroti",
-          "value": "75-180, working value 180",
-          "value_min": "75",
-          "value_max": "180",
-          "unit": "days",
-          "window": "",
-          "tag": "assumed",
-          "source": "FAO EcoCrop data sheet",
-          "source_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=5657",
-          "page_or_quote": "",
-          "basis": "No Ugandan figure found. EcoCrop's global crop cycle used, with the upper end (180) as the working value so the duration check is the strictest case",
-          "note": "notebook can also run 75 to show the range"
-        },
-        {
-          "crop": "finger_millet",
-          "stage": "planting_window",
-          "parameter": "planting_window",
-          "rule": "planting window, Soroti",
-          "value": "15/03 to 15/08",
-          "value_min": "",
-          "value_max": "",
-          "unit": "date (dd/mm)",
-          "window": "15/03 to 15/08",
-          "tag": "assumed",
-          "source": "MAAIF maize training manual (2023)",
-          "source_url": "https://www.agriculture.go.ug/wp-content/uploads/2019/09/Maize-training-manual-for-extension-workers-in-Uganda.pdf",
-          "page_or_quote": "",
-          "basis": "Borrowed from the MAAIF maize Soroti row (PDF p67), since both are rain-fed cereals planted in the same rains. No sorghum or millet calendar for Teso was opened",
-          "note": "biggest assumption in the table"
-        },
-        {
-          "crop": "finger_millet",
-          "stage": "water",
-          "parameter": "planting_rainfall_threshold",
-          "rule": "rain needed per season",
-          "value": "500-1100 (optimum), 300-4300 (absolute)",
-          "value_min": "500",
-          "value_max": "1100",
-          "unit": "mm per season",
-          "window": "",
-          "tag": "assumed",
-          "source": "FAO EcoCrop data sheet",
-          "source_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=5657",
-          "page_or_quote": "",
-          "basis": "EcoCrop's ANNUAL rainfall range used as the season need (Soroti one long wet season, per the team's POWER analysis)",
-          "note": "kept visible beside the sourced millet row below"
-        },
-        {
-          "crop": "finger_millet",
-          "stage": "water",
-          "parameter": "annual_rainfall",
-          "rule": "annual rainfall",
-          "value": "optimum 500-1100, absolute 300-4300",
-          "value_min": "500",
-          "value_max": "1100",
-          "unit": "mm per year",
-          "window": "",
-          "tag": "sourced",
-          "source": "FAO EcoCrop data sheet",
-          "source_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=5657",
-          "page_or_quote": "EcoCrop data sheet, annual rainfall",
-          "basis": "",
-          "note": "global, per year"
-        },
-        {
-          "crop": "finger_millet",
-          "stage": "ph",
-          "parameter": "ph_range",
-          "rule": "soil pH (EcoCrop)",
-          "value": "optimum 6-7, absolute 5.5-8.2",
-          "value_min": "6",
-          "value_max": "7",
-          "unit": "pH",
-          "window": "",
-          "tag": "sourced",
-          "source": "FAO EcoCrop data sheet",
-          "source_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=5657",
-          "page_or_quote": "EcoCrop data sheet, soil pH",
-          "basis": "",
-          "note": ""
-        },
-        {
-          "crop": "finger_millet",
-          "stage": "soil",
-          "parameter": "soil_type",
-          "rule": "soil type",
-          "value": "unknown",
-          "value_min": "",
-          "value_max": "",
-          "unit": "",
-          "window": "",
-          "tag": "unknown",
-          "source": "",
-          "source_url": "",
-          "page_or_quote": "",
-          "basis": "",
-          "note": "not needed for the timing check"
-        },
-        {
-          "crop": "finger_millet",
-          "stage": "rotation",
-          "parameter": "rotation",
-          "rule": "rotation: not after sorghum",
-          "value": "millet should not follow sorghum (striga weed)",
-          "value_min": "",
-          "value_max": "",
-          "unit": "",
-          "window": "",
-          "tag": "sourced",
-          "source": "R8030 Final Technical Report",
-          "source_url": "",
-          "page_or_quote": "PDF p50: 'Some farmers especially in Teso were aware that millet should not follow sorghum because of the striga weed'",
-          "basis": "",
-          "note": "farmer knowledge from a survey, not a trial. Same page: 'The order of rotation was not consistent'"
-        },
-        {
-          "crop": "finger_millet",
-          "stage": "water",
-          "parameter": "planting_rainfall_threshold",
-          "rule": "rainfall per season (millet chapter)",
-          "value": "500-1,000",
-          "value_min": "500",
-          "value_max": "1000",
-          "unit": "mm per season",
-          "window": "",
-          "tag": "sourced",
-          "source": "National Research Council (1996), Lost Crops of Africa Vol. I, chapter 2",
-          "source_url": "https://nap.nationalacademies.org/read/2305/chapter/5",
-          "page_or_quote": "Page 56, section Rainfall: \"It requires a moderate rainfall (500-1,000 mm), well distributed during the growing season with an absence of prolonged droughts. Dry weather is required for drying the grain at harvest.\"",
-          "basis": "",
-          "note": "the caveat travels with the number: absence of prolonged drought, and grain needs dry weather at harvest. Read as a seasonal water requirement, not a planting threshold"
-        }
-      ]
     }
   ],
   "crop_rule_coverage": [
@@ -1514,31 +1328,41 @@
       "crop": "maize",
       "crop_label": "Maize",
       "n_rules_sourced": 4,
-      "n_rules_expected": 4
+      "n_rules_expected": 4,
+      "appears": true,
+      "cut_reason": ""
     },
     {
       "crop": "common_bean",
       "crop_label": "Common bean",
       "n_rules_sourced": 3,
-      "n_rules_expected": 4
+      "n_rules_expected": 4,
+      "appears": true,
+      "cut_reason": ""
     },
     {
       "crop": "finger_millet",
       "crop_label": "Finger millet",
-      "n_rules_sourced": 3,
-      "n_rules_expected": 4
+      "n_rules_sourced": 2,
+      "n_rules_expected": 4,
+      "appears": false,
+      "cut_reason": "Two of the four parameters have a sourced row: duration and pH. The water row is reference evidence from the millet chapter, 500-1,000 mm, and is not a Soroti threshold. The planting window is borrowed from the maize row. Under the three-of-four rule this crop is cut."
     },
     {
       "crop": "sorghum",
       "crop_label": "Sorghum",
       "n_rules_sourced": 0,
-      "n_rules_expected": 4
+      "n_rules_expected": 4,
+      "appears": false,
+      "cut_reason": ""
     },
     {
       "crop": "groundnut",
       "crop_label": "Groundnut",
       "n_rules_sourced": 0,
-      "n_rules_expected": 4
+      "n_rules_expected": 4,
+      "appears": false,
+      "cut_reason": ""
     }
   ],
   "crop_limitations": [

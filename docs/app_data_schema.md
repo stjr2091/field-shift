@@ -28,7 +28,7 @@ tonight. Anything not listed here does not go in the file.
 | `monthly_climatology` | yes | NASA POWER daily 1991–2025 |
 | `onset` | yes | this notebook, stated assumption |
 | `soil` | yes | SoilGrids v2.0 point extract |
-| `crops` | yes, from `rules/rules.csv` | rules table; three crops pass the three-of-four cut |
+| `crops` | yes, from `rules/rules.csv` | rules table; two crops pass the three-of-four cut |
 
 `data_status` tells the app which blocks are real. A crop appears only when at
 least three of its four parameters have a sourced row, per `docs/plan.md`. A crop
@@ -50,7 +50,7 @@ See `docs/crop_rules.md` for what the table supports.
 | `onset` | object | definition + summary + per-year rows |
 | `soil` | object | pH and texture, 0–30 cm depth-weighted |
 | `crops` | array | one object per crop; a crop with fewer than three sourced rules is cut |
-| `crop_rule_coverage` | array[object] | sourced rows per crop, out of four |
+| `crop_rule_coverage` | array[object] | sourced rows per crop out of four, whether it appears, and the reason when it is cut |
 | `crop_limitations` | array[string] | the five limitation lines from the released rules table |
 | `notes` | array[string] | short honesty notes the app may show verbatim |
 
