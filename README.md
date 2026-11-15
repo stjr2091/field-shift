@@ -53,7 +53,7 @@ is `docs/app_data_schema.md`.
 
 ## AI contribution
 
-An automated coding assistant helped write and check the code, the data analysis and the documentation in this repository. The project owner reviewed and merged every change. The assistant made no agricultural claim. All crops, thresholds, planting windows and reasons come from the cited sources and the rules table. Per-use detail is in `AI_USE.md`.
+An automated coding assistant helped write and check the code, the data analysis and the documentation in this repository. The work was reviewed before release. The assistant made no agricultural claim: crops, thresholds, planting windows and reasons come from the rules table and the cited sources, including rows marked as team expertise or prototype assumptions. Per-use detail is in `AI_USE.md`.
 
 ## Workflow
 
