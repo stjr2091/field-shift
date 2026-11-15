@@ -27,6 +27,16 @@ SUNBIRD_URL = "https://api.sunbird.ai/tasks/translate"
 # Model names come from the pattern already in use for this vocabulary. The
 # small model answers first and the larger one covers a refusal.
 GROQ_MODEL = "openai/gpt-oss-120b"
+
+# This model reasons before it writes, and the reasoning is billed to the token
+# limit. At 300 tokens the whole budget went on thinking and the card came back
+# empty. The ceiling is set well above the card length so the text always fits
+# after the reasoning. The card itself is still held to 110 words by the check.
+GROQ_MAX_TOKENS = 1200
+
+# The provider refuses the default Python client signature, so the service names
+# itself. Without this header the first call returns 403 and no card is written.
+USER_AGENT = "field-shift-service/1.0"
 GROQ_TIMEOUT_S = 12
 SUNBIRD_TIMEOUT_S = 15
 
@@ -40,12 +50,13 @@ BANNED = [
 SYSTEM_PROMPT = """You rewrite a fixed agricultural result as a short card.
 Rules:
 1. Use only the fields given. Add no number, date, month, place, dose, price or measurement.
-2. Add no advice, no recommendation of your own, and no new crop.
-3. Never mention yield, harvest success, profit, confidence or a guarantee.
-4. State that the figure is district-scale, and that rotation reasons are direction only.
-5. Plain text. No markdown, no bullets, no headings, no emoji.
-6. At most 90 words. Six short sentences at most.
-7. Write for a farmer and an extension worker. Simple words, short sentences.
+2. Copy the "when" value into the card word for word. Keep every month it names. Never replace the window with "early season", "the rains" or any other summary.
+3. Add no advice, no recommendation of your own, and no new crop.
+4. Never mention yield, harvest success, profit, confidence or a guarantee.
+5. State that the figure is district-scale, and that rotation reasons are direction only.
+6. Plain text. No markdown, no bullets, no headings, no emoji.
+7. At most 90 words. Six short sentences at most.
+8. Write for a farmer and an extension worker. Simple words, short sentences.
 Return the card text only."""
 
 
@@ -97,7 +108,14 @@ def _months(text: str) -> set[str]:
 
 
 def check_card(card: str, result: dict) -> tuple[bool, str]:
-    """Return (ok, reason). A card that fails is not sent."""
+    """Return (ok, reason). A card that fails is not sent.
+
+    The check has two sides. A card may not add anything that is not in the
+    facts, such as a number, a month or a claim. It also may not drop the two
+    things the reader came for: the crop and the planting window. A card that
+    says "plant in the early season" instead of the published months has lost
+    the answer, so it is refused like an invented one.
+    """
     text = (card or "").strip()
     if not text:
         return False, "empty card"
@@ -114,6 +132,17 @@ def check_card(card: str, result: dict) -> tuple[bool, str]:
     extra_months = _months(lowered) - _months(allowed)
     if extra_months:
         return False, f"card holds a month not in the facts: {sorted(extra_months)}"
+
+    # The crop must be named, so the card cannot be read as advice for another.
+    crop_words = result["recommended_crop"].lower().split()
+    if not all(word in lowered for word in crop_words):
+        return False, f"card does not name the recommended crop: {result['recommended_crop']}"
+
+    # Every month the window names must survive into the card. A window given
+    # only as "early season" is not the published window.
+    missing = _months(str(result["when"])) - _months(lowered)
+    if missing:
+        return False, f"card drops the planting window month(s): {sorted(missing)}"
     return True, "ok"
 
 
@@ -126,7 +155,7 @@ def groq_card(result: dict) -> tuple[str | None, str]:
     payload = {
         "model": GROQ_MODEL,
         "temperature": 0.1,
-        "max_completion_tokens": 300,
+        "max_completion_tokens": GROQ_MAX_TOKENS,
         "reasoning_effort": "low",
         "messages": [
             {"role": "system", "content": SYSTEM_PROMPT},
@@ -140,6 +169,7 @@ def groq_card(result: dict) -> tuple[str | None, str]:
             "Authorization": f"Bearer {key}",
             "Content-Type": "application/json",
             "Accept": "application/json",
+            "User-Agent": USER_AGENT,
         },
         method="POST",
     )
@@ -176,6 +206,7 @@ def sunbird_translate(text: str) -> tuple[str | None, str]:
             "Authorization": f"Bearer {token}",
             "Content-Type": "application/json",
             "Accept": "application/json",
+            "User-Agent": USER_AGENT,
         },
         method="POST",
     )
