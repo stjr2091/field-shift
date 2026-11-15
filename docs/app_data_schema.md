@@ -186,12 +186,12 @@ later than documented practice.
   "generated_utc": "2026-11-14T21:05:00Z",
   "data_status": { "site_climate": "ready", "crop_windows": "pending" },
   "meta": { "sources": [], "assumptions": [], "raw_cache_sha256": "...", "pipeline": "" },
-  "site": { "name": "Nakasongola", "lat": 1.35, "lon": 32.45, "scale_note": "" },
+  "site": { "name": "Soroti", "lat": 1.79, "lon": 33.5, "scale_note": "" },
   "period": { "start_date": "1991-01-01", "end_date": "2025-12-31", "n_years": 35 },
   "monthly_climatology": [],
-  "annual": { "rain_mm_mean": 1114.4, "rain_mm_median": 1074.8, "n_years_complete": 35 },
+  "annual": { "rain_mm_mean": 843.0, "rain_mm_median": 839.4, "n_years_complete": 35 },
   "onset": { "definition": {}, "summary": [], "by_year": [] },
-  "soil": { "ph_h2o": 6.12, "clay_pct": 38.57, "sand_pct": 39.63, "silt_pct": 21.8, "texture_sum_pct": 100.0 },
+  "soil": { "ph_h2o": 6.12, "clay_pct": 40.73, "sand_pct": 38.87, "silt_pct": 20.32, "texture_sum_pct": 99.92 },
   "crops": [],
   "notes": []
 }

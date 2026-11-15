@@ -1,4 +1,4 @@
-"""Independent onset cross-check for Field Shift (QA, GIS Analyst).
+"""Independent onset cross-check for Field Shift.
 
 Re-implements onset detection from scratch against the raw NASA POWER CSV and
 compares every date with the notebook's committed results/site_climate.json.
@@ -18,7 +18,7 @@ from decimal import Decimal
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-POWER = ROOT / "data" / "raw" / "power_daily_1.35N_32.45E_1991-2025.csv"
+POWER = ROOT / "data" / "raw" / "power_daily_1.79N_33.50E_1991-2025.csv"
 NOTEBOOK_JSON = ROOT / "results" / "site_climate.json"
 
 RAIN_10D_MM = Decimal("20")

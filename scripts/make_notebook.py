@@ -16,10 +16,10 @@ code = nbf.v4.new_code_cell
 
 CELLS = [
     md(
-        """# Field Shift — site climate for Nakasongola
+        """# Field Shift — site climate for Soroti
 
-One notebook for one question: **what do I plant, and when**, for Nakasongola
-district (1.35 N, 32.45 E).
+One notebook for one question: **what do I plant, and when**, for Soroti
+district (1.79 N, 33.50 E).
 
 This file is the data layer. It pulls NASA POWER daily data and a SoilGrids
 point extract, builds the monthly rainfall climatology, detects a planting onset

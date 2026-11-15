@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_utc": "2026-11-14T19:30:52Z",
+  "generated_utc": "2026-11-15T04:42:28Z",
   "data_status": {
     "site_climate": "ready",
     "crop_windows": "pending"
@@ -9,12 +9,12 @@
     "sources": [
       {
         "name": "NASA POWER daily point (MERRA-2)",
-        "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR,T2M,GWETROOT&community=AG&longitude=32.45&latitude=1.35&start=19910101&end=20251231&format=CSV",
+        "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR,T2M,GWETROOT&community=AG&longitude=33.5&latitude=1.79&start=19910101&end=20251231&format=CSV",
         "accessed": "2026-11-14"
       },
       {
         "name": "ISRIC SoilGrids v2.0 point query",
-        "url": "https://rest.isric.org/soilgrids/v2.0/properties/query?lon=32.45&lat=1.35&property=phh2o&property=clay&property=sand&property=silt&depth=0-5cm&depth=5-15cm&depth=15-30cm&value=mean&value=Q0.5",
+        "url": "https://rest.isric.org/soilgrids/v2.0/properties/query?lon=33.5&lat=1.79&property=phh2o&property=clay&property=sand&property=silt&depth=0-5cm&depth=5-15cm&depth=15-30cm&value=mean&value=Q0.5",
         "accessed": "2026-11-14"
       }
     ],
@@ -22,13 +22,13 @@
       "Planting is possible on the first day the trailing 10-day rainfall sum reaches the threshold, having been below it before, with root-zone soil wetness at or above 0.40. This is an assumption, not a sourced rule.",
       "This figure is the day the 10-day threshold is first met, not the first rain day. It can lag the first rain by up to 9 days."
     ],
-    "raw_cache_sha256": "ff9cec9c6582d8532e3140d213e40ce3ff344b0ca4ffbc22cb150929e21e0483",
+    "raw_cache_sha256": "ac0df9b99463c212fc1c444670ba219b9cccf5e986090151fb81daef36a6743e",
     "pipeline": "notebooks/field_shift.ipynb"
   },
   "site": {
-    "name": "Nakasongola",
-    "lat": 1.35,
-    "lon": 32.45,
+    "name": "Soroti",
+    "lat": 1.79,
+    "lon": 33.5,
     "scale_note": "One NASA POWER grid cell (0.5 x 0.625 deg, ~50 km). District-scale, not parcel-scale."
   },
   "period": {
@@ -39,128 +39,128 @@
   "monthly_climatology": [
     {
       "month": 1,
-      "rain_mm_mean": 38.1,
-      "rain_mm_median": 33.5,
-      "rain_mm_p25": 15.3,
-      "rain_mm_p75": 53.7,
+      "rain_mm_mean": 19.6,
+      "rain_mm_median": 15.8,
+      "rain_mm_p25": 6.4,
+      "rain_mm_p75": 32.1,
       "n_years": 35,
-      "t2m_mean_c": 25.83,
-      "gwetroot_mean": 0.47
+      "t2m_mean_c": 26.64,
+      "gwetroot_mean": 0.39
     },
     {
       "month": 2,
-      "rain_mm_mean": 33.2,
-      "rain_mm_median": 28.8,
-      "rain_mm_p25": 14.7,
-      "rain_mm_p75": 44.4,
+      "rain_mm_mean": 18.6,
+      "rain_mm_median": 11.1,
+      "rain_mm_p25": 5.7,
+      "rain_mm_p75": 26.7,
       "n_years": 35,
-      "t2m_mean_c": 26.84,
-      "gwetroot_mean": 0.46
+      "t2m_mean_c": 27.77,
+      "gwetroot_mean": 0.38
     },
     {
       "month": 3,
-      "rain_mm_mean": 90.3,
-      "rain_mm_median": 82.7,
-      "rain_mm_p25": 62.4,
-      "rain_mm_p75": 108.6,
+      "rain_mm_mean": 48.8,
+      "rain_mm_median": 35.7,
+      "rain_mm_p25": 25.6,
+      "rain_mm_p75": 62.1,
       "n_years": 35,
-      "t2m_mean_c": 26.38,
-      "gwetroot_mean": 0.47
+      "t2m_mean_c": 27.83,
+      "gwetroot_mean": 0.39
     },
     {
       "month": 4,
-      "rain_mm_mean": 138.9,
-      "rain_mm_median": 135.0,
-      "rain_mm_p25": 102.0,
-      "rain_mm_p75": 160.6,
+      "rain_mm_mean": 90.8,
+      "rain_mm_median": 83.4,
+      "rain_mm_p25": 54.5,
+      "rain_mm_p75": 120.5,
       "n_years": 35,
-      "t2m_mean_c": 24.53,
-      "gwetroot_mean": 0.51
+      "t2m_mean_c": 26.28,
+      "gwetroot_mean": 0.41
     },
     {
       "month": 5,
-      "rain_mm_mean": 135.0,
-      "rain_mm_median": 120.9,
-      "rain_mm_p25": 96.7,
-      "rain_mm_p75": 153.6,
+      "rain_mm_mean": 114.4,
+      "rain_mm_median": 115.9,
+      "rain_mm_p25": 87.7,
+      "rain_mm_p75": 138.9,
       "n_years": 35,
-      "t2m_mean_c": 23.36,
-      "gwetroot_mean": 0.53
+      "t2m_mean_c": 24.6,
+      "gwetroot_mean": 0.43
     },
     {
       "month": 6,
-      "rain_mm_mean": 80.8,
-      "rain_mm_median": 76.8,
-      "rain_mm_p25": 48.2,
-      "rain_mm_p75": 100.3,
+      "rain_mm_mean": 84.1,
+      "rain_mm_median": 90.8,
+      "rain_mm_p25": 55.8,
+      "rain_mm_p75": 106.8,
       "n_years": 35,
-      "t2m_mean_c": 23.06,
-      "gwetroot_mean": 0.51
+      "t2m_mean_c": 23.81,
+      "gwetroot_mean": 0.43
     },
     {
       "month": 7,
-      "rain_mm_mean": 77.0,
-      "rain_mm_median": 66.5,
-      "rain_mm_p25": 55.6,
-      "rain_mm_p75": 93.1,
+      "rain_mm_mean": 91.5,
+      "rain_mm_median": 87.1,
+      "rain_mm_p25": 65.3,
+      "rain_mm_p75": 123.9,
       "n_years": 35,
-      "t2m_mean_c": 23.06,
-      "gwetroot_mean": 0.5
+      "t2m_mean_c": 23.3,
+      "gwetroot_mean": 0.43
     },
     {
       "month": 8,
-      "rain_mm_mean": 104.9,
-      "rain_mm_median": 108.7,
-      "rain_mm_p25": 84.1,
-      "rain_mm_p75": 130.4,
+      "rain_mm_mean": 104.3,
+      "rain_mm_median": 101.2,
+      "rain_mm_p25": 77.6,
+      "rain_mm_p75": 124.3,
       "n_years": 35,
-      "t2m_mean_c": 23.54,
-      "gwetroot_mean": 0.51
+      "t2m_mean_c": 23.65,
+      "gwetroot_mean": 0.43
     },
     {
       "month": 9,
-      "rain_mm_mean": 114.0,
-      "rain_mm_median": 116.0,
-      "rain_mm_p25": 78.2,
-      "rain_mm_p75": 145.7,
+      "rain_mm_mean": 93.7,
+      "rain_mm_median": 84.8,
+      "rain_mm_p25": 69.8,
+      "rain_mm_p75": 120.4,
       "n_years": 35,
-      "t2m_mean_c": 24.02,
-      "gwetroot_mean": 0.52
+      "t2m_mean_c": 24.9,
+      "gwetroot_mean": 0.43
     },
     {
       "month": 10,
-      "rain_mm_mean": 147.7,
-      "rain_mm_median": 131.6,
-      "rain_mm_p25": 98.4,
-      "rain_mm_p75": 186.9,
+      "rain_mm_mean": 94.8,
+      "rain_mm_median": 101.1,
+      "rain_mm_p25": 64.2,
+      "rain_mm_p75": 114.4,
       "n_years": 35,
-      "t2m_mean_c": 23.92,
-      "gwetroot_mean": 0.53
+      "t2m_mean_c": 25.2,
+      "gwetroot_mean": 0.43
     },
     {
       "month": 11,
-      "rain_mm_mean": 104.6,
-      "rain_mm_median": 93.5,
-      "rain_mm_p25": 70.7,
-      "rain_mm_p75": 129.2,
+      "rain_mm_mean": 55.2,
+      "rain_mm_median": 50.3,
+      "rain_mm_p25": 36.9,
+      "rain_mm_p75": 67.8,
       "n_years": 35,
-      "t2m_mean_c": 24.11,
-      "gwetroot_mean": 0.53
+      "t2m_mean_c": 25.22,
+      "gwetroot_mean": 0.41
     },
     {
       "month": 12,
-      "rain_mm_mean": 50.0,
-      "rain_mm_median": 45.3,
-      "rain_mm_p25": 23.7,
-      "rain_mm_p75": 67.1,
+      "rain_mm_mean": 27.1,
+      "rain_mm_median": 19.8,
+      "rain_mm_p25": 12.4,
+      "rain_mm_p75": 43.0,
       "n_years": 35,
-      "t2m_mean_c": 25.13,
-      "gwetroot_mean": 0.49
+      "t2m_mean_c": 25.88,
+      "gwetroot_mean": 0.4
     }
   ],
   "annual": {
-    "rain_mm_mean": 1114.4,
-    "rain_mm_median": 1074.8,
+    "rain_mm_mean": 843.0,
+    "rain_mm_median": 839.4,
     "n_years_complete": 35
   },
   "onset": {
@@ -179,27 +179,27 @@
         "label": "First rains (Feb–May)",
         "window_start_md": "02-01",
         "window_end_md": "05-31",
-        "onset_doy_median": 53.0,
-        "onset_doy_p25": 41.5,
-        "onset_doy_p75": 73.5,
+        "onset_doy_median": 77.0,
+        "onset_doy_p25": 55.5,
+        "onset_doy_p75": 90.0,
         "years_evaluated": 35,
         "years_found": 35,
-        "years_with_dry_spell_ge_7d_in_next_30d": 17,
+        "years_with_dry_spell_ge_7d_in_next_30d": 21,
         "threshold_sensitivity": [
           {
             "rain_10d_threshold_mm": 15.0,
             "years_found": 35,
-            "onset_doy_median": 51.0
+            "onset_doy_median": 72.0
           },
           {
             "rain_10d_threshold_mm": 20.0,
             "years_found": 35,
-            "onset_doy_median": 53.0
+            "onset_doy_median": 77.0
           },
           {
             "rain_10d_threshold_mm": 25.0,
             "years_found": 35,
-            "onset_doy_median": 63.0
+            "onset_doy_median": 85.0
           }
         ]
       },
@@ -208,22 +208,22 @@
         "label": "Second rains (Aug–Nov)",
         "window_start_md": "08-01",
         "window_end_md": "11-30",
-        "onset_doy_median": 219.0,
+        "onset_doy_median": 225.0,
         "onset_doy_p25": 214.0,
-        "onset_doy_p75": 231.0,
+        "onset_doy_p75": 243.2,
         "years_evaluated": 35,
-        "years_found": 35,
-        "years_with_dry_spell_ge_7d_in_next_30d": 4,
+        "years_found": 34,
+        "years_with_dry_spell_ge_7d_in_next_30d": 8,
         "threshold_sensitivity": [
           {
             "rain_10d_threshold_mm": 15.0,
-            "years_found": 33,
-            "onset_doy_median": 224.0
+            "years_found": 35,
+            "onset_doy_median": 248.0
           },
           {
             "rain_10d_threshold_mm": 20.0,
-            "years_found": 35,
-            "onset_doy_median": 219.0
+            "years_found": 34,
+            "onset_doy_median": 225.0
           },
           {
             "rain_10d_threshold_mm": 25.0,
@@ -237,38 +237,38 @@
       {
         "year": 1991,
         "season": "first_rains",
-        "onset_date": "1991-02-01",
-        "onset_doy": 32,
+        "onset_date": "1991-03-27",
+        "onset_doy": 86,
         "onset_found": true,
-        "rain_next_30d_mm": 23.1,
-        "longest_dry_spell_next_30d": 9
+        "rain_next_30d_mm": 74.9,
+        "longest_dry_spell_next_30d": 8
       },
       {
         "year": 1992,
         "season": "first_rains",
-        "onset_date": "1992-04-03",
-        "onset_doy": 94,
+        "onset_date": "1992-04-08",
+        "onset_doy": 99,
         "onset_found": true,
-        "rain_next_30d_mm": 159.4,
-        "longest_dry_spell_next_30d": 5
+        "rain_next_30d_mm": 78.3,
+        "longest_dry_spell_next_30d": 14
       },
       {
         "year": 1993,
         "season": "first_rains",
-        "onset_date": "1993-03-22",
-        "onset_doy": 81,
+        "onset_date": "1993-03-23",
+        "onset_doy": 82,
         "onset_found": true,
-        "rain_next_30d_mm": 86.2,
-        "longest_dry_spell_next_30d": 3
+        "rain_next_30d_mm": 21.8,
+        "longest_dry_spell_next_30d": 25
       },
       {
         "year": 1994,
         "season": "first_rains",
-        "onset_date": "1994-02-21",
-        "onset_doy": 52,
+        "onset_date": "1994-04-22",
+        "onset_doy": 112,
         "onset_found": true,
-        "rain_next_30d_mm": 122.1,
-        "longest_dry_spell_next_30d": 4
+        "rain_next_30d_mm": 154.7,
+        "longest_dry_spell_next_30d": 2
       },
       {
         "year": 1995,
@@ -276,89 +276,89 @@
         "onset_date": "1995-02-13",
         "onset_doy": 44,
         "onset_found": true,
-        "rain_next_30d_mm": 95.4,
-        "longest_dry_spell_next_30d": 10
+        "rain_next_30d_mm": 37.7,
+        "longest_dry_spell_next_30d": 11
       },
       {
         "year": 1996,
         "season": "first_rains",
-        "onset_date": "1996-02-05",
-        "onset_doy": 36,
+        "onset_date": "1996-03-18",
+        "onset_doy": 78,
         "onset_found": true,
-        "rain_next_30d_mm": 64.4,
-        "longest_dry_spell_next_30d": 9
+        "rain_next_30d_mm": 121.5,
+        "longest_dry_spell_next_30d": 6
       },
       {
         "year": 1997,
         "season": "first_rains",
-        "onset_date": "1997-03-25",
-        "onset_doy": 84,
+        "onset_date": "1997-03-29",
+        "onset_doy": 88,
         "onset_found": true,
-        "rain_next_30d_mm": 271.4,
-        "longest_dry_spell_next_30d": 2
+        "rain_next_30d_mm": 177.9,
+        "longest_dry_spell_next_30d": 5
       },
       {
         "year": 1998,
         "season": "first_rains",
-        "onset_date": "1998-02-11",
-        "onset_doy": 42,
+        "onset_date": "1998-02-13",
+        "onset_doy": 44,
         "onset_found": true,
-        "rain_next_30d_mm": 44.7,
-        "longest_dry_spell_next_30d": 11
+        "rain_next_30d_mm": 19.0,
+        "longest_dry_spell_next_30d": 23
       },
       {
         "year": 1999,
         "season": "first_rains",
-        "onset_date": "1999-03-09",
-        "onset_doy": 68,
+        "onset_date": "1999-03-15",
+        "onset_doy": 74,
         "onset_found": true,
-        "rain_next_30d_mm": 82.6,
-        "longest_dry_spell_next_30d": 4
+        "rain_next_30d_mm": 15.6,
+        "longest_dry_spell_next_30d": 23
       },
       {
         "year": 2000,
         "season": "first_rains",
-        "onset_date": "2000-04-06",
-        "onset_doy": 97,
+        "onset_date": "2000-05-08",
+        "onset_doy": 129,
         "onset_found": true,
-        "rain_next_30d_mm": 110.3,
-        "longest_dry_spell_next_30d": 5
+        "rain_next_30d_mm": 69.2,
+        "longest_dry_spell_next_30d": 6
       },
       {
         "year": 2001,
         "season": "first_rains",
-        "onset_date": "2001-02-11",
-        "onset_doy": 42,
+        "onset_date": "2001-03-07",
+        "onset_doy": 66,
         "onset_found": true,
-        "rain_next_30d_mm": 73.8,
-        "longest_dry_spell_next_30d": 8
+        "rain_next_30d_mm": 44.1,
+        "longest_dry_spell_next_30d": 7
       },
       {
         "year": 2002,
         "season": "first_rains",
-        "onset_date": "2002-02-19",
-        "onset_doy": 50,
+        "onset_date": "2002-03-10",
+        "onset_doy": 69,
         "onset_found": true,
-        "rain_next_30d_mm": 106.4,
+        "rain_next_30d_mm": 38.9,
         "longest_dry_spell_next_30d": 7
       },
       {
         "year": 2003,
         "season": "first_rains",
-        "onset_date": "2003-03-23",
-        "onset_doy": 82,
+        "onset_date": "2003-04-21",
+        "onset_doy": 111,
         "onset_found": true,
-        "rain_next_30d_mm": 124.6,
-        "longest_dry_spell_next_30d": 11
+        "rain_next_30d_mm": 151.9,
+        "longest_dry_spell_next_30d": 4
       },
       {
         "year": 2004,
         "season": "first_rains",
-        "onset_date": "2004-02-22",
-        "onset_doy": 53,
+        "onset_date": "2004-04-03",
+        "onset_doy": 94,
         "onset_found": true,
-        "rain_next_30d_mm": 67.4,
-        "longest_dry_spell_next_30d": 4
+        "rain_next_30d_mm": 165.8,
+        "longest_dry_spell_next_30d": 1
       },
       {
         "year": 2005,
@@ -366,107 +366,107 @@
         "onset_date": "2005-02-01",
         "onset_doy": 32,
         "onset_found": true,
-        "rain_next_30d_mm": 38.3,
-        "longest_dry_spell_next_30d": 16
+        "rain_next_30d_mm": 19.4,
+        "longest_dry_spell_next_30d": 24
       },
       {
         "year": 2006,
         "season": "first_rains",
-        "onset_date": "2006-02-27",
-        "onset_doy": 58,
+        "onset_date": "2006-03-01",
+        "onset_doy": 60,
         "onset_found": true,
-        "rain_next_30d_mm": 66.4,
-        "longest_dry_spell_next_30d": 4
+        "rain_next_30d_mm": 35.3,
+        "longest_dry_spell_next_30d": 8
       },
       {
         "year": 2007,
         "season": "first_rains",
-        "onset_date": "2007-02-02",
-        "onset_doy": 33,
+        "onset_date": "2007-04-14",
+        "onset_doy": 104,
         "onset_found": true,
-        "rain_next_30d_mm": 37.3,
-        "longest_dry_spell_next_30d": 8
+        "rain_next_30d_mm": 105.2,
+        "longest_dry_spell_next_30d": 6
       },
       {
         "year": 2008,
         "season": "first_rains",
-        "onset_date": "2008-02-10",
-        "onset_doy": 41,
+        "onset_date": "2008-02-11",
+        "onset_doy": 42,
         "onset_found": true,
-        "rain_next_30d_mm": 65.2,
-        "longest_dry_spell_next_30d": 6
+        "rain_next_30d_mm": 39.5,
+        "longest_dry_spell_next_30d": 19
       },
       {
         "year": 2009,
         "season": "first_rains",
-        "onset_date": "2009-02-01",
-        "onset_doy": 32,
+        "onset_date": "2009-03-31",
+        "onset_doy": 90,
         "onset_found": true,
-        "rain_next_30d_mm": 47.1,
-        "longest_dry_spell_next_30d": 7
+        "rain_next_30d_mm": 106.0,
+        "longest_dry_spell_next_30d": 6
       },
       {
         "year": 2010,
         "season": "first_rains",
-        "onset_date": "2010-02-12",
-        "onset_doy": 43,
+        "onset_date": "2010-02-25",
+        "onset_doy": 56,
         "onset_found": true,
-        "rain_next_30d_mm": 103.0,
-        "longest_dry_spell_next_30d": 7
+        "rain_next_30d_mm": 91.3,
+        "longest_dry_spell_next_30d": 9
       },
       {
         "year": 2011,
         "season": "first_rains",
-        "onset_date": "2011-03-15",
-        "onset_doy": 74,
+        "onset_date": "2011-03-18",
+        "onset_doy": 77,
         "onset_found": true,
-        "rain_next_30d_mm": 125.9,
-        "longest_dry_spell_next_30d": 3
+        "rain_next_30d_mm": 54.6,
+        "longest_dry_spell_next_30d": 8
       },
       {
         "year": 2012,
         "season": "first_rains",
-        "onset_date": "2012-03-05",
-        "onset_doy": 65,
+        "onset_date": "2012-03-06",
+        "onset_doy": 66,
         "onset_found": true,
-        "rain_next_30d_mm": 38.5,
-        "longest_dry_spell_next_30d": 11
+        "rain_next_30d_mm": 11.8,
+        "longest_dry_spell_next_30d": 13
       },
       {
         "year": 2013,
         "season": "first_rains",
-        "onset_date": "2013-03-19",
-        "onset_doy": 78,
+        "onset_date": "2013-03-29",
+        "onset_doy": 88,
         "onset_found": true,
-        "rain_next_30d_mm": 145.6,
+        "rain_next_30d_mm": 137.8,
         "longest_dry_spell_next_30d": 1
       },
       {
         "year": 2014,
         "season": "first_rains",
-        "onset_date": "2014-03-13",
-        "onset_doy": 72,
+        "onset_date": "2014-05-07",
+        "onset_doy": 127,
         "onset_found": true,
-        "rain_next_30d_mm": 68.6,
-        "longest_dry_spell_next_30d": 5
+        "rain_next_30d_mm": 135.1,
+        "longest_dry_spell_next_30d": 4
       },
       {
         "year": 2015,
         "season": "first_rains",
-        "onset_date": "2015-03-23",
-        "onset_doy": 82,
+        "onset_date": "2015-03-31",
+        "onset_doy": 90,
         "onset_found": true,
-        "rain_next_30d_mm": 179.2,
-        "longest_dry_spell_next_30d": 2
+        "rain_next_30d_mm": 125.7,
+        "longest_dry_spell_next_30d": 4
       },
       {
         "year": 2016,
         "season": "first_rains",
-        "onset_date": "2016-03-09",
-        "onset_doy": 69,
+        "onset_date": "2016-04-03",
+        "onset_doy": 94,
         "onset_found": true,
-        "rain_next_30d_mm": 104.0,
-        "longest_dry_spell_next_30d": 8
+        "rain_next_30d_mm": 151.5,
+        "longest_dry_spell_next_30d": 3
       },
       {
         "year": 2017,
@@ -474,26 +474,26 @@
         "onset_date": "2017-02-01",
         "onset_doy": 32,
         "onset_found": true,
-        "rain_next_30d_mm": 82.5,
-        "longest_dry_spell_next_30d": 13
+        "rain_next_30d_mm": 58.9,
+        "longest_dry_spell_next_30d": 16
       },
       {
         "year": 2018,
         "season": "first_rains",
-        "onset_date": "2018-02-25",
-        "onset_doy": 56,
+        "onset_date": "2018-03-01",
+        "onset_doy": 60,
         "onset_found": true,
-        "rain_next_30d_mm": 108.6,
-        "longest_dry_spell_next_30d": 3
+        "rain_next_30d_mm": 99.9,
+        "longest_dry_spell_next_30d": 4
       },
       {
         "year": 2019,
         "season": "first_rains",
-        "onset_date": "2019-02-21",
-        "onset_doy": 52,
+        "onset_date": "2019-02-24",
+        "onset_doy": 55,
         "onset_found": true,
-        "rain_next_30d_mm": 65.3,
-        "longest_dry_spell_next_30d": 8
+        "rain_next_30d_mm": 24.5,
+        "longest_dry_spell_next_30d": 17
       },
       {
         "year": 2020,
@@ -501,71 +501,71 @@
         "onset_date": "2020-02-01",
         "onset_doy": 32,
         "onset_found": true,
-        "rain_next_30d_mm": 60.2,
-        "longest_dry_spell_next_30d": 13
+        "rain_next_30d_mm": 35.2,
+        "longest_dry_spell_next_30d": 19
       },
       {
         "year": 2021,
         "season": "first_rains",
-        "onset_date": "2021-02-01",
-        "onset_doy": 32,
+        "onset_date": "2021-02-20",
+        "onset_doy": 51,
         "onset_found": true,
-        "rain_next_30d_mm": 20.8,
-        "longest_dry_spell_next_30d": 14
+        "rain_next_30d_mm": 17.2,
+        "longest_dry_spell_next_30d": 16
       },
       {
         "year": 2022,
         "season": "first_rains",
-        "onset_date": "2022-03-04",
-        "onset_doy": 63,
+        "onset_date": "2022-03-25",
+        "onset_doy": 84,
         "onset_found": true,
-        "rain_next_30d_mm": 58.1,
-        "longest_dry_spell_next_30d": 5
+        "rain_next_30d_mm": 93.6,
+        "longest_dry_spell_next_30d": 12
       },
       {
         "year": 2023,
         "season": "first_rains",
-        "onset_date": "2023-03-14",
-        "onset_doy": 73,
+        "onset_date": "2023-03-15",
+        "onset_doy": 74,
         "onset_found": true,
-        "rain_next_30d_mm": 200.4,
-        "longest_dry_spell_next_30d": 3
+        "rain_next_30d_mm": 194.3,
+        "longest_dry_spell_next_30d": 8
       },
       {
         "year": 2024,
         "season": "first_rains",
-        "onset_date": "2024-02-12",
-        "onset_doy": 43,
+        "onset_date": "2024-02-20",
+        "onset_doy": 51,
         "onset_found": true,
-        "rain_next_30d_mm": 90.8,
-        "longest_dry_spell_next_30d": 6
+        "rain_next_30d_mm": 44.1,
+        "longest_dry_spell_next_30d": 11
       },
       {
         "year": 2025,
         "season": "first_rains",
-        "onset_date": "2025-03-23",
-        "onset_doy": 82,
+        "onset_date": "2025-03-25",
+        "onset_doy": 84,
         "onset_found": true,
-        "rain_next_30d_mm": 99.0,
-        "longest_dry_spell_next_30d": 3
+        "rain_next_30d_mm": 84.7,
+        "longest_dry_spell_next_30d": 6
       },
       {
         "year": 1991,
         "season": "second_rains",
-        "onset_date": "1991-09-29",
-        "onset_doy": 272,
+        "onset_date": "1991-10-12",
+        "onset_doy": 285,
         "onset_found": true,
-        "rain_next_30d_mm": 195.6,
-        "longest_dry_spell_next_30d": 9
+        "rain_next_30d_mm": 111.2,
+        "longest_dry_spell_next_30d": 3
       },
       {
         "year": 1992,
         "season": "second_rains",
-        "onset_date": "1992-10-04",
-        "onset_doy": 278,
+        "onset_date": "1992-09-02",
+        "onset_doy": 246,
         "onset_found": true,
-        "rain_next_30d_mm": 229.3,
-        "longest_dry_spell_next_30d": 5
+        "rain_next_30d_mm": 127.4,
+        "longest_dry_spell_next_30d": 4
       },
       {
         "year": 1993,
@@ -573,17 +573,17 @@
         "onset_date": "1993-08-02",
         "onset_doy": 214,
         "onset_found": true,
-        "rain_next_30d_mm": 132.0,
-        "longest_dry_spell_next_30d": 2
+        "rain_next_30d_mm": 75.5,
+        "longest_dry_spell_next_30d": 4
       },
       {
         "year": 1994,
         "season": "second_rains",
-        "onset_date": "1994-08-17",
-        "onset_doy": 229,
+        "onset_date": "1994-09-11",
+        "onset_doy": 254,
         "onset_found": true,
-        "rain_next_30d_mm": 212.8,
-        "longest_dry_spell_next_30d": 2
+        "rain_next_30d_mm": 38.8,
+        "longest_dry_spell_next_30d": 16
       },
       {
         "year": 1995,
@@ -591,8 +591,8 @@
         "onset_date": "1995-08-18",
         "onset_doy": 230,
         "onset_found": true,
-        "rain_next_30d_mm": 113.2,
-        "longest_dry_spell_next_30d": 2
+        "rain_next_30d_mm": 97.8,
+        "longest_dry_spell_next_30d": 4
       },
       {
         "year": 1996,
@@ -600,7 +600,7 @@
         "onset_date": "1996-08-12",
         "onset_doy": 225,
         "onset_found": true,
-        "rain_next_30d_mm": 173.1,
+        "rain_next_30d_mm": 155.0,
         "longest_dry_spell_next_30d": 1
       },
       {
@@ -609,26 +609,26 @@
         "onset_date": "1997-08-01",
         "onset_doy": 213,
         "onset_found": true,
-        "rain_next_30d_mm": 134.5,
-        "longest_dry_spell_next_30d": 4
+        "rain_next_30d_mm": 93.6,
+        "longest_dry_spell_next_30d": 6
       },
       {
         "year": 1998,
         "season": "second_rains",
-        "onset_date": "1998-08-15",
-        "onset_doy": 227,
+        "onset_date": "1998-08-18",
+        "onset_doy": 230,
         "onset_found": true,
-        "rain_next_30d_mm": 83.2,
-        "longest_dry_spell_next_30d": 2
+        "rain_next_30d_mm": 48.7,
+        "longest_dry_spell_next_30d": 8
       },
       {
         "year": 1999,
         "season": "second_rains",
-        "onset_date": "1999-09-27",
-        "onset_doy": 270,
+        "onset_date": "1999-08-13",
+        "onset_doy": 225,
         "onset_found": true,
-        "rain_next_30d_mm": 114.7,
-        "longest_dry_spell_next_30d": 2
+        "rain_next_30d_mm": 94.9,
+        "longest_dry_spell_next_30d": 8
       },
       {
         "year": 2000,
@@ -636,7 +636,7 @@
         "onset_date": "2000-08-01",
         "onset_doy": 214,
         "onset_found": true,
-        "rain_next_30d_mm": 128.5,
+        "rain_next_30d_mm": 120.2,
         "longest_dry_spell_next_30d": 1
       },
       {
@@ -645,43 +645,43 @@
         "onset_date": "2001-09-07",
         "onset_doy": 250,
         "onset_found": true,
-        "rain_next_30d_mm": 137.7,
-        "longest_dry_spell_next_30d": 2
+        "rain_next_30d_mm": 107.8,
+        "longest_dry_spell_next_30d": 9
       },
       {
         "year": 2002,
         "season": "second_rains",
-        "onset_date": "2002-08-07",
-        "onset_doy": 219,
+        "onset_date": "2002-08-04",
+        "onset_doy": 216,
         "onset_found": true,
-        "rain_next_30d_mm": 100.5,
-        "longest_dry_spell_next_30d": 3
+        "rain_next_30d_mm": 95.9,
+        "longest_dry_spell_next_30d": 5
       },
       {
         "year": 2003,
         "season": "second_rains",
-        "onset_date": "2003-08-10",
-        "onset_doy": 222,
+        "onset_date": "2003-08-12",
+        "onset_doy": 224,
         "onset_found": true,
-        "rain_next_30d_mm": 136.4,
-        "longest_dry_spell_next_30d": 1
+        "rain_next_30d_mm": 159.7,
+        "longest_dry_spell_next_30d": 2
       },
       {
         "year": 2004,
         "season": "second_rains",
-        "onset_date": "2004-08-01",
-        "onset_doy": 214,
+        "onset_date": "2004-09-08",
+        "onset_doy": 252,
         "onset_found": true,
-        "rain_next_30d_mm": 107.5,
-        "longest_dry_spell_next_30d": 5
+        "rain_next_30d_mm": 85.3,
+        "longest_dry_spell_next_30d": 4
       },
       {
         "year": 2005,
         "season": "second_rains",
-        "onset_date": "2005-08-20",
-        "onset_doy": 232,
+        "onset_date": "2005-08-22",
+        "onset_doy": 234,
         "onset_found": true,
-        "rain_next_30d_mm": 118.6,
+        "rain_next_30d_mm": 112.7,
         "longest_dry_spell_next_30d": 4
       },
       {
@@ -690,17 +690,17 @@
         "onset_date": "2006-08-12",
         "onset_doy": 224,
         "onset_found": true,
-        "rain_next_30d_mm": 40.6,
+        "rain_next_30d_mm": 45.9,
         "longest_dry_spell_next_30d": 7
       },
       {
         "year": 2007,
         "season": "second_rains",
-        "onset_date": "2007-09-04",
-        "onset_doy": 247,
-        "onset_found": true,
-        "rain_next_30d_mm": 147.4,
-        "longest_dry_spell_next_30d": 0
+        "onset_date": null,
+        "onset_doy": null,
+        "onset_found": false,
+        "rain_next_30d_mm": null,
+        "longest_dry_spell_next_30d": null
       },
       {
         "year": 2008,
@@ -708,8 +708,8 @@
         "onset_date": "2008-08-01",
         "onset_doy": 214,
         "onset_found": true,
-        "rain_next_30d_mm": 89.3,
-        "longest_dry_spell_next_30d": 3
+        "rain_next_30d_mm": 103.8,
+        "longest_dry_spell_next_30d": 2
       },
       {
         "year": 2009,
@@ -717,17 +717,17 @@
         "onset_date": "2009-08-16",
         "onset_doy": 228,
         "onset_found": true,
-        "rain_next_30d_mm": 79.5,
+        "rain_next_30d_mm": 87.4,
         "longest_dry_spell_next_30d": 2
       },
       {
         "year": 2010,
         "season": "second_rains",
-        "onset_date": "2010-08-01",
-        "onset_doy": 213,
+        "onset_date": "2010-08-23",
+        "onset_doy": 235,
         "onset_found": true,
-        "rain_next_30d_mm": 87.5,
-        "longest_dry_spell_next_30d": 5
+        "rain_next_30d_mm": 150.7,
+        "longest_dry_spell_next_30d": 0
       },
       {
         "year": 2011,
@@ -735,53 +735,53 @@
         "onset_date": "2011-08-01",
         "onset_doy": 213,
         "onset_found": true,
-        "rain_next_30d_mm": 171.7,
+        "rain_next_30d_mm": 193.2,
         "longest_dry_spell_next_30d": 5
       },
       {
         "year": 2012,
         "season": "second_rains",
-        "onset_date": "2012-10-27",
-        "onset_doy": 301,
+        "onset_date": "2012-10-25",
+        "onset_doy": 299,
         "onset_found": true,
-        "rain_next_30d_mm": 138.2,
-        "longest_dry_spell_next_30d": 9
+        "rain_next_30d_mm": 118.9,
+        "longest_dry_spell_next_30d": 7
       },
       {
         "year": 2013,
         "season": "second_rains",
-        "onset_date": "2013-08-01",
-        "onset_doy": 213,
+        "onset_date": "2013-08-17",
+        "onset_doy": 229,
         "onset_found": true,
-        "rain_next_30d_mm": 110.6,
-        "longest_dry_spell_next_30d": 1
+        "rain_next_30d_mm": 134.7,
+        "longest_dry_spell_next_30d": 2
       },
       {
         "year": 2014,
         "season": "second_rains",
-        "onset_date": "2014-08-01",
-        "onset_doy": 213,
+        "onset_date": "2014-09-25",
+        "onset_doy": 268,
         "onset_found": true,
-        "rain_next_30d_mm": 89.4,
+        "rain_next_30d_mm": 135.5,
         "longest_dry_spell_next_30d": 2
       },
       {
         "year": 2015,
         "season": "second_rains",
-        "onset_date": "2015-08-03",
-        "onset_doy": 215,
+        "onset_date": "2015-08-01",
+        "onset_doy": 213,
         "onset_found": true,
-        "rain_next_30d_mm": 63.6,
-        "longest_dry_spell_next_30d": 8
+        "rain_next_30d_mm": 48.1,
+        "longest_dry_spell_next_30d": 10
       },
       {
         "year": 2016,
         "season": "second_rains",
-        "onset_date": "2016-08-06",
-        "onset_doy": 219,
+        "onset_date": "2016-08-01",
+        "onset_doy": 214,
         "onset_found": true,
-        "rain_next_30d_mm": 49.7,
-        "longest_dry_spell_next_30d": 6
+        "rain_next_30d_mm": 87.3,
+        "longest_dry_spell_next_30d": 4
       },
       {
         "year": 2017,
@@ -789,34 +789,34 @@
         "onset_date": "2017-08-01",
         "onset_doy": 213,
         "onset_found": true,
-        "rain_next_30d_mm": 88.7,
-        "longest_dry_spell_next_30d": 2
+        "rain_next_30d_mm": 72.8,
+        "longest_dry_spell_next_30d": 4
       },
       {
         "year": 2018,
         "season": "second_rains",
-        "onset_date": "2018-08-06",
-        "onset_doy": 218,
+        "onset_date": "2018-08-23",
+        "onset_doy": 235,
         "onset_found": true,
-        "rain_next_30d_mm": 100.6,
-        "longest_dry_spell_next_30d": 5
+        "rain_next_30d_mm": 45.1,
+        "longest_dry_spell_next_30d": 6
       },
       {
         "year": 2019,
         "season": "second_rains",
-        "onset_date": "2019-08-04",
-        "onset_doy": 216,
+        "onset_date": "2019-10-03",
+        "onset_doy": 276,
         "onset_found": true,
-        "rain_next_30d_mm": 121.1,
+        "rain_next_30d_mm": 164.0,
         "longest_dry_spell_next_30d": 2
       },
       {
         "year": 2020,
         "season": "second_rains",
-        "onset_date": "2020-08-21",
-        "onset_doy": 234,
+        "onset_date": "2020-08-06",
+        "onset_doy": 219,
         "onset_found": true,
-        "rain_next_30d_mm": 148.9,
+        "rain_next_30d_mm": 88.2,
         "longest_dry_spell_next_30d": 1
       },
       {
@@ -825,8 +825,8 @@
         "onset_date": "2021-09-06",
         "onset_doy": 249,
         "onset_found": true,
-        "rain_next_30d_mm": 70.3,
-        "longest_dry_spell_next_30d": 3
+        "rain_next_30d_mm": 92.2,
+        "longest_dry_spell_next_30d": 4
       },
       {
         "year": 2022,
@@ -834,17 +834,17 @@
         "onset_date": "2022-08-01",
         "onset_doy": 213,
         "onset_found": true,
-        "rain_next_30d_mm": 113.1,
-        "longest_dry_spell_next_30d": 6
+        "rain_next_30d_mm": 179.4,
+        "longest_dry_spell_next_30d": 5
       },
       {
         "year": 2023,
         "season": "second_rains",
-        "onset_date": "2023-08-03",
-        "onset_doy": 215,
+        "onset_date": "2023-08-01",
+        "onset_doy": 213,
         "onset_found": true,
-        "rain_next_30d_mm": 51.1,
-        "longest_dry_spell_next_30d": 5
+        "rain_next_30d_mm": 40.5,
+        "longest_dry_spell_next_30d": 10
       },
       {
         "year": 2024,
@@ -852,26 +852,26 @@
         "onset_date": "2024-08-01",
         "onset_doy": 214,
         "onset_found": true,
-        "rain_next_30d_mm": 122.7,
+        "rain_next_30d_mm": 51.3,
         "longest_dry_spell_next_30d": 4
       },
       {
         "year": 2025,
         "season": "second_rains",
-        "onset_date": "2025-08-09",
-        "onset_doy": 221,
+        "onset_date": "2025-08-01",
+        "onset_doy": 213,
         "onset_found": true,
-        "rain_next_30d_mm": 109.3,
-        "longest_dry_spell_next_30d": 5
+        "rain_next_30d_mm": 129.3,
+        "longest_dry_spell_next_30d": 3
       }
     ]
   },
   "soil": {
     "ph_h2o": 6.12,
-    "clay_pct": 38.57,
-    "sand_pct": 39.63,
-    "silt_pct": 21.8,
-    "texture_sum_pct": 100.0
+    "clay_pct": 40.73,
+    "sand_pct": 38.87,
+    "silt_pct": 20.32,
+    "texture_sum_pct": 99.92
   },
   "crops": [],
   "crop_rule_coverage": [
@@ -925,8 +925,8 @@
     },
     "months_incomplete": 0,
     "months_incomplete_sample": [],
-    "gwetroot_days_below_gate": 0,
-    "gwetroot_gate_note": "GWETROOT never fell below the 0.40 gate in this record, so the soil condition never binds and onset is decided by rainfall alone. Reported, not dropped."
+    "gwetroot_days_below_gate": 4732,
+    "gwetroot_gate_note": "GWETROOT fell below the 0.40 gate on some days; those days cannot be an onset."
   },
   "notes": [
     "One NASA POWER cell covers about 50 km. District-scale, not parcel-scale.",

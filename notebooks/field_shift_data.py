@@ -10,8 +10,8 @@ Run standalone to rebuild the outputs without a notebook:
     python notebooks/field_shift_data.py
 
 Inputs (see scripts/download_data.py):
-    data/raw/power_daily_1.35N_32.45E_1991-2025.csv
-    data/raw/soilgrids_point_1.35N_32.45E.json   (falls back to data/processed)
+    data/raw/power_daily_1.79N_33.50E_1991-2025.csv
+    data/raw/soilgrids_point_1.79N_33.50E.json   (falls back to data/processed)
 
 Outputs:
     results/site_climate.json
@@ -30,9 +30,9 @@ from pathlib import Path
 import pandas as pd
 
 # --- Site and period --------------------------------------------------------
-SITE_NAME = "Nakasongola"
-LAT = 1.35
-LON = 32.45
+SITE_NAME = "Soroti"
+LAT = 1.79
+LON = 33.50
 START = date(1991, 1, 1)
 END = date(2025, 12, 31)
 

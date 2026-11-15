@@ -2,12 +2,12 @@
   "meta": {
     "product": "site_climate",
     "site": {
-      "name": "Nakasongola",
-      "latitude": 1.35,
-      "longitude": 32.45,
+      "name": "Soroti",
+      "latitude": 1.79,
+      "longitude": 33.5,
       "scale_note": "One NASA POWER grid cell (0.5 x 0.625 deg, ~50 km). District-scale, not parcel-scale."
     },
-    "generated_utc": "2026-11-14T13:39:10Z",
+    "generated_utc": "2026-11-15T04:42:24Z",
     "period": {
       "start_date": "1991-01-01",
       "end_date": "2025-12-31",
@@ -23,7 +23,7 @@
           "T2M",
           "GWETROOT"
         ],
-        "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR,T2M,GWETROOT&community=AG&longitude=32.45&latitude=1.35&start=19910101&end=20251231&format=CSV",
+        "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR,T2M,GWETROOT&community=AG&longitude=33.5&latitude=1.79&start=19910101&end=20251231&format=CSV",
         "header": {
           "parameters": {
             "PRECTOTCORR": "MERRA-2 Precipitation Corrected (mm/day)",
@@ -31,20 +31,20 @@
             "GWETROOT": "MERRA-2 Root Zone Soil Wetness (1)"
           },
           "dates": "Dates (month/day/year): 01/01/1991 through 12/31/2025 in LST",
-          "location": "Location: latitude  1.35   longitude 32.45",
-          "elevation": "elevation from MERRA-2: Average for 0.5 x 0.625 degree lat/lon region = 1053.97 meters",
+          "location": "Location: latitude  1.79   longitude 33.5",
+          "elevation": "elevation from MERRA-2: Average for 0.5 x 0.625 degree lat/lon region = 1078.38 meters",
           "missing_value_note": "The value for missing source data that cannot be computed or is outside of the sources availability range: -999"
         }
       },
       "soilgrids": {
         "name": "ISRIC SoilGrids v2.0 point query",
-        "url": "https://rest.isric.org/soilgrids/v2.0/properties/query?lon=32.45&lat=1.35&property=phh2o&property=clay&property=sand&property=silt&depth=0-5cm&depth=5-15cm&depth=15-30cm&value=mean&value=Q0.5"
+        "url": "https://rest.isric.org/soilgrids/v2.0/properties/query?lon=33.5&lat=1.79&property=phh2o&property=clay&property=sand&property=silt&depth=0-5cm&depth=5-15cm&depth=15-30cm&value=mean&value=Q0.5"
       }
     },
     "raw_cache": {
-      "file": "data/raw/power_daily_1.35N_32.45E_1991-2025.csv",
-      "bytes": 325436,
-      "sha256": "ff9cec9c6582d8532e3140d213e40ce3ff344b0ca4ffbc22cb150929e21e0483"
+      "file": "data/raw/power_daily_1.79N_33.50E_1991-2025.csv",
+      "bytes": 324013,
+      "sha256": "ac0df9b99463c212fc1c444670ba219b9cccf5e986090151fb81daef36a6743e"
     },
     "assumptions": [
       "Planting is possible when a crop's rainfall threshold is met over a rolling 10-day sum and root-zone wetness (GWETROOT) is at or above 0.40. This is an assumption, not a sourced agronomic rule.",
@@ -62,155 +62,155 @@
   "monthly_climatology": [
     {
       "month": 1,
-      "rain_mm_mean": 38.1,
-      "rain_mm_median": 33.5,
-      "rain_mm_p25": 15.3,
-      "rain_mm_p75": 53.7,
-      "rain_mm_min": 1.1,
-      "rain_mm_max": 111.4,
+      "rain_mm_mean": 19.6,
+      "rain_mm_median": 15.8,
+      "rain_mm_p25": 6.4,
+      "rain_mm_p75": 32.1,
+      "rain_mm_min": 0.2,
+      "rain_mm_max": 58.1,
       "n_years": 35,
-      "t2m_mean_c": 25.83,
-      "gwetroot_mean": 0.474
+      "t2m_mean_c": 26.64,
+      "gwetroot_mean": 0.387
     },
     {
       "month": 2,
-      "rain_mm_mean": 33.2,
-      "rain_mm_median": 28.8,
-      "rain_mm_p25": 14.7,
-      "rain_mm_p75": 44.4,
-      "rain_mm_min": 0.5,
-      "rain_mm_max": 97.0,
+      "rain_mm_mean": 18.6,
+      "rain_mm_median": 11.1,
+      "rain_mm_p25": 5.7,
+      "rain_mm_p75": 26.7,
+      "rain_mm_min": 0.0,
+      "rain_mm_max": 69.5,
       "n_years": 35,
-      "t2m_mean_c": 26.84,
-      "gwetroot_mean": 0.461
+      "t2m_mean_c": 27.77,
+      "gwetroot_mean": 0.381
     },
     {
       "month": 3,
-      "rain_mm_mean": 90.3,
-      "rain_mm_median": 82.7,
-      "rain_mm_p25": 62.4,
-      "rain_mm_p75": 108.6,
-      "rain_mm_min": 18.0,
-      "rain_mm_max": 258.1,
+      "rain_mm_mean": 48.8,
+      "rain_mm_median": 35.7,
+      "rain_mm_p25": 25.6,
+      "rain_mm_p75": 62.1,
+      "rain_mm_min": 2.2,
+      "rain_mm_max": 206.4,
       "n_years": 35,
-      "t2m_mean_c": 26.38,
-      "gwetroot_mean": 0.475
+      "t2m_mean_c": 27.83,
+      "gwetroot_mean": 0.389
     },
     {
       "month": 4,
-      "rain_mm_mean": 138.9,
-      "rain_mm_median": 135.0,
-      "rain_mm_p25": 102.0,
-      "rain_mm_p75": 160.6,
-      "rain_mm_min": 54.6,
-      "rain_mm_max": 322.8,
+      "rain_mm_mean": 90.8,
+      "rain_mm_median": 83.4,
+      "rain_mm_p25": 54.5,
+      "rain_mm_p75": 120.5,
+      "rain_mm_min": 12.5,
+      "rain_mm_max": 221.5,
       "n_years": 35,
-      "t2m_mean_c": 24.53,
-      "gwetroot_mean": 0.511
+      "t2m_mean_c": 26.28,
+      "gwetroot_mean": 0.41
     },
     {
       "month": 5,
-      "rain_mm_mean": 135.0,
-      "rain_mm_median": 120.9,
-      "rain_mm_p25": 96.7,
-      "rain_mm_p75": 153.6,
-      "rain_mm_min": 68.2,
-      "rain_mm_max": 310.2,
+      "rain_mm_mean": 114.4,
+      "rain_mm_median": 115.9,
+      "rain_mm_p25": 87.7,
+      "rain_mm_p75": 138.9,
+      "rain_mm_min": 27.3,
+      "rain_mm_max": 180.7,
       "n_years": 35,
-      "t2m_mean_c": 23.36,
-      "gwetroot_mean": 0.53
+      "t2m_mean_c": 24.6,
+      "gwetroot_mean": 0.434
     },
     {
       "month": 6,
-      "rain_mm_mean": 80.8,
-      "rain_mm_median": 76.8,
-      "rain_mm_p25": 48.2,
-      "rain_mm_p75": 100.3,
-      "rain_mm_min": 20.5,
-      "rain_mm_max": 190.6,
+      "rain_mm_mean": 84.1,
+      "rain_mm_median": 90.8,
+      "rain_mm_p25": 55.8,
+      "rain_mm_p75": 106.8,
+      "rain_mm_min": 19.6,
+      "rain_mm_max": 173.2,
       "n_years": 35,
-      "t2m_mean_c": 23.06,
-      "gwetroot_mean": 0.511
+      "t2m_mean_c": 23.81,
+      "gwetroot_mean": 0.426
     },
     {
       "month": 7,
-      "rain_mm_mean": 77.0,
-      "rain_mm_median": 66.5,
-      "rain_mm_p25": 55.6,
-      "rain_mm_p75": 93.1,
-      "rain_mm_min": 9.6,
-      "rain_mm_max": 175.9,
+      "rain_mm_mean": 91.5,
+      "rain_mm_median": 87.1,
+      "rain_mm_p25": 65.3,
+      "rain_mm_p75": 123.9,
+      "rain_mm_min": 26.0,
+      "rain_mm_max": 152.4,
       "n_years": 35,
-      "t2m_mean_c": 23.06,
-      "gwetroot_mean": 0.501
+      "t2m_mean_c": 23.3,
+      "gwetroot_mean": 0.427
     },
     {
       "month": 8,
-      "rain_mm_mean": 104.9,
-      "rain_mm_median": 108.7,
-      "rain_mm_p25": 84.1,
-      "rain_mm_p75": 130.4,
-      "rain_mm_min": 23.0,
-      "rain_mm_max": 182.1,
+      "rain_mm_mean": 104.3,
+      "rain_mm_median": 101.2,
+      "rain_mm_p25": 77.6,
+      "rain_mm_p75": 124.3,
+      "rain_mm_min": 19.8,
+      "rain_mm_max": 199.0,
       "n_years": 35,
-      "t2m_mean_c": 23.54,
-      "gwetroot_mean": 0.51
+      "t2m_mean_c": 23.65,
+      "gwetroot_mean": 0.435
     },
     {
       "month": 9,
-      "rain_mm_mean": 114.0,
-      "rain_mm_median": 116.0,
-      "rain_mm_p25": 78.2,
-      "rain_mm_p75": 145.7,
-      "rain_mm_min": 12.5,
-      "rain_mm_max": 178.8,
+      "rain_mm_mean": 93.7,
+      "rain_mm_median": 84.8,
+      "rain_mm_p25": 69.8,
+      "rain_mm_p75": 120.4,
+      "rain_mm_min": 3.3,
+      "rain_mm_max": 307.3,
       "n_years": 35,
-      "t2m_mean_c": 24.02,
-      "gwetroot_mean": 0.516
+      "t2m_mean_c": 24.9,
+      "gwetroot_mean": 0.431
     },
     {
       "month": 10,
-      "rain_mm_mean": 147.7,
-      "rain_mm_median": 131.6,
-      "rain_mm_p25": 98.4,
-      "rain_mm_p75": 186.9,
-      "rain_mm_min": 69.4,
-      "rain_mm_max": 366.3,
+      "rain_mm_mean": 94.8,
+      "rain_mm_median": 101.1,
+      "rain_mm_p25": 64.2,
+      "rain_mm_p75": 114.4,
+      "rain_mm_min": 21.9,
+      "rain_mm_max": 168.0,
       "n_years": 35,
-      "t2m_mean_c": 23.92,
-      "gwetroot_mean": 0.531
+      "t2m_mean_c": 25.2,
+      "gwetroot_mean": 0.427
     },
     {
       "month": 11,
-      "rain_mm_mean": 104.6,
-      "rain_mm_median": 93.5,
-      "rain_mm_p25": 70.7,
-      "rain_mm_p75": 129.2,
-      "rain_mm_min": 44.4,
-      "rain_mm_max": 288.8,
+      "rain_mm_mean": 55.2,
+      "rain_mm_median": 50.3,
+      "rain_mm_p25": 36.9,
+      "rain_mm_p75": 67.8,
+      "rain_mm_min": 16.3,
+      "rain_mm_max": 152.2,
       "n_years": 35,
-      "t2m_mean_c": 24.11,
-      "gwetroot_mean": 0.529
+      "t2m_mean_c": 25.22,
+      "gwetroot_mean": 0.415
     },
     {
       "month": 12,
-      "rain_mm_mean": 50.0,
-      "rain_mm_median": 45.3,
-      "rain_mm_p25": 23.7,
-      "rain_mm_p75": 67.1,
-      "rain_mm_min": 1.1,
-      "rain_mm_max": 125.3,
+      "rain_mm_mean": 27.1,
+      "rain_mm_median": 19.8,
+      "rain_mm_p25": 12.4,
+      "rain_mm_p75": 43.0,
+      "rain_mm_min": 0.6,
+      "rain_mm_max": 75.2,
       "n_years": 35,
-      "t2m_mean_c": 25.13,
-      "gwetroot_mean": 0.494
+      "t2m_mean_c": 25.88,
+      "gwetroot_mean": 0.395
     }
   ],
   "annual": {
     "n_years_complete": 35,
-    "rain_mm_mean": 1114.4,
-    "rain_mm_median": 1074.8,
-    "rain_mm_min": 650.8,
-    "rain_mm_max": 1595.5
+    "rain_mm_mean": 843.0,
+    "rain_mm_median": 839.4,
+    "rain_mm_min": 554.0,
+    "rain_mm_max": 1395.6
   },
   "onset_definition": {
     "rain_10d_threshold_mm": 20.0,
@@ -228,14 +228,14 @@
       "window_end": "1991-05-31",
       "year": 1991,
       "onset_found": true,
-      "onset_date": "1991-02-01",
-      "onset_doy": 32,
-      "rain_10d_mm": 22.1,
-      "gwetroot": 0.48,
-      "rain_prev_10d_mm": 0.0,
-      "rain_next_30d_mm": 23.1,
-      "dry_days_next_30d": 21,
-      "longest_dry_spell_next_30d": 9
+      "onset_date": "1991-03-27",
+      "onset_doy": 86,
+      "rain_10d_mm": 29.0,
+      "gwetroot": 0.4,
+      "rain_prev_10d_mm": 3.0,
+      "rain_next_30d_mm": 74.9,
+      "dry_days_next_30d": 18,
+      "longest_dry_spell_next_30d": 8
     },
     {
       "season": "first_rains",
@@ -243,14 +243,14 @@
       "window_end": "1992-05-31",
       "year": 1992,
       "onset_found": true,
-      "onset_date": "1992-04-03",
-      "onset_doy": 94,
-      "rain_10d_mm": 20.0,
-      "gwetroot": 0.47,
-      "rain_prev_10d_mm": 12.4,
-      "rain_next_30d_mm": 159.4,
-      "dry_days_next_30d": 8,
-      "longest_dry_spell_next_30d": 5
+      "onset_date": "1992-04-08",
+      "onset_doy": 99,
+      "rain_10d_mm": 32.0,
+      "gwetroot": 0.41,
+      "rain_prev_10d_mm": 3.2,
+      "rain_next_30d_mm": 78.3,
+      "dry_days_next_30d": 18,
+      "longest_dry_spell_next_30d": 14
     },
     {
       "season": "first_rains",
@@ -258,14 +258,14 @@
       "window_end": "1993-05-31",
       "year": 1993,
       "onset_found": true,
-      "onset_date": "1993-03-22",
-      "onset_doy": 81,
-      "rain_10d_mm": 21.4,
-      "gwetroot": 0.47,
-      "rain_prev_10d_mm": 3.9,
-      "rain_next_30d_mm": 86.2,
-      "dry_days_next_30d": 12,
-      "longest_dry_spell_next_30d": 3
+      "onset_date": "1993-03-23",
+      "onset_doy": 82,
+      "rain_10d_mm": 20.8,
+      "gwetroot": 0.4,
+      "rain_prev_10d_mm": 1.7,
+      "rain_next_30d_mm": 21.8,
+      "dry_days_next_30d": 28,
+      "longest_dry_spell_next_30d": 25
     },
     {
       "season": "first_rains",
@@ -273,14 +273,14 @@
       "window_end": "1994-05-31",
       "year": 1994,
       "onset_found": true,
-      "onset_date": "1994-02-21",
-      "onset_doy": 52,
-      "rain_10d_mm": 22.1,
-      "gwetroot": 0.46,
-      "rain_prev_10d_mm": 1.2,
-      "rain_next_30d_mm": 122.1,
-      "dry_days_next_30d": 10,
-      "longest_dry_spell_next_30d": 4
+      "onset_date": "1994-04-22",
+      "onset_doy": 112,
+      "rain_10d_mm": 20.7,
+      "gwetroot": 0.4,
+      "rain_prev_10d_mm": 0.8,
+      "rain_next_30d_mm": 154.7,
+      "dry_days_next_30d": 4,
+      "longest_dry_spell_next_30d": 2
     },
     {
       "season": "first_rains",
@@ -290,12 +290,12 @@
       "onset_found": true,
       "onset_date": "1995-02-13",
       "onset_doy": 44,
-      "rain_10d_mm": 20.3,
-      "gwetroot": 0.47,
-      "rain_prev_10d_mm": 3.3,
-      "rain_next_30d_mm": 95.4,
-      "dry_days_next_30d": 12,
-      "longest_dry_spell_next_30d": 10
+      "rain_10d_mm": 21.6,
+      "gwetroot": 0.4,
+      "rain_prev_10d_mm": 1.6,
+      "rain_next_30d_mm": 37.7,
+      "dry_days_next_30d": 18,
+      "longest_dry_spell_next_30d": 11
     },
     {
       "season": "first_rains",
@@ -303,14 +303,14 @@
       "window_end": "1996-05-31",
       "year": 1996,
       "onset_found": true,
-      "onset_date": "1996-02-05",
-      "onset_doy": 36,
+      "onset_date": "1996-03-18",
+      "onset_doy": 78,
       "rain_10d_mm": 22.4,
-      "gwetroot": 0.5,
-      "rain_prev_10d_mm": 10.7,
-      "rain_next_30d_mm": 64.4,
-      "dry_days_next_30d": 13,
-      "longest_dry_spell_next_30d": 9
+      "gwetroot": 0.4,
+      "rain_prev_10d_mm": 6.8,
+      "rain_next_30d_mm": 121.5,
+      "dry_days_next_30d": 11,
+      "longest_dry_spell_next_30d": 6
     },
     {
       "season": "first_rains",
@@ -318,14 +318,14 @@
       "window_end": "1997-05-31",
       "year": 1997,
       "onset_found": true,
-      "onset_date": "1997-03-25",
-      "onset_doy": 84,
-      "rain_10d_mm": 28.2,
-      "gwetroot": 0.48,
-      "rain_prev_10d_mm": 0.3,
-      "rain_next_30d_mm": 271.4,
-      "dry_days_next_30d": 2,
-      "longest_dry_spell_next_30d": 2
+      "onset_date": "1997-03-29",
+      "onset_doy": 88,
+      "rain_10d_mm": 32.3,
+      "gwetroot": 0.41,
+      "rain_prev_10d_mm": 0.0,
+      "rain_next_30d_mm": 177.9,
+      "dry_days_next_30d": 7,
+      "longest_dry_spell_next_30d": 5
     },
     {
       "season": "first_rains",
@@ -333,14 +333,14 @@
       "window_end": "1998-05-31",
       "year": 1998,
       "onset_found": true,
-      "onset_date": "1998-02-11",
-      "onset_doy": 42,
-      "rain_10d_mm": 22.6,
-      "gwetroot": 0.51,
-      "rain_prev_10d_mm": 2.4,
-      "rain_next_30d_mm": 44.7,
-      "dry_days_next_30d": 20,
-      "longest_dry_spell_next_30d": 11
+      "onset_date": "1998-02-13",
+      "onset_doy": 44,
+      "rain_10d_mm": 26.9,
+      "gwetroot": 0.42,
+      "rain_prev_10d_mm": 1.8,
+      "rain_next_30d_mm": 19.0,
+      "dry_days_next_30d": 27,
+      "longest_dry_spell_next_30d": 23
     },
     {
       "season": "first_rains",
@@ -348,14 +348,14 @@
       "window_end": "1999-05-31",
       "year": 1999,
       "onset_found": true,
-      "onset_date": "1999-03-09",
-      "onset_doy": 68,
-      "rain_10d_mm": 25.1,
-      "gwetroot": 0.46,
-      "rain_prev_10d_mm": 0.0,
-      "rain_next_30d_mm": 82.6,
-      "dry_days_next_30d": 9,
-      "longest_dry_spell_next_30d": 4
+      "onset_date": "1999-03-15",
+      "onset_doy": 74,
+      "rain_10d_mm": 24.8,
+      "gwetroot": 0.4,
+      "rain_prev_10d_mm": 1.4,
+      "rain_next_30d_mm": 15.6,
+      "dry_days_next_30d": 27,
+      "longest_dry_spell_next_30d": 23
     },
     {
       "season": "first_rains",
@@ -363,14 +363,14 @@
       "window_end": "2000-05-31",
       "year": 2000,
       "onset_found": true,
-      "onset_date": "2000-04-06",
-      "onset_doy": 97,
-      "rain_10d_mm": 22.6,
-      "gwetroot": 0.46,
-      "rain_prev_10d_mm": 3.2,
-      "rain_next_30d_mm": 110.3,
-      "dry_days_next_30d": 8,
-      "longest_dry_spell_next_30d": 5
+      "onset_date": "2000-05-08",
+      "onset_doy": 129,
+      "rain_10d_mm": 24.7,
+      "gwetroot": 0.4,
+      "rain_prev_10d_mm": 7.3,
+      "rain_next_30d_mm": 69.2,
+      "dry_days_next_30d": 13,
+      "longest_dry_spell_next_30d": 6
     },
     {
       "season": "first_rains",
@@ -378,14 +378,14 @@
       "window_end": "2001-05-31",
       "year": 2001,
       "onset_found": true,
-      "onset_date": "2001-02-11",
-      "onset_doy": 42,
-      "rain_10d_mm": 20.4,
-      "gwetroot": 0.47,
-      "rain_prev_10d_mm": 13.9,
-      "rain_next_30d_mm": 73.8,
+      "onset_date": "2001-03-07",
+      "onset_doy": 66,
+      "rain_10d_mm": 23.7,
+      "gwetroot": 0.41,
+      "rain_prev_10d_mm": 0.5,
+      "rain_next_30d_mm": 44.1,
       "dry_days_next_30d": 17,
-      "longest_dry_spell_next_30d": 8
+      "longest_dry_spell_next_30d": 7
     },
     {
       "season": "first_rains",
@@ -393,13 +393,13 @@
       "window_end": "2002-05-31",
       "year": 2002,
       "onset_found": true,
-      "onset_date": "2002-02-19",
-      "onset_doy": 50,
-      "rain_10d_mm": 22.7,
-      "gwetroot": 0.47,
-      "rain_prev_10d_mm": 0.4,
-      "rain_next_30d_mm": 106.4,
-      "dry_days_next_30d": 11,
+      "onset_date": "2002-03-10",
+      "onset_doy": 69,
+      "rain_10d_mm": 41.3,
+      "gwetroot": 0.42,
+      "rain_prev_10d_mm": 2.4,
+      "rain_next_30d_mm": 38.9,
+      "dry_days_next_30d": 22,
       "longest_dry_spell_next_30d": 7
     },
     {
@@ -408,14 +408,14 @@
       "window_end": "2003-05-31",
       "year": 2003,
       "onset_found": true,
-      "onset_date": "2003-03-23",
-      "onset_doy": 82,
-      "rain_10d_mm": 22.8,
-      "gwetroot": 0.46,
-      "rain_prev_10d_mm": 4.8,
-      "rain_next_30d_mm": 124.6,
-      "dry_days_next_30d": 12,
-      "longest_dry_spell_next_30d": 11
+      "onset_date": "2003-04-21",
+      "onset_doy": 111,
+      "rain_10d_mm": 40.2,
+      "gwetroot": 0.4,
+      "rain_prev_10d_mm": 0.1,
+      "rain_next_30d_mm": 151.9,
+      "dry_days_next_30d": 10,
+      "longest_dry_spell_next_30d": 4
     },
     {
       "season": "first_rains",
@@ -423,14 +423,14 @@
       "window_end": "2004-05-31",
       "year": 2004,
       "onset_found": true,
-      "onset_date": "2004-02-22",
-      "onset_doy": 53,
-      "rain_10d_mm": 22.9,
-      "gwetroot": 0.46,
-      "rain_prev_10d_mm": 0.1,
-      "rain_next_30d_mm": 67.4,
-      "dry_days_next_30d": 14,
-      "longest_dry_spell_next_30d": 4
+      "onset_date": "2004-04-03",
+      "onset_doy": 94,
+      "rain_10d_mm": 23.6,
+      "gwetroot": 0.4,
+      "rain_prev_10d_mm": 2.4,
+      "rain_next_30d_mm": 165.8,
+      "dry_days_next_30d": 3,
+      "longest_dry_spell_next_30d": 1
     },
     {
       "season": "first_rains",
@@ -440,12 +440,12 @@
       "onset_found": true,
       "onset_date": "2005-02-01",
       "onset_doy": 32,
-      "rain_10d_mm": 47.2,
-      "gwetroot": 0.49,
-      "rain_prev_10d_mm": 10.6,
-      "rain_next_30d_mm": 38.3,
-      "dry_days_next_30d": 21,
-      "longest_dry_spell_next_30d": 16
+      "rain_10d_mm": 31.3,
+      "gwetroot": 0.4,
+      "rain_prev_10d_mm": 2.0,
+      "rain_next_30d_mm": 19.4,
+      "dry_days_next_30d": 25,
+      "longest_dry_spell_next_30d": 24
     },
     {
       "season": "first_rains",
@@ -453,14 +453,14 @@
       "window_end": "2006-05-31",
       "year": 2006,
       "onset_found": true,
-      "onset_date": "2006-02-27",
-      "onset_doy": 58,
-      "rain_10d_mm": 26.4,
-      "gwetroot": 0.45,
+      "onset_date": "2006-03-01",
+      "onset_doy": 60,
+      "rain_10d_mm": 29.0,
+      "gwetroot": 0.41,
       "rain_prev_10d_mm": 2.4,
-      "rain_next_30d_mm": 66.4,
-      "dry_days_next_30d": 14,
-      "longest_dry_spell_next_30d": 4
+      "rain_next_30d_mm": 35.3,
+      "dry_days_next_30d": 21,
+      "longest_dry_spell_next_30d": 8
     },
     {
       "season": "first_rains",
@@ -468,14 +468,14 @@
       "window_end": "2007-05-31",
       "year": 2007,
       "onset_found": true,
-      "onset_date": "2007-02-02",
-      "onset_doy": 33,
-      "rain_10d_mm": 27.3,
-      "gwetroot": 0.49,
-      "rain_prev_10d_mm": 17.8,
-      "rain_next_30d_mm": 37.3,
-      "dry_days_next_30d": 20,
-      "longest_dry_spell_next_30d": 8
+      "onset_date": "2007-04-14",
+      "onset_doy": 104,
+      "rain_10d_mm": 25.1,
+      "gwetroot": 0.4,
+      "rain_prev_10d_mm": 0.7,
+      "rain_next_30d_mm": 105.2,
+      "dry_days_next_30d": 11,
+      "longest_dry_spell_next_30d": 6
     },
     {
       "season": "first_rains",
@@ -483,14 +483,14 @@
       "window_end": "2008-05-31",
       "year": 2008,
       "onset_found": true,
-      "onset_date": "2008-02-10",
-      "onset_doy": 41,
-      "rain_10d_mm": 28.2,
-      "gwetroot": 0.48,
-      "rain_prev_10d_mm": 19.4,
-      "rain_next_30d_mm": 65.2,
-      "dry_days_next_30d": 19,
-      "longest_dry_spell_next_30d": 6
+      "onset_date": "2008-02-11",
+      "onset_doy": 42,
+      "rain_10d_mm": 33.8,
+      "gwetroot": 0.41,
+      "rain_prev_10d_mm": 2.9,
+      "rain_next_30d_mm": 39.5,
+      "dry_days_next_30d": 25,
+      "longest_dry_spell_next_30d": 19
     },
     {
       "season": "first_rains",
@@ -498,14 +498,14 @@
       "window_end": "2009-05-31",
       "year": 2009,
       "onset_found": true,
-      "onset_date": "2009-02-01",
-      "onset_doy": 32,
-      "rain_10d_mm": 24.2,
-      "gwetroot": 0.46,
-      "rain_prev_10d_mm": 9.7,
-      "rain_next_30d_mm": 47.1,
-      "dry_days_next_30d": 17,
-      "longest_dry_spell_next_30d": 7
+      "onset_date": "2009-03-31",
+      "onset_doy": 90,
+      "rain_10d_mm": 24.0,
+      "gwetroot": 0.4,
+      "rain_prev_10d_mm": 2.5,
+      "rain_next_30d_mm": 106.0,
+      "dry_days_next_30d": 7,
+      "longest_dry_spell_next_30d": 6
     },
     {
       "season": "first_rains",
@@ -513,14 +513,14 @@
       "window_end": "2010-05-31",
       "year": 2010,
       "onset_found": true,
-      "onset_date": "2010-02-12",
-      "onset_doy": 43,
-      "rain_10d_mm": 20.5,
-      "gwetroot": 0.46,
-      "rain_prev_10d_mm": 0.0,
-      "rain_next_30d_mm": 103.0,
-      "dry_days_next_30d": 13,
-      "longest_dry_spell_next_30d": 7
+      "onset_date": "2010-02-25",
+      "onset_doy": 56,
+      "rain_10d_mm": 23.7,
+      "gwetroot": 0.4,
+      "rain_prev_10d_mm": 4.8,
+      "rain_next_30d_mm": 91.3,
+      "dry_days_next_30d": 9,
+      "longest_dry_spell_next_30d": 9
     },
     {
       "season": "first_rains",
@@ -528,14 +528,14 @@
       "window_end": "2011-05-31",
       "year": 2011,
       "onset_found": true,
-      "onset_date": "2011-03-15",
-      "onset_doy": 74,
-      "rain_10d_mm": 23.0,
-      "gwetroot": 0.46,
-      "rain_prev_10d_mm": 3.2,
-      "rain_next_30d_mm": 125.9,
-      "dry_days_next_30d": 9,
-      "longest_dry_spell_next_30d": 3
+      "onset_date": "2011-03-18",
+      "onset_doy": 77,
+      "rain_10d_mm": 27.1,
+      "gwetroot": 0.41,
+      "rain_prev_10d_mm": 4.5,
+      "rain_next_30d_mm": 54.6,
+      "dry_days_next_30d": 16,
+      "longest_dry_spell_next_30d": 8
     },
     {
       "season": "first_rains",
@@ -543,14 +543,14 @@
       "window_end": "2012-05-31",
       "year": 2012,
       "onset_found": true,
-      "onset_date": "2012-03-05",
-      "onset_doy": 65,
-      "rain_10d_mm": 24.0,
-      "gwetroot": 0.47,
-      "rain_prev_10d_mm": 6.2,
-      "rain_next_30d_mm": 38.5,
-      "dry_days_next_30d": 18,
-      "longest_dry_spell_next_30d": 11
+      "onset_date": "2012-03-06",
+      "onset_doy": 66,
+      "rain_10d_mm": 20.0,
+      "gwetroot": 0.4,
+      "rain_prev_10d_mm": 1.5,
+      "rain_next_30d_mm": 11.8,
+      "dry_days_next_30d": 26,
+      "longest_dry_spell_next_30d": 13
     },
     {
       "season": "first_rains",
@@ -558,13 +558,13 @@
       "window_end": "2013-05-31",
       "year": 2013,
       "onset_found": true,
-      "onset_date": "2013-03-19",
-      "onset_doy": 78,
-      "rain_10d_mm": 24.3,
-      "gwetroot": 0.47,
-      "rain_prev_10d_mm": 6.9,
-      "rain_next_30d_mm": 145.6,
-      "dry_days_next_30d": 2,
+      "onset_date": "2013-03-29",
+      "onset_doy": 88,
+      "rain_10d_mm": 22.3,
+      "gwetroot": 0.4,
+      "rain_prev_10d_mm": 15.5,
+      "rain_next_30d_mm": 137.8,
+      "dry_days_next_30d": 3,
       "longest_dry_spell_next_30d": 1
     },
     {
@@ -573,14 +573,14 @@
       "window_end": "2014-05-31",
       "year": 2014,
       "onset_found": true,
-      "onset_date": "2014-03-13",
-      "onset_doy": 72,
-      "rain_10d_mm": 24.4,
-      "gwetroot": 0.47,
-      "rain_prev_10d_mm": 2.9,
-      "rain_next_30d_mm": 68.6,
-      "dry_days_next_30d": 11,
-      "longest_dry_spell_next_30d": 5
+      "onset_date": "2014-05-07",
+      "onset_doy": 127,
+      "rain_10d_mm": 33.2,
+      "gwetroot": 0.41,
+      "rain_prev_10d_mm": 3.1,
+      "rain_next_30d_mm": 135.1,
+      "dry_days_next_30d": 5,
+      "longest_dry_spell_next_30d": 4
     },
     {
       "season": "first_rains",
@@ -588,14 +588,14 @@
       "window_end": "2015-05-31",
       "year": 2015,
       "onset_found": true,
-      "onset_date": "2015-03-23",
-      "onset_doy": 82,
-      "rain_10d_mm": 26.0,
-      "gwetroot": 0.48,
-      "rain_prev_10d_mm": 0.1,
-      "rain_next_30d_mm": 179.2,
-      "dry_days_next_30d": 7,
-      "longest_dry_spell_next_30d": 2
+      "onset_date": "2015-03-31",
+      "onset_doy": 90,
+      "rain_10d_mm": 26.3,
+      "gwetroot": 0.41,
+      "rain_prev_10d_mm": 1.1,
+      "rain_next_30d_mm": 125.7,
+      "dry_days_next_30d": 9,
+      "longest_dry_spell_next_30d": 4
     },
     {
       "season": "first_rains",
@@ -603,14 +603,14 @@
       "window_end": "2016-05-31",
       "year": 2016,
       "onset_found": true,
-      "onset_date": "2016-03-09",
-      "onset_doy": 69,
+      "onset_date": "2016-04-03",
+      "onset_doy": 94,
       "rain_10d_mm": 21.0,
-      "gwetroot": 0.49,
-      "rain_prev_10d_mm": 5.0,
-      "rain_next_30d_mm": 104.0,
-      "dry_days_next_30d": 16,
-      "longest_dry_spell_next_30d": 8
+      "gwetroot": 0.4,
+      "rain_prev_10d_mm": 12.0,
+      "rain_next_30d_mm": 151.5,
+      "dry_days_next_30d": 6,
+      "longest_dry_spell_next_30d": 3
     },
     {
       "season": "first_rains",
@@ -620,12 +620,12 @@
       "onset_found": true,
       "onset_date": "2017-02-01",
       "onset_doy": 32,
-      "rain_10d_mm": 32.4,
-      "gwetroot": 0.49,
+      "rain_10d_mm": 28.5,
+      "gwetroot": 0.42,
       "rain_prev_10d_mm": 0.0,
-      "rain_next_30d_mm": 82.5,
-      "dry_days_next_30d": 16,
-      "longest_dry_spell_next_30d": 13
+      "rain_next_30d_mm": 58.9,
+      "dry_days_next_30d": 20,
+      "longest_dry_spell_next_30d": 16
     },
     {
       "season": "first_rains",
@@ -633,14 +633,14 @@
       "window_end": "2018-05-31",
       "year": 2018,
       "onset_found": true,
-      "onset_date": "2018-02-25",
-      "onset_doy": 56,
-      "rain_10d_mm": 23.3,
-      "gwetroot": 0.46,
-      "rain_prev_10d_mm": 0.1,
-      "rain_next_30d_mm": 108.6,
-      "dry_days_next_30d": 8,
-      "longest_dry_spell_next_30d": 3
+      "onset_date": "2018-03-01",
+      "onset_doy": 60,
+      "rain_10d_mm": 34.6,
+      "gwetroot": 0.42,
+      "rain_prev_10d_mm": 1.0,
+      "rain_next_30d_mm": 99.9,
+      "dry_days_next_30d": 13,
+      "longest_dry_spell_next_30d": 4
     },
     {
       "season": "first_rains",
@@ -648,14 +648,14 @@
       "window_end": "2019-05-31",
       "year": 2019,
       "onset_found": true,
-      "onset_date": "2019-02-21",
-      "onset_doy": 52,
-      "rain_10d_mm": 22.9,
-      "gwetroot": 0.44,
-      "rain_prev_10d_mm": 0.3,
-      "rain_next_30d_mm": 65.3,
-      "dry_days_next_30d": 21,
-      "longest_dry_spell_next_30d": 8
+      "onset_date": "2019-02-24",
+      "onset_doy": 55,
+      "rain_10d_mm": 21.2,
+      "gwetroot": 0.4,
+      "rain_prev_10d_mm": 0.1,
+      "rain_next_30d_mm": 24.5,
+      "dry_days_next_30d": 24,
+      "longest_dry_spell_next_30d": 17
     },
     {
       "season": "first_rains",
@@ -665,12 +665,12 @@
       "onset_found": true,
       "onset_date": "2020-02-01",
       "onset_doy": 32,
-      "rain_10d_mm": 30.3,
-      "gwetroot": 0.56,
-      "rain_prev_10d_mm": 9.5,
-      "rain_next_30d_mm": 60.2,
+      "rain_10d_mm": 35.4,
+      "gwetroot": 0.44,
+      "rain_prev_10d_mm": 5.7,
+      "rain_next_30d_mm": 35.2,
       "dry_days_next_30d": 21,
-      "longest_dry_spell_next_30d": 13
+      "longest_dry_spell_next_30d": 19
     },
     {
       "season": "first_rains",
@@ -678,14 +678,14 @@
       "window_end": "2021-05-31",
       "year": 2021,
       "onset_found": true,
-      "onset_date": "2021-02-01",
-      "onset_doy": 32,
-      "rain_10d_mm": 44.4,
-      "gwetroot": 0.5,
-      "rain_prev_10d_mm": 15.2,
-      "rain_next_30d_mm": 20.8,
-      "dry_days_next_30d": 22,
-      "longest_dry_spell_next_30d": 14
+      "onset_date": "2021-02-20",
+      "onset_doy": 51,
+      "rain_10d_mm": 25.8,
+      "gwetroot": 0.43,
+      "rain_prev_10d_mm": 0.7,
+      "rain_next_30d_mm": 17.2,
+      "dry_days_next_30d": 27,
+      "longest_dry_spell_next_30d": 16
     },
     {
       "season": "first_rains",
@@ -693,14 +693,14 @@
       "window_end": "2022-05-31",
       "year": 2022,
       "onset_found": true,
-      "onset_date": "2022-03-04",
-      "onset_doy": 63,
-      "rain_10d_mm": 30.4,
-      "gwetroot": 0.47,
-      "rain_prev_10d_mm": 3.1,
-      "rain_next_30d_mm": 58.1,
-      "dry_days_next_30d": 15,
-      "longest_dry_spell_next_30d": 5
+      "onset_date": "2022-03-25",
+      "onset_doy": 84,
+      "rain_10d_mm": 27.6,
+      "gwetroot": 0.4,
+      "rain_prev_10d_mm": 0.8,
+      "rain_next_30d_mm": 93.6,
+      "dry_days_next_30d": 18,
+      "longest_dry_spell_next_30d": 12
     },
     {
       "season": "first_rains",
@@ -708,14 +708,14 @@
       "window_end": "2023-05-31",
       "year": 2023,
       "onset_found": true,
-      "onset_date": "2023-03-14",
-      "onset_doy": 73,
-      "rain_10d_mm": 27.0,
-      "gwetroot": 0.47,
-      "rain_prev_10d_mm": 14.1,
-      "rain_next_30d_mm": 200.4,
-      "dry_days_next_30d": 6,
-      "longest_dry_spell_next_30d": 3
+      "onset_date": "2023-03-15",
+      "onset_doy": 74,
+      "rain_10d_mm": 33.2,
+      "gwetroot": 0.44,
+      "rain_prev_10d_mm": 8.9,
+      "rain_next_30d_mm": 194.3,
+      "dry_days_next_30d": 12,
+      "longest_dry_spell_next_30d": 8
     },
     {
       "season": "first_rains",
@@ -723,14 +723,14 @@
       "window_end": "2024-05-31",
       "year": 2024,
       "onset_found": true,
-      "onset_date": "2024-02-12",
-      "onset_doy": 43,
-      "rain_10d_mm": 20.1,
-      "gwetroot": 0.48,
-      "rain_prev_10d_mm": 7.1,
-      "rain_next_30d_mm": 90.8,
-      "dry_days_next_30d": 10,
-      "longest_dry_spell_next_30d": 6
+      "onset_date": "2024-02-20",
+      "onset_doy": 51,
+      "rain_10d_mm": 24.1,
+      "gwetroot": 0.4,
+      "rain_prev_10d_mm": 10.0,
+      "rain_next_30d_mm": 44.1,
+      "dry_days_next_30d": 19,
+      "longest_dry_spell_next_30d": 11
     },
     {
       "season": "first_rains",
@@ -738,14 +738,14 @@
       "window_end": "2025-05-31",
       "year": 2025,
       "onset_found": true,
-      "onset_date": "2025-03-23",
-      "onset_doy": 82,
-      "rain_10d_mm": 26.4,
-      "gwetroot": 0.46,
-      "rain_prev_10d_mm": 8.7,
-      "rain_next_30d_mm": 99.0,
-      "dry_days_next_30d": 11,
-      "longest_dry_spell_next_30d": 3
+      "onset_date": "2025-03-25",
+      "onset_doy": 84,
+      "rain_10d_mm": 23.9,
+      "gwetroot": 0.4,
+      "rain_prev_10d_mm": 13.9,
+      "rain_next_30d_mm": 84.7,
+      "dry_days_next_30d": 14,
+      "longest_dry_spell_next_30d": 6
     },
     {
       "season": "second_rains",
@@ -753,14 +753,14 @@
       "window_end": "1991-11-30",
       "year": 1991,
       "onset_found": true,
-      "onset_date": "1991-09-29",
-      "onset_doy": 272,
-      "rain_10d_mm": 34.7,
-      "gwetroot": 0.6,
-      "rain_prev_10d_mm": 19.7,
-      "rain_next_30d_mm": 195.6,
+      "onset_date": "1991-10-12",
+      "onset_doy": 285,
+      "rain_10d_mm": 33.0,
+      "gwetroot": 0.44,
+      "rain_prev_10d_mm": 13.9,
+      "rain_next_30d_mm": 111.2,
       "dry_days_next_30d": 9,
-      "longest_dry_spell_next_30d": 9
+      "longest_dry_spell_next_30d": 3
     },
     {
       "season": "second_rains",
@@ -768,14 +768,14 @@
       "window_end": "1992-11-30",
       "year": 1992,
       "onset_found": true,
-      "onset_date": "1992-10-04",
-      "onset_doy": 278,
-      "rain_10d_mm": 47.0,
-      "gwetroot": 0.59,
-      "rain_prev_10d_mm": 16.7,
-      "rain_next_30d_mm": 229.3,
-      "dry_days_next_30d": 6,
-      "longest_dry_spell_next_30d": 5
+      "onset_date": "1992-09-02",
+      "onset_doy": 246,
+      "rain_10d_mm": 29.9,
+      "gwetroot": 0.45,
+      "rain_prev_10d_mm": 19.4,
+      "rain_next_30d_mm": 127.4,
+      "dry_days_next_30d": 11,
+      "longest_dry_spell_next_30d": 4
     },
     {
       "season": "second_rains",
@@ -785,12 +785,12 @@
       "onset_found": true,
       "onset_date": "1993-08-02",
       "onset_doy": 214,
-      "rain_10d_mm": 43.2,
-      "gwetroot": 0.54,
-      "rain_prev_10d_mm": 16.8,
-      "rain_next_30d_mm": 132.0,
-      "dry_days_next_30d": 5,
-      "longest_dry_spell_next_30d": 2
+      "rain_10d_mm": 32.5,
+      "gwetroot": 0.43,
+      "rain_prev_10d_mm": 15.7,
+      "rain_next_30d_mm": 75.5,
+      "dry_days_next_30d": 9,
+      "longest_dry_spell_next_30d": 4
     },
     {
       "season": "second_rains",
@@ -798,14 +798,14 @@
       "window_end": "1994-11-30",
       "year": 1994,
       "onset_found": true,
-      "onset_date": "1994-08-17",
-      "onset_doy": 229,
-      "rain_10d_mm": 65.7,
-      "gwetroot": 0.57,
-      "rain_prev_10d_mm": 19.1,
-      "rain_next_30d_mm": 212.8,
-      "dry_days_next_30d": 3,
-      "longest_dry_spell_next_30d": 2
+      "onset_date": "1994-09-11",
+      "onset_doy": 254,
+      "rain_10d_mm": 55.3,
+      "gwetroot": 0.48,
+      "rain_prev_10d_mm": 17.5,
+      "rain_next_30d_mm": 38.8,
+      "dry_days_next_30d": 23,
+      "longest_dry_spell_next_30d": 16
     },
     {
       "season": "second_rains",
@@ -815,12 +815,12 @@
       "onset_found": true,
       "onset_date": "1995-08-18",
       "onset_doy": 230,
-      "rain_10d_mm": 27.6,
-      "gwetroot": 0.53,
-      "rain_prev_10d_mm": 19.9,
-      "rain_next_30d_mm": 113.2,
-      "dry_days_next_30d": 4,
-      "longest_dry_spell_next_30d": 2
+      "rain_10d_mm": 21.1,
+      "gwetroot": 0.42,
+      "rain_prev_10d_mm": 14.7,
+      "rain_next_30d_mm": 97.8,
+      "dry_days_next_30d": 7,
+      "longest_dry_spell_next_30d": 4
     },
     {
       "season": "second_rains",
@@ -830,11 +830,11 @@
       "onset_found": true,
       "onset_date": "1996-08-12",
       "onset_doy": 225,
-      "rain_10d_mm": 21.2,
-      "gwetroot": 0.58,
-      "rain_prev_10d_mm": 9.1,
-      "rain_next_30d_mm": 173.1,
-      "dry_days_next_30d": 1,
+      "rain_10d_mm": 23.2,
+      "gwetroot": 0.42,
+      "rain_prev_10d_mm": 14.3,
+      "rain_next_30d_mm": 155.0,
+      "dry_days_next_30d": 2,
       "longest_dry_spell_next_30d": 1
     },
     {
@@ -845,12 +845,12 @@
       "onset_found": true,
       "onset_date": "1997-08-01",
       "onset_doy": 213,
-      "rain_10d_mm": 41.9,
-      "gwetroot": 0.53,
-      "rain_prev_10d_mm": 13.8,
-      "rain_next_30d_mm": 134.5,
-      "dry_days_next_30d": 4,
-      "longest_dry_spell_next_30d": 4
+      "rain_10d_mm": 31.4,
+      "gwetroot": 0.42,
+      "rain_prev_10d_mm": 13.9,
+      "rain_next_30d_mm": 93.6,
+      "dry_days_next_30d": 13,
+      "longest_dry_spell_next_30d": 6
     },
     {
       "season": "second_rains",
@@ -858,14 +858,14 @@
       "window_end": "1998-11-30",
       "year": 1998,
       "onset_found": true,
-      "onset_date": "1998-08-15",
-      "onset_doy": 227,
-      "rain_10d_mm": 21.4,
-      "gwetroot": 0.49,
-      "rain_prev_10d_mm": 15.4,
-      "rain_next_30d_mm": 83.2,
-      "dry_days_next_30d": 4,
-      "longest_dry_spell_next_30d": 2
+      "onset_date": "1998-08-18",
+      "onset_doy": 230,
+      "rain_10d_mm": 39.9,
+      "gwetroot": 0.44,
+      "rain_prev_10d_mm": 19.5,
+      "rain_next_30d_mm": 48.7,
+      "dry_days_next_30d": 12,
+      "longest_dry_spell_next_30d": 8
     },
     {
       "season": "second_rains",
@@ -873,14 +873,14 @@
       "window_end": "1999-11-30",
       "year": 1999,
       "onset_found": true,
-      "onset_date": "1999-09-27",
-      "onset_doy": 270,
-      "rain_10d_mm": 22.0,
-      "gwetroot": 0.48,
-      "rain_prev_10d_mm": 8.7,
-      "rain_next_30d_mm": 114.7,
-      "dry_days_next_30d": 4,
-      "longest_dry_spell_next_30d": 2
+      "onset_date": "1999-08-13",
+      "onset_doy": 225,
+      "rain_10d_mm": 20.0,
+      "gwetroot": 0.41,
+      "rain_prev_10d_mm": 18.3,
+      "rain_next_30d_mm": 94.9,
+      "dry_days_next_30d": 10,
+      "longest_dry_spell_next_30d": 8
     },
     {
       "season": "second_rains",
@@ -890,11 +890,11 @@
       "onset_found": true,
       "onset_date": "2000-08-01",
       "onset_doy": 214,
-      "rain_10d_mm": 29.9,
-      "gwetroot": 0.47,
-      "rain_prev_10d_mm": 8.0,
-      "rain_next_30d_mm": 128.5,
-      "dry_days_next_30d": 5,
+      "rain_10d_mm": 36.9,
+      "gwetroot": 0.41,
+      "rain_prev_10d_mm": 6.3,
+      "rain_next_30d_mm": 120.2,
+      "dry_days_next_30d": 3,
       "longest_dry_spell_next_30d": 1
     },
     {
@@ -905,12 +905,12 @@
       "onset_found": true,
       "onset_date": "2001-09-07",
       "onset_doy": 250,
-      "rain_10d_mm": 42.3,
-      "gwetroot": 0.52,
-      "rain_prev_10d_mm": 19.0,
-      "rain_next_30d_mm": 137.7,
-      "dry_days_next_30d": 6,
-      "longest_dry_spell_next_30d": 2
+      "rain_10d_mm": 26.9,
+      "gwetroot": 0.43,
+      "rain_prev_10d_mm": 17.9,
+      "rain_next_30d_mm": 107.8,
+      "dry_days_next_30d": 13,
+      "longest_dry_spell_next_30d": 9
     },
     {
       "season": "second_rains",
@@ -918,14 +918,14 @@
       "window_end": "2002-11-30",
       "year": 2002,
       "onset_found": true,
-      "onset_date": "2002-08-07",
-      "onset_doy": 219,
-      "rain_10d_mm": 31.4,
-      "gwetroot": 0.49,
-      "rain_prev_10d_mm": 18.5,
-      "rain_next_30d_mm": 100.5,
-      "dry_days_next_30d": 7,
-      "longest_dry_spell_next_30d": 3
+      "onset_date": "2002-08-04",
+      "onset_doy": 216,
+      "rain_10d_mm": 23.3,
+      "gwetroot": 0.4,
+      "rain_prev_10d_mm": 7.8,
+      "rain_next_30d_mm": 95.9,
+      "dry_days_next_30d": 8,
+      "longest_dry_spell_next_30d": 5
     },
     {
       "season": "second_rains",
@@ -933,14 +933,14 @@
       "window_end": "2003-11-30",
       "year": 2003,
       "onset_found": true,
-      "onset_date": "2003-08-10",
-      "onset_doy": 222,
-      "rain_10d_mm": 44.3,
-      "gwetroot": 0.5,
-      "rain_prev_10d_mm": 15.4,
-      "rain_next_30d_mm": 136.4,
-      "dry_days_next_30d": 2,
-      "longest_dry_spell_next_30d": 1
+      "onset_date": "2003-08-12",
+      "onset_doy": 224,
+      "rain_10d_mm": 59.8,
+      "gwetroot": 0.46,
+      "rain_prev_10d_mm": 17.4,
+      "rain_next_30d_mm": 159.7,
+      "dry_days_next_30d": 4,
+      "longest_dry_spell_next_30d": 2
     },
     {
       "season": "second_rains",
@@ -948,14 +948,14 @@
       "window_end": "2004-11-30",
       "year": 2004,
       "onset_found": true,
-      "onset_date": "2004-08-01",
-      "onset_doy": 214,
-      "rain_10d_mm": 41.1,
-      "gwetroot": 0.49,
-      "rain_prev_10d_mm": 15.0,
-      "rain_next_30d_mm": 107.5,
-      "dry_days_next_30d": 7,
-      "longest_dry_spell_next_30d": 5
+      "onset_date": "2004-09-08",
+      "onset_doy": 252,
+      "rain_10d_mm": 23.4,
+      "gwetroot": 0.41,
+      "rain_prev_10d_mm": 18.8,
+      "rain_next_30d_mm": 85.3,
+      "dry_days_next_30d": 9,
+      "longest_dry_spell_next_30d": 4
     },
     {
       "season": "second_rains",
@@ -963,13 +963,13 @@
       "window_end": "2005-11-30",
       "year": 2005,
       "onset_found": true,
-      "onset_date": "2005-08-20",
-      "onset_doy": 232,
-      "rain_10d_mm": 24.6,
-      "gwetroot": 0.48,
-      "rain_prev_10d_mm": 17.9,
-      "rain_next_30d_mm": 118.6,
-      "dry_days_next_30d": 6,
+      "onset_date": "2005-08-22",
+      "onset_doy": 234,
+      "rain_10d_mm": 27.8,
+      "gwetroot": 0.41,
+      "rain_prev_10d_mm": 19.3,
+      "rain_next_30d_mm": 112.7,
+      "dry_days_next_30d": 8,
       "longest_dry_spell_next_30d": 4
     },
     {
@@ -980,11 +980,11 @@
       "onset_found": true,
       "onset_date": "2006-08-12",
       "onset_doy": 224,
-      "rain_10d_mm": 32.8,
-      "gwetroot": 0.48,
-      "rain_prev_10d_mm": 12.9,
-      "rain_next_30d_mm": 40.6,
-      "dry_days_next_30d": 21,
+      "rain_10d_mm": 30.7,
+      "gwetroot": 0.42,
+      "rain_prev_10d_mm": 19.7,
+      "rain_next_30d_mm": 45.9,
+      "dry_days_next_30d": 19,
       "longest_dry_spell_next_30d": 7
     },
     {
@@ -992,15 +992,15 @@
       "window_start": "2007-08-01",
       "window_end": "2007-11-30",
       "year": 2007,
-      "onset_found": true,
-      "onset_date": "2007-09-04",
-      "onset_doy": 247,
-      "rain_10d_mm": 40.5,
-      "gwetroot": 0.51,
-      "rain_prev_10d_mm": 18.1,
-      "rain_next_30d_mm": 147.4,
-      "dry_days_next_30d": 0,
-      "longest_dry_spell_next_30d": 0
+      "onset_found": false,
+      "onset_date": null,
+      "onset_doy": null,
+      "rain_10d_mm": null,
+      "gwetroot": null,
+      "rain_prev_10d_mm": null,
+      "rain_next_30d_mm": null,
+      "dry_days_next_30d": null,
+      "longest_dry_spell_next_30d": null
     },
     {
       "season": "second_rains",
@@ -1010,12 +1010,12 @@
       "onset_found": true,
       "onset_date": "2008-08-01",
       "onset_doy": 214,
-      "rain_10d_mm": 23.9,
-      "gwetroot": 0.48,
-      "rain_prev_10d_mm": 13.0,
-      "rain_next_30d_mm": 89.3,
-      "dry_days_next_30d": 7,
-      "longest_dry_spell_next_30d": 3
+      "rain_10d_mm": 27.6,
+      "gwetroot": 0.42,
+      "rain_prev_10d_mm": 19.4,
+      "rain_next_30d_mm": 103.8,
+      "dry_days_next_30d": 5,
+      "longest_dry_spell_next_30d": 2
     },
     {
       "season": "second_rains",
@@ -1025,11 +1025,11 @@
       "onset_found": true,
       "onset_date": "2009-08-16",
       "onset_doy": 228,
-      "rain_10d_mm": 20.0,
-      "gwetroot": 0.47,
-      "rain_prev_10d_mm": 11.6,
-      "rain_next_30d_mm": 79.5,
-      "dry_days_next_30d": 9,
+      "rain_10d_mm": 23.3,
+      "gwetroot": 0.4,
+      "rain_prev_10d_mm": 8.6,
+      "rain_next_30d_mm": 87.4,
+      "dry_days_next_30d": 6,
       "longest_dry_spell_next_30d": 2
     },
     {
@@ -1038,14 +1038,14 @@
       "window_end": "2010-11-30",
       "year": 2010,
       "onset_found": true,
-      "onset_date": "2010-08-01",
-      "onset_doy": 213,
-      "rain_10d_mm": 31.6,
-      "gwetroot": 0.5,
-      "rain_prev_10d_mm": 20.0,
-      "rain_next_30d_mm": 87.5,
-      "dry_days_next_30d": 6,
-      "longest_dry_spell_next_30d": 5
+      "onset_date": "2010-08-23",
+      "onset_doy": 235,
+      "rain_10d_mm": 38.8,
+      "gwetroot": 0.43,
+      "rain_prev_10d_mm": 16.8,
+      "rain_next_30d_mm": 150.7,
+      "dry_days_next_30d": 0,
+      "longest_dry_spell_next_30d": 0
     },
     {
       "season": "second_rains",
@@ -1055,10 +1055,10 @@
       "onset_found": true,
       "onset_date": "2011-08-01",
       "onset_doy": 213,
-      "rain_10d_mm": 48.5,
-      "gwetroot": 0.51,
-      "rain_prev_10d_mm": 10.4,
-      "rain_next_30d_mm": 171.7,
+      "rain_10d_mm": 52.5,
+      "gwetroot": 0.45,
+      "rain_prev_10d_mm": 11.3,
+      "rain_next_30d_mm": 193.2,
       "dry_days_next_30d": 5,
       "longest_dry_spell_next_30d": 5
     },
@@ -1068,14 +1068,14 @@
       "window_end": "2012-11-30",
       "year": 2012,
       "onset_found": true,
-      "onset_date": "2012-10-27",
-      "onset_doy": 301,
-      "rain_10d_mm": 36.8,
-      "gwetroot": 0.51,
-      "rain_prev_10d_mm": 19.3,
-      "rain_next_30d_mm": 138.2,
+      "onset_date": "2012-10-25",
+      "onset_doy": 299,
+      "rain_10d_mm": 20.9,
+      "gwetroot": 0.43,
+      "rain_prev_10d_mm": 11.6,
+      "rain_next_30d_mm": 118.9,
       "dry_days_next_30d": 11,
-      "longest_dry_spell_next_30d": 9
+      "longest_dry_spell_next_30d": 7
     },
     {
       "season": "second_rains",
@@ -1083,14 +1083,14 @@
       "window_end": "2013-11-30",
       "year": 2013,
       "onset_found": true,
-      "onset_date": "2013-08-01",
-      "onset_doy": 213,
-      "rain_10d_mm": 24.8,
-      "gwetroot": 0.49,
-      "rain_prev_10d_mm": 15.6,
-      "rain_next_30d_mm": 110.6,
-      "dry_days_next_30d": 4,
-      "longest_dry_spell_next_30d": 1
+      "onset_date": "2013-08-17",
+      "onset_doy": 229,
+      "rain_10d_mm": 29.3,
+      "gwetroot": 0.43,
+      "rain_prev_10d_mm": 18.6,
+      "rain_next_30d_mm": 134.7,
+      "dry_days_next_30d": 3,
+      "longest_dry_spell_next_30d": 2
     },
     {
       "season": "second_rains",
@@ -1098,13 +1098,13 @@
       "window_end": "2014-11-30",
       "year": 2014,
       "onset_found": true,
-      "onset_date": "2014-08-01",
-      "onset_doy": 213,
-      "rain_10d_mm": 43.3,
-      "gwetroot": 0.51,
-      "rain_prev_10d_mm": 16.9,
-      "rain_next_30d_mm": 89.4,
-      "dry_days_next_30d": 4,
+      "onset_date": "2014-09-25",
+      "onset_doy": 268,
+      "rain_10d_mm": 20.7,
+      "gwetroot": 0.42,
+      "rain_prev_10d_mm": 17.5,
+      "rain_next_30d_mm": 135.5,
+      "dry_days_next_30d": 5,
       "longest_dry_spell_next_30d": 2
     },
     {
@@ -1113,14 +1113,14 @@
       "window_end": "2015-11-30",
       "year": 2015,
       "onset_found": true,
-      "onset_date": "2015-08-03",
-      "onset_doy": 215,
-      "rain_10d_mm": 22.3,
-      "gwetroot": 0.48,
-      "rain_prev_10d_mm": 10.1,
-      "rain_next_30d_mm": 63.6,
-      "dry_days_next_30d": 15,
-      "longest_dry_spell_next_30d": 8
+      "onset_date": "2015-08-01",
+      "onset_doy": 213,
+      "rain_10d_mm": 44.2,
+      "gwetroot": 0.45,
+      "rain_prev_10d_mm": 14.1,
+      "rain_next_30d_mm": 48.1,
+      "dry_days_next_30d": 16,
+      "longest_dry_spell_next_30d": 10
     },
     {
       "season": "second_rains",
@@ -1128,14 +1128,14 @@
       "window_end": "2016-11-30",
       "year": 2016,
       "onset_found": true,
-      "onset_date": "2016-08-06",
-      "onset_doy": 219,
-      "rain_10d_mm": 20.9,
-      "gwetroot": 0.49,
-      "rain_prev_10d_mm": 12.1,
-      "rain_next_30d_mm": 49.7,
-      "dry_days_next_30d": 15,
-      "longest_dry_spell_next_30d": 6
+      "onset_date": "2016-08-01",
+      "onset_doy": 214,
+      "rain_10d_mm": 23.4,
+      "gwetroot": 0.42,
+      "rain_prev_10d_mm": 18.2,
+      "rain_next_30d_mm": 87.3,
+      "dry_days_next_30d": 11,
+      "longest_dry_spell_next_30d": 4
     },
     {
       "season": "second_rains",
@@ -1145,12 +1145,12 @@
       "onset_found": true,
       "onset_date": "2017-08-01",
       "onset_doy": 213,
-      "rain_10d_mm": 37.2,
-      "gwetroot": 0.51,
-      "rain_prev_10d_mm": 17.9,
-      "rain_next_30d_mm": 88.7,
-      "dry_days_next_30d": 7,
-      "longest_dry_spell_next_30d": 2
+      "rain_10d_mm": 27.2,
+      "gwetroot": 0.42,
+      "rain_prev_10d_mm": 19.4,
+      "rain_next_30d_mm": 72.8,
+      "dry_days_next_30d": 12,
+      "longest_dry_spell_next_30d": 4
     },
     {
       "season": "second_rains",
@@ -1158,14 +1158,14 @@
       "window_end": "2018-11-30",
       "year": 2018,
       "onset_found": true,
-      "onset_date": "2018-08-06",
-      "onset_doy": 218,
-      "rain_10d_mm": 20.4,
-      "gwetroot": 0.48,
-      "rain_prev_10d_mm": 7.6,
-      "rain_next_30d_mm": 100.6,
-      "dry_days_next_30d": 10,
-      "longest_dry_spell_next_30d": 5
+      "onset_date": "2018-08-23",
+      "onset_doy": 235,
+      "rain_10d_mm": 24.4,
+      "gwetroot": 0.43,
+      "rain_prev_10d_mm": 12.1,
+      "rain_next_30d_mm": 45.1,
+      "dry_days_next_30d": 17,
+      "longest_dry_spell_next_30d": 6
     },
     {
       "season": "second_rains",
@@ -1173,13 +1173,13 @@
       "window_end": "2019-11-30",
       "year": 2019,
       "onset_found": true,
-      "onset_date": "2019-08-04",
-      "onset_doy": 216,
-      "rain_10d_mm": 24.9,
-      "gwetroot": 0.51,
-      "rain_prev_10d_mm": 17.6,
-      "rain_next_30d_mm": 121.1,
-      "dry_days_next_30d": 6,
+      "onset_date": "2019-10-03",
+      "onset_doy": 276,
+      "rain_10d_mm": 65.1,
+      "gwetroot": 0.47,
+      "rain_prev_10d_mm": 13.2,
+      "rain_next_30d_mm": 164.0,
+      "dry_days_next_30d": 5,
       "longest_dry_spell_next_30d": 2
     },
     {
@@ -1188,12 +1188,12 @@
       "window_end": "2020-11-30",
       "year": 2020,
       "onset_found": true,
-      "onset_date": "2020-08-21",
-      "onset_doy": 234,
-      "rain_10d_mm": 20.5,
-      "gwetroot": 0.53,
-      "rain_prev_10d_mm": 15.0,
-      "rain_next_30d_mm": 148.9,
+      "onset_date": "2020-08-06",
+      "onset_doy": 219,
+      "rain_10d_mm": 36.0,
+      "gwetroot": 0.49,
+      "rain_prev_10d_mm": 19.1,
+      "rain_next_30d_mm": 88.2,
       "dry_days_next_30d": 4,
       "longest_dry_spell_next_30d": 1
     },
@@ -1205,12 +1205,12 @@
       "onset_found": true,
       "onset_date": "2021-09-06",
       "onset_doy": 249,
-      "rain_10d_mm": 23.3,
-      "gwetroot": 0.47,
-      "rain_prev_10d_mm": 4.3,
-      "rain_next_30d_mm": 70.3,
-      "dry_days_next_30d": 12,
-      "longest_dry_spell_next_30d": 3
+      "rain_10d_mm": 25.4,
+      "gwetroot": 0.41,
+      "rain_prev_10d_mm": 4.8,
+      "rain_next_30d_mm": 92.2,
+      "dry_days_next_30d": 13,
+      "longest_dry_spell_next_30d": 4
     },
     {
       "season": "second_rains",
@@ -1220,12 +1220,12 @@
       "onset_found": true,
       "onset_date": "2022-08-01",
       "onset_doy": 213,
-      "rain_10d_mm": 45.0,
-      "gwetroot": 0.5,
-      "rain_prev_10d_mm": 13.0,
-      "rain_next_30d_mm": 113.1,
-      "dry_days_next_30d": 11,
-      "longest_dry_spell_next_30d": 6
+      "rain_10d_mm": 54.1,
+      "gwetroot": 0.43,
+      "rain_prev_10d_mm": 15.8,
+      "rain_next_30d_mm": 179.4,
+      "dry_days_next_30d": 12,
+      "longest_dry_spell_next_30d": 5
     },
     {
       "season": "second_rains",
@@ -1233,14 +1233,14 @@
       "window_end": "2023-11-30",
       "year": 2023,
       "onset_found": true,
-      "onset_date": "2023-08-03",
-      "onset_doy": 215,
-      "rain_10d_mm": 20.6,
-      "gwetroot": 0.49,
-      "rain_prev_10d_mm": 1.1,
-      "rain_next_30d_mm": 51.1,
-      "dry_days_next_30d": 14,
-      "longest_dry_spell_next_30d": 5
+      "onset_date": "2023-08-01",
+      "onset_doy": 213,
+      "rain_10d_mm": 21.7,
+      "gwetroot": 0.41,
+      "rain_prev_10d_mm": 5.9,
+      "rain_next_30d_mm": 40.5,
+      "dry_days_next_30d": 20,
+      "longest_dry_spell_next_30d": 10
     },
     {
       "season": "second_rains",
@@ -1250,11 +1250,11 @@
       "onset_found": true,
       "onset_date": "2024-08-01",
       "onset_doy": 214,
-      "rain_10d_mm": 42.9,
+      "rain_10d_mm": 89.6,
       "gwetroot": 0.52,
-      "rain_prev_10d_mm": 18.1,
-      "rain_next_30d_mm": 122.7,
-      "dry_days_next_30d": 10,
+      "rain_prev_10d_mm": 14.7,
+      "rain_next_30d_mm": 51.3,
+      "dry_days_next_30d": 14,
       "longest_dry_spell_next_30d": 4
     },
     {
@@ -1263,14 +1263,14 @@
       "window_end": "2025-11-30",
       "year": 2025,
       "onset_found": true,
-      "onset_date": "2025-08-09",
-      "onset_doy": 221,
-      "rain_10d_mm": 28.8,
-      "gwetroot": 0.49,
-      "rain_prev_10d_mm": 12.2,
-      "rain_next_30d_mm": 109.3,
-      "dry_days_next_30d": 17,
-      "longest_dry_spell_next_30d": 5
+      "onset_date": "2025-08-01",
+      "onset_doy": 213,
+      "rain_10d_mm": 30.7,
+      "gwetroot": 0.42,
+      "rain_prev_10d_mm": 16.6,
+      "rain_next_30d_mm": 129.3,
+      "dry_days_next_30d": 7,
+      "longest_dry_spell_next_30d": 3
     }
   ],
   "onset_summary": [
@@ -1280,27 +1280,27 @@
       "window_end_md": "05-31",
       "years_evaluated": 35,
       "years_found": 35,
-      "onset_doy_median": 53.0,
-      "onset_doy_p25": 41.5,
-      "onset_doy_p75": 73.5,
+      "onset_doy_median": 77.0,
+      "onset_doy_p25": 55.5,
+      "onset_doy_p75": 90.0,
       "onset_doy_min": 32,
-      "onset_doy_max": 97,
-      "years_with_dry_spell_ge_7d_in_next_30d": 17,
+      "onset_doy_max": 129,
+      "years_with_dry_spell_ge_7d_in_next_30d": 21,
       "threshold_sensitivity": [
         {
           "rain_10d_threshold_mm": 15.0,
           "years_found": 35,
-          "onset_doy_median": 51.0
+          "onset_doy_median": 72.0
         },
         {
           "rain_10d_threshold_mm": 20.0,
           "years_found": 35,
-          "onset_doy_median": 53.0
+          "onset_doy_median": 77.0
         },
         {
           "rain_10d_threshold_mm": 25.0,
           "years_found": 35,
-          "onset_doy_median": 63.0
+          "onset_doy_median": 85.0
         }
       ]
     },
@@ -1309,23 +1309,23 @@
       "window_start_md": "08-01",
       "window_end_md": "11-30",
       "years_evaluated": 35,
-      "years_found": 35,
-      "onset_doy_median": 219.0,
+      "years_found": 34,
+      "onset_doy_median": 225.0,
       "onset_doy_p25": 214.0,
-      "onset_doy_p75": 231.0,
+      "onset_doy_p75": 243.2,
       "onset_doy_min": 213,
-      "onset_doy_max": 301,
-      "years_with_dry_spell_ge_7d_in_next_30d": 4,
+      "onset_doy_max": 299,
+      "years_with_dry_spell_ge_7d_in_next_30d": 8,
       "threshold_sensitivity": [
         {
           "rain_10d_threshold_mm": 15.0,
-          "years_found": 33,
-          "onset_doy_median": 224.0
+          "years_found": 35,
+          "onset_doy_median": 248.0
         },
         {
           "rain_10d_threshold_mm": 20.0,
-          "years_found": 35,
-          "onset_doy_median": 219.0
+          "years_found": 34,
+          "onset_doy_median": 225.0
         },
         {
           "rain_10d_threshold_mm": 25.0,
@@ -1336,7 +1336,7 @@
     }
   ],
   "soil": {
-    "source_file": "data/raw/soilgrids_point_1.35N_32.45E.json",
+    "source_file": "data/raw/soilgrids_point_1.79N_33.50E.json",
     "properties": {
       "phh2o": {
         "mapped_units": "pH*10",
@@ -1353,75 +1353,75 @@
           },
           "15-30cm": {
             "mean": 6.1,
-            "median": 6.0
+            "median": 6.1
           }
         }
       },
       "clay": {
         "mapped_units": "g/kg",
         "unit": "%",
-        "depth_weighted_0_30cm": 38.57,
+        "depth_weighted_0_30cm": 40.73,
         "depths": {
           "0-5cm": {
-            "mean": 35.0,
-            "median": 30.3
+            "mean": 38.8,
+            "median": 31.7
           },
           "5-15cm": {
-            "mean": 34.0,
-            "median": 29.5
+            "mean": 39.8,
+            "median": 34.1
           },
           "15-30cm": {
-            "mean": 42.8,
-            "median": 41.6
+            "mean": 42.0,
+            "median": 37.3
           }
         }
       },
       "sand": {
         "mapped_units": "g/kg",
         "unit": "%",
-        "depth_weighted_0_30cm": 39.63,
+        "depth_weighted_0_30cm": 38.87,
         "depths": {
           "0-5cm": {
-            "mean": 41.0,
-            "median": 43.1
+            "mean": 39.5,
+            "median": 39.2
           },
           "5-15cm": {
-            "mean": 42.9,
-            "median": 44.9
+            "mean": 39.7,
+            "median": 39.4
           },
           "15-30cm": {
-            "mean": 37.0,
-            "median": 35.9
+            "mean": 38.1,
+            "median": 36.4
           }
         }
       },
       "silt": {
         "mapped_units": "g/kg",
         "unit": "%",
-        "depth_weighted_0_30cm": 21.8,
+        "depth_weighted_0_30cm": 20.32,
         "depths": {
           "0-5cm": {
-            "mean": 24.0,
-            "median": 16.9
+            "mean": 21.7,
+            "median": 15.5
           },
           "5-15cm": {
-            "mean": 23.1,
-            "median": 16.6
+            "mean": 20.4,
+            "median": 15.0
           },
           "15-30cm": {
-            "mean": 20.2,
-            "median": 14.3
+            "mean": 19.8,
+            "median": 14.7
           }
         }
       }
     },
     "summary_0_30cm": {
       "ph_h2o": 6.12,
-      "clay_pct": 38.57,
-      "sand_pct": 39.63,
-      "silt_pct": 21.8
+      "clay_pct": 40.73,
+      "sand_pct": 38.87,
+      "silt_pct": 20.32
     },
-    "texture_sum_pct": 100.0
+    "texture_sum_pct": 99.92
   },
   "data_quality": {
     "days_expected": 12784,
@@ -1442,7 +1442,7 @@
     },
     "months_incomplete": 0,
     "months_incomplete_sample": [],
-    "gwetroot_days_below_gate": 0,
-    "gwetroot_gate_note": "GWETROOT never fell below the 0.40 gate in this record, so the soil condition never binds and onset is decided by rainfall alone. Reported, not dropped."
+    "gwetroot_days_below_gate": 4732,
+    "gwetroot_gate_note": "GWETROOT fell below the 0.40 gate on some days; those days cannot be an onset."
   }
 }

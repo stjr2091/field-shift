@@ -7,7 +7,7 @@ One question: **what do I plant, and when.** One district, five crops (four if t
 | Piece | Already true | Missing | Owner | By |
 | --- | --- | --- | --- | --- |
 | Five crops | Named below, all rain-fed Ugandan staples with documented planting windows | Nothing — call is made | Lead | done |
-| Demo area | Nakasongola district, one point (1.35 N, 32.45 E); 2022 Rakai/Nakasongola trial is the local anchor | District outline for the map | Joel | Sun 09:00 |
+| Demo area | Soroti district, one point (1.79 N, 33.50 E); 2022 Rakai/Nakasongola trial is the local anchor | District outline for the map | Joel | Sun 09:00 |
 | Rules table | Convention, schema and 4 checked sources | All rows. `rules.csv` has a header only | Lead | tonight 19:00 |
 | Notebook | Repo layout, download script stub | Every cell. Data pull, onset logic, crop windows, outputs | Lead | tonight 22:30 |
 | App | Thin-app rule agreed (reads precomputed JSON only) | One page, charts, deploy URL | Joel | tonight 22:30 |
@@ -16,7 +16,7 @@ One question: **what do I plant, and when.** One district, five crops (four if t
 ## Calls I am making now (say so by 16:30 if you object)
 
 - **Crops:** maize, common bean, finger millet, sorghum, groundnut. Two cereals, a legume, a pulse and a drought-tolerant small grain; all have extension guidance and all fit a one-season planting window.
-- **Site:** Nakasongola, one point. NASA POWER is a ~50 km grid cell, so we say **district-scale**, never parcel-scale. That is a limit we state, not a problem we hide.
+- **Site:** Soroti, one point. NASA POWER is a ~50 km grid cell, so we say **district-scale**, never parcel-scale. That is a limit we state, not a problem we hide.
 - **Data:** NASA POWER daily (rain, temperature, root-zone soil wetness) and SoilGrids static soil (pH, texture). Both free, no key, both checked answering today. One source each, no parallel ingests.
 - **Cut list, frozen:** Landsat greenness, yield prediction, login/auth, a database, dashboards, extra districts, extra crops, any paid tool.
 

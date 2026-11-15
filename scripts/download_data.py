@@ -8,7 +8,7 @@ clean runtime, then notebooks/field_shift.ipynb runs offline against the cache.
 
 Two datasets, both free and keyless:
 
-1. NASA POWER daily point data for the Nakasongola site point (1.35 N, 32.45 E),
+1. NASA POWER daily point data for the Soroti site point (1.79 N, 33.50 E),
    parameters PRECTOTCORR, T2M, GWETROOT, community AG, 1991-01-01..2025-12-31.
    POWER gives one grid cell (0.5 x 0.625 deg), so every number it produces is
    district-scale, never parcel-scale.
@@ -19,8 +19,8 @@ Two datasets, both free and keyless:
    slow (~30 s) and occasionally rate-limited.
 
 Writes:
-  data/raw/power_daily_1.35N_32.45E_1991-2025.csv
-  data/raw/soilgrids_point_1.35N_32.45E.json
+  data/raw/power_daily_1.79N_33.50E_1991-2025.csv
+  data/raw/soilgrids_point_1.79N_33.50E.json
 
 Neither file is committed. The SoilGrids extract is *also* copied to
 data/processed/soilgrids_site.json, which IS committed, so the pipeline still
@@ -42,9 +42,9 @@ RAW = ROOT / "data" / "raw"
 PROCESSED = ROOT / "data" / "processed"
 
 # --- Site -------------------------------------------------------------------
-LAT = 1.35
-LON = 32.45
-SITE_NAME = "Nakasongola"
+LAT = 1.79
+LON = 33.50
+SITE_NAME = "Soroti"
 
 # --- NASA POWER -------------------------------------------------------------
 POWER_START = "19910101"
