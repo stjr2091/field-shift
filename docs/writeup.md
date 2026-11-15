@@ -169,3 +169,9 @@ The check record is `qa/app_rebuild/check_soroti_app_numbers.md`.
 - MAAIF beans training manual for extension workers, 2023.
 - FAO EcoCrop datasheets for maize, common bean and finger millet.
 - National Research Council, Lost Crops of Africa, Volume I, chapter 2, Finger Millet, 1996.
+
+## Status of this draft
+
+This is a draft for review. Figures are from the committed results and the check record.
+Two items are not final: the crop section follows the corrected table once it is merged, and
+the millet rainfall row is shown as reference evidence pending a decision.
