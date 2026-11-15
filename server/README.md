@@ -77,11 +77,12 @@ translation, and the card is translated back to English and read again. A crop
 that appeared, a claim, a wider scope, a reversed direction, or an allowed crop
 named more often than the card names it drops the Luganda card. The Luganda
 card must also name the recommended crop, in the Luganda name the translator
-holds or in the English name, so an invented crop word cannot hide behind a
-faithful reading. That name comes from a live lookup, and the guard fails
-closed on it: when the translator is reachable but no name can be confirmed,
-the card is unverifiable in exactly the window where an invented crop word
-hides, so the Luganda card is dropped. A failed reading is retried once,
+holds, one word or several, or in the English name, so an invented crop word
+cannot hide behind a faithful reading. That name comes from a live lookup, and
+the guard fails closed on it: a name counts only when it reads back as the
+crop it stands for, and when the translator is reachable but no name can be
+confirmed, the card is unverifiable in exactly the window where an invented
+crop word hides, so the Luganda card is dropped. A failed reading is retried once,
 because the translator rephrases between calls. An unverified translation is
 never sent: the English card already carries the answer, and the notes say why
 the Luganda one was dropped. When a model card cannot be verified in Luganda,

@@ -583,12 +583,13 @@ def luganda_crop_name(crop: str) -> tuple[str | None, bool]:
     """The Luganda name of a crop, and whether the lookup could be judged.
 
     The name is read from the translator the card already uses, then read
-    back: a name that does not return as the same crop is not a name to judge
-    a card by. The second value says whether the lookup was judged at all. A
-    reachable translator that yields no confirmed name fails closed: an
-    invented crop word could hide in that window, so the card that depends on
-    it is unverifiable. No token means no lookup was possible, and the card
-    is judged without the name check.
+    back. A name of one word or several is confirmed the same way: every word
+    of the crop name must return, plurals allowed. A name that reads back as
+    a different plant is not a name to judge a card by. The second value says
+    whether the lookup was judged at all. A reachable translator that yields
+    no confirmed name fails closed: an invented crop word could hide in that
+    window, so the card that depends on it is unverifiable. No token means no
+    lookup was possible, and the card is judged without the name check.
     """
     if not os.environ.get("SUNBIRD_API_TOKEN", "").strip():
         return None, False
@@ -596,10 +597,16 @@ def luganda_crop_name(crop: str) -> tuple[str | None, bool]:
     if not lg:
         return None, True
     word = lg.strip().strip(".").strip()
-    if not word or " " in word or word.lower() in crop.lower():
+    if not word or word.lower() in crop.lower():
+        # The translator gave the English name back, so it holds nothing to
+        # check a Luganda card against.
         return None, True
     back, _ = sunbird_translate(word, "lug", "eng")
-    if not back or crop.split()[0].lower() not in back.lower():
+    confirmed = back and all(
+        re.search(r"\b" + re.escape(part) + r"s?\b", back.lower())
+        for part in crop.lower().split()
+    )
+    if not confirmed:
         return None, True
     return word.lower(), True
 
