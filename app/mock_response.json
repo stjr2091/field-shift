@@ -1,14 +1,1 @@
-{
-  "recommended_crop": "Maize",
-  "when": "Mid-March, when the first rains settle",
-  "why": "The soil pH fits maize, and the season ends before the second rains. The mean temperature is below the crop's optimum range, so this is a cautious pick.",
-  "alternative": "Common bean",
-  "reasons": [
-    "Site pH 6.12 is inside the maize range of 5.5 to 7.0.",
-    "A 110-day maize season from mid-March ends in early July, before the second rains.",
-    "The site mean of 25.4 C is below the 30 to 34 C optimum, so temperature is not a pass."
-  ],
-  "card_en": "Plant maize at the start of the first rains, usually mid-March. The soil pH fits and a 110-day season ends in early July, before the second rains. The mean temperature is below the crop's optimum range, so treat this as a cautious choice. Common bean is the supported alternative.",
-  "season_assumption": "This advice assumes the first rains season: the timing uses the median first-rains onset, and the window closes after 110 growing days.",
-  "card_lg": "Simba kasooli mu ntandikwa ya nkuba ezisooka. Ettaka lino lya bulungi. Ebbugumu lya wansi ku kigero kya kasooli, kale kino kya kulowooza. Ebijanjaalo bye birala ebisobola okusimbibwa."
-}
+{"recommended_crop": "Common bean", "when": "Early August, when the second rains settle", "why": "No planting date was given, so the coming second-rains season is used. The window opens on 1 August and a bean season fits before the dry months. The soil pH fits beans.", "alternative": "Maize", "reasons": ["The second-rains window opens on 1 August, and an 85-day bean season ends in late October.", "Site pH 6.12 is inside the bean range of 6.0 to 7.0.", "The site mean of 25.4 C is above the 18 to 24 C bean optimum, so temperature is not a pass.", "Maize would run an 110-day season to late November, close to the dry months, so it is the alternative and not the pick."], "card_en": "Plant common bean at the start of the second rains, usually early August. An 85-day season ends in late October, before the dry months. The soil pH fits beans, though the site is warmer than the bean optimum. Maize is the supported alternative, but its longer season runs close to the dry months.", "season_assumption": "No planting date was given, so this advice assumes the coming second-rains season: the window opens on 1 August and the season closes after 85 growing days."}

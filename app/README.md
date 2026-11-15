@@ -17,17 +17,24 @@ this folder is used as a fallback.
 
 The form posts JSON to the advice service:
 
-    POST {previous_crops: string[], soil_ph?: number, moisture?: string, district?: string}
+    POST {previous_crops: string[], soil_ph?: number, moisture?: string,
+          planting_date?: string, district?: string}
+
+`planting_date` is ISO YYYY-MM-DD from the optional date input. When it is
+blank the field is left out and the server picks the season from today's
+date. Any check on the date itself is the server's business.
 
 The response shape the card expects:
 
     {recommended_crop: string, when: string, why: string, alternative: string,
-     reasons: string[], card_en: string, card_lg?: string, season_assumption: string}
+     reasons: string[], card_en: string, card_lg?: string, season_assumption: string,
+     error?: string}
 
 `season_assumption` is one plain sentence naming the season the advice assumes.
 The card shows it on the result and next to the submit button before the advice
 is requested. When `card_lg` is missing, the Luganda area says so in one line
-instead of staying blank.
+instead of staying blank. If the response carries an `error` string, the form
+shows it in the error line instead of the card.
 
 `previous_crops` carries crop keys, oldest first, newest last:
 `maize`, `common_bean`, `finger_millet`, `sorghum`, `groundnut`, `other`.
@@ -39,11 +46,13 @@ be tested before the service exists. Add the flag to use the real address:
 
     http://localhost:8000/app/index.html?api=https://example.org/advice
 
-Two samples cover the Luganda paths: the default shows the Luganda card, and
+The samples follow the request: a blank planting date shows the default
+second-season sample without a Luganda card, and a chosen date shows the
+dated first-rains sample with the Luganda card. The flag
 
     http://localhost:8000/app/index.html?api=mock-nolg
 
-shows the missing-card note instead.
+removes the Luganda card from either sample, so the missing-card note shows.
 
 The service must allow the browser's origin (CORS) and answer with the JSON
 shape above. No other setting is needed.
