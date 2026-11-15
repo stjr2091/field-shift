@@ -110,6 +110,17 @@ def main() -> int:
         ok, _ = card.check_card(text, res)
         check(f"card guard rejects {name}", not ok)
 
+    # A card that drops the published window, or the crop name, is refused. The
+    # reader came for those two things, so losing them is a failed card.
+    bean = calc.recommend(["maize"], soil_ph=6.1, data=data)
+    dropped = {
+        "window replaced by a season word": "Common bean. Plant in the early season.",
+        "crop name missing": "Plant in March to mid-April or mid-August to December.",
+    }
+    for name, text in dropped.items():
+        ok, reason = card.check_card(text, bean)
+        check(f"card guard rejects {name}", not ok, reason)
+
     # Without credentials the service still answers, and says why.
     card_en, card_lg, notes = card.build_cards(res)
     check("card exists with no credentials", bool(card_en))
