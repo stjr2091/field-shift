@@ -597,6 +597,37 @@ code {
   .step span { display: none; }
   .limits { columns: 1; }
   .site-facts { gap: 0 1.6rem; }
+
+  /* The comparison table does not fit two columns on a phone. Side by side, the
+     reasons column fell to 190 px and one row grew to 859 px. Each candidate
+     becomes a block: its name on one line, its reasons below, full width. The
+     table keeps its markup, so a screen reader still reads a table. */
+  #table-sequence,
+  #table-sequence thead,
+  #table-sequence tbody,
+  #table-sequence tr,
+  #table-sequence th,
+  #table-sequence td {
+    display: block;
+    width: auto;
+  }
+  #table-sequence thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  #table-sequence tr {
+    padding: 0.9rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  #table-sequence tbody tr:last-child { border-bottom: 0; }
+  #table-sequence td { padding: 0; border-bottom: 0; }
+  #table-sequence td:first-child {
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+  #table-sequence .reasons { padding-left: 1.1rem; }
+
+  /* The chart is drawn in a 720-unit space, so its 9 px labels rendered at
+     3.5 px when the drawing was squeezed to 360 px. A larger size in the
+     drawing space keeps the labels readable at that width. */
+  .axis-label { font-size: 22px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
