@@ -557,15 +557,16 @@
       return {
         crop: crop,
         reasons: reasons,
-        supporting: reasons.filter(function (r) { return r.direction === "for"; }).length,
-        against: reasons.filter(function (r) { return r.direction === "against"; }).length,
         order: crops.indexOf(crop)
       };
     });
 
+    /* The rows are in a fixed order, the order the crops appear in the data.
+       They are not sorted by how many reasons favour them. A count of "for"
+       reasons would rank the crops by the pH and temperature comparisons, and
+       both of those say they are not a verdict, so tallying them would turn a
+       comparison into a suitability score. No total is shown. */
     rows.sort(function (a, b) {
-      if (b.supporting !== a.supporting) return b.supporting - a.supporting;
-      if (a.against !== b.against) return a.against - b.against;
       return a.order - b.order;
     });
 
@@ -576,11 +577,6 @@
       var name = document.createElement("td");
       name.textContent = row.crop.crop_label;
       tr.appendChild(name);
-
-      var count = document.createElement("td");
-      count.className = "num";
-      count.textContent = row.supporting;
-      tr.appendChild(count);
 
       var cell = document.createElement("td");
       var list = document.createElement("ul");

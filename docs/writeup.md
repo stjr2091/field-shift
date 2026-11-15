@@ -183,6 +183,11 @@ The check record is `qa/app_rebuild/check_soroti_app_numbers.md`.
   duration disagree. For finger millet the shortest duration fits before the second rains
   and the longest overlaps them, so the reason shows both ends and is marked as mixed. It is
   never shown as a supporting reason.
+- The page does not rank the crops. Rows are in a fixed order and there is no tally of
+  reasons. A count of favourable reasons would have ranked the crops by the pH and
+  temperature comparisons, and both of those state that they are not a suitability verdict.
+  With no yield, nitrogen, plot or trial data, there is no measured basis on which to rank one
+  crop above another, so the page shows the reasons and no order.
 
 ## Sources
 
