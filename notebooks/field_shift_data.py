@@ -482,9 +482,9 @@ def onset_trend_summary(onsets: list[dict]) -> list[dict]:
                 "sen_ci_high_days_per_decade": _round(ci_high * 10, 1),
                 "mann_kendall_tau": _round(tau, 2),
                 "mann_kendall_p": _round(p_value, 3),
-                # Three places, so a small real value keeps its sign instead of
-                # collapsing to a signed zero at two places.
-                "lag1_autocorrelation": _round(lag1, 3),
+                # Two places, the same as the published spread table. The helper
+                # keeps a near-zero from printing as a signed zero.
+                "lag1_autocorrelation": _round(lag1, 2),
                 "date_frame": "non-leap calendar offset",
             }
         )
