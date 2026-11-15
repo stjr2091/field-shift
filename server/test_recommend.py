@@ -8,6 +8,7 @@ so this can run in a release check.
 
 from __future__ import annotations
 
+import re
 import sys
 from pathlib import Path
 
@@ -155,6 +156,163 @@ def main() -> int:
     no_tie = calc.recommend(["maize"], data=data)
     check("no tie is claimed when none occurred", not no_tie["facts"].get("tie_line"))
 
+    # Fixtures from the second audit. Each card below was accepted once, and
+    # each must now be refused.
+
+    # A favourable pair read as unusable. The whole defect is one word.
+    favour = calc.recommend(["maize"], data=data)
+    check(
+        "the maize pair is held to be favourable",
+        favour["facts"].get("pair_direction") == "for",
+        str(favour["facts"].get("pair_direction")),
+    )
+    favour_en = (
+        "Plant Common bean. Planting window: March to mid-April, or mid-August to "
+        "December. Maize before Common bean is neutral to favourable. The first rains "
+        "start about 18 March; this figure is district-scale."
+    )
+    favour_back = (
+        "Plant Common bean. Planting window: March to mid-April, or mid-August to "
+        "December. Planting maize after common bean is not suitable. The first rains "
+        "start about 18 March; this figure is district-scale."
+    )
+    ok, reason = card.check_card(favour_back, favour)
+    check("card guard rejects a favourable pair read as unsuitable", not ok, reason)
+    ok, reason = card.check_luganda(favour_en, favour_en, favour_back, favour)
+    check("Luganda guard rejects a reversal with no listed phrase", not ok, reason)
+
+    # A made-up crop word that the translator renders as an allowed crop. The
+    # rendering changes between calls: the same Luganda word has come back as
+    # "maize" and, in the round trip the audit read, as "beans". The fixture
+    # holds the "beans" rendering, because the card names common bean once and
+    # that rendering names a bean crop three times.
+    made_up = calc.recommend(["sorghum"], data=data)
+    made_up_en = (
+        "Maize is the recommended crop. Planting window: 15 March to 15 August. "
+        "The previous crop was sorghum and no rotation rule is held for maize after "
+        "sorghum; the reason is direction only. An alternative is common bean. The "
+        "first rains timing is a district-scale figure. This advice applies to Soroti."
+    )
+    made_up_back = (
+        "The best planting time is for beans. Planting season: 15th March to 15th "
+        "August. The first crop was sorghum and there were no rules about replanting "
+        "beans after sorghum; the reason being only one crop can be planted at a "
+        "time. Another option is common bean. The start of the first rains is on a "
+        "district basis. This advice applies to Soroti."
+    )
+    ok, reason = card.check_luganda(made_up_en, made_up_en, made_up_back, made_up)
+    check("Luganda guard rejects a made-up crop that renders as an allowed crop", not ok, reason)
+
+    # The same defect under a rendering that agrees with the card. The made-up
+    # word then reads back as the recommended crop and the counts match, so
+    # the Luganda card itself must name the crop. This is the Luganda text the
+    # audit held, and it names neither the Luganda nor the English crop name.
+    made_up_lg = (
+        "Obusimba obulungi bwe bulimi bw\u2019obumonde. Ekiseera ky\u2019okusimba: 15 March "
+        "okutuuka 15 August. Obusimba obwasooka bwali sorghum era tewali mateeka ga kuddamu "
+        "kusimba bumonde oluvannyuma lwa sorghum; ensonga eri mu ngeri yokka. Ekyokulondako "
+        "ekirala kye common bean. Okutandika kw\u2019enkuba eyasooka kuli ku mutendera gwa "
+        "disitulikiti. Amagezi gano gakozesebwa ku Soroti."
+    )
+    ok, reason = card.check_luganda(made_up_lg, made_up_en, made_up_en, made_up, crop_lg="kasooli")
+    check("Luganda guard rejects a card that never names the recommended crop", not ok, reason)
+
+    # A tie line on a history that holds no tie.
+    two_crops = calc.recommend(["maize", "common_bean"], data=data)
+    check("the two-crop history holds no tie", not two_crops["facts"].get("tie_line"))
+    false_tie = (
+        "When: 15 March to 15 August. Maize is recommended. Planting window is 15 "
+        "March to 15 August. The first rains usually start in mid-March, a "
+        "district-scale observation. Common bean before Maize is favourable. "
+        "Alternative crop is Finger millet. The crops tie and the "
+        "order listed decided. The season assumed is the first rains season."
+    )
+    ok, reason = card.check_card(false_tie, two_crops)
+    check("card guard rejects a tie the facts do not hold", not ok, reason)
+
+    # Fault: the season pick was silent. The response and the card must both
+    # state it, with the data fact that governs it.
+    for history in ([], ["sorghum"], ["groundnut"]):
+        res = calc.recommend(history, data=data)
+        line = res.get("season_assumption") or ""
+        check(f"season assumption is stated for {history}", "first rains" in line and "No planting season was entered" in line, line)
+        check(f"season assumption sits in the facts for {history}", res["facts"].get("season_assumption") == line)
+    season_case = calc.recommend(["sorghum"], data=data)
+    plain_season = card.template_card(season_case)
+    check("the plain card carries the season assumption word for word", season_case["facts"]["season_assumption"] in plain_season)
+    no_season = "Plant Maize. Planting window: 15 March to 15 August. No rotation rule is held for Maize after Sorghum; the pair is unknown. Several crops tie on the rules held, so the listed order decided. Alternative crop: Common bean. This is district-scale advice, not a field reading."
+    ok, reason = card.check_card(no_season, season_case)
+    check("card guard rejects a card that omits the season assumption", not ok, reason)
+
+    # Fault: the plain card is the primary card. It speaks to the farmer,
+    # carries one idea per sentence, and is the card sent without credentials.
+    for history in ([], ["maize"], ["common_bean"], ["sorghum"]):
+        target = calc.recommend(history, data=data)
+        plain = card.template_card(target)
+        check(f"the plain card opens with an instruction for {history}", plain.startswith("Plant "), plain[:40])
+        check(f"the plain card holds five sentences or fewer for {history}",
+              len([s for s in re.split(r"(?<=[.!?])\s+", plain) if s.strip()]) <= 5, plain)
+        ok, reason = card.check_card(plain, target)
+        check(f"the plain card passes its own guard for {history}", ok, reason)
+    card_en, card_lg, notes = card.build_cards(season_case)
+    check("the card sent with no credentials is the plain card", card_en == card.template_card(season_case))
+
+    # Fault: prompt echo and talk about the tool. Neither belongs in a card.
+    echoes = {
+        "an instruction line": "You rewrite a fixed agricultural result as a short card. Plant Maize from 15 March to 15 August. Season assumed: first rains. This is district-scale advice.",
+        "the rules header": "Rules: plant Maize from 15 March to 15 August. Season assumed: first rains. This is district-scale advice.",
+        "the word system": "The system holds Maize. Planting window: 15 March to 15 August. Season assumed: first rains. This is district-scale advice.",
+        "third-person talk": "The recommendation is Maize. Planting window: 15 March to 15 August. Season assumed: first rains. This is district-scale advice.",
+        "the tool speaks": "The tool recommends Maize. Planting window: 15 March to 15 August. Season assumed: first rains. This is district-scale advice.",
+    }
+    for name, text in echoes.items():
+        ok, reason = card.check_card(text, season_case)
+        check(f"card guard rejects {name}", not ok, reason)
+
+    # Fault: the last grown crop is never advised again, neither as the crop
+    # nor as the alternative. Checked over every history of up to two crops.
+    crop_keys = ["maize", "common_bean", "finger_millet", "sorghum", "groundnut"]
+    histories = [[]] + [[c] for c in crop_keys] + [list(p) for p in __import__("itertools").product(crop_keys, repeat=2)]
+    guard_ok = True
+    guard_detail = ""
+    for history in histories:
+        res = calc.recommend(history, data=data)
+        last = history[-1] if history else None
+        if last:
+            if res["recommended_crop"].lower().replace(" ", "_") == last:
+                guard_ok, guard_detail = False, f"{history} recommended the last crop"
+            alt_key = str(res["alternative"]).lower().replace(" ", "_")
+            if alt_key == last:
+                guard_ok, guard_detail = False, f"{history} offered the last crop as alternative"
+            if "last crop" not in " ".join(res["reasons"]):
+                guard_ok, guard_detail = False, f"{history} does not state the monocrop guard"
+    check("no history is advised its last crop again", guard_ok, guard_detail)
+
+    # The cards that audit kept must stay kept on the checks that audit was
+    # about: crops, direction and tie. The contract has since gained the
+    # season assumption, so a card that omits that line is now incomplete,
+    # and that omission is the only refusal these old cards may earn.
+    kept = [
+        (["sorghum"], None, None, "Plant Maize. Planting window: 15 March to 15 August. No rotation rule after sorghum, the pair is unknown. First rains start about 18 March, district-scale figure. The crops tie, no rule separated them, so the list order decided. Alternative crop is Common bean. Alternative window: March to mid-April or mid-August to December."),
+        ([], None, None, "Maize is recommended. Planting window: 15 March to 15 August. The first rains start about 18 March, a district-scale figure. No previous crop was given, so rotation was not judged. The crops tie and the list order decided. Alternative crop is Common bean. This is a district-scale recommendation."),
+        (["groundnut"], 5.0, None, "Plant Maize from 15 March to 15 August. No rotation rule exists after groundnut, and the pair is unknown. Soil pH 5.0 is outside Maize's sourced range, making it a less-good match. The first rains usually begin around 18 March, a district-scale figure. The crops tie, so the listed order decided. Alternative is Common bean. Common bean also has no rotation rule after groundnut."),
+        (["finger_millet"], 6.4, "moist", "Plant Maize. Planting window: 15 March to 15 August. Soil pH 6.4 fits the range for Maize. The first rains usually start about 18 March, a district-scale figure. The crops tie; no rule separates them, so the list order decided. Alternative crop is Common bean. No rotation rule is held for Maize after Finger millet."),
+    ]
+    for history, ph, wet, text in kept:
+        target = calc.recommend(history, soil_ph=ph, moisture=wet, data=data)
+        ok, reason = card.check_card(text, target)
+        kept_ok = ok or reason.startswith("card omits the season assumption")
+        check(f"audited card for {history} keeps its facts", kept_ok, reason)
+
+    # One audited card offered the last grown crop again as the alternative.
+    # The monocrop guard now refuses that at the ranking, so the card no
+    # longer matches the facts, and the facts state why.
+    maize_card = "Common bean. Planting window: March to mid-April, or mid-August to December. Why: Maize before Common bean is neutral to favourable. This is a direction only, with no measured number. Alternative: Maize. Not held for this crop: planting rainfall threshold. Rotation reasons give a direction only, not a measured amount. This is district-scale, not a field reading."
+    again = calc.recommend(["maize"], data=data)
+    ok, reason = card.check_card(maize_card, again)
+    check("card guard rejects the last grown crop as the alternative", not ok, reason)
+    check("the facts state the monocrop guard", "last crop" in str(again["facts"].get("last_crop_guard")), str(again["facts"].get("last_crop_guard")))
+
     # A translated card is checked too. An unverified translation is dropped.
     en = card.template_card(bean)
     lg_text = (
@@ -225,9 +383,14 @@ def main() -> int:
     out = service.handle_request({"previous_crops": ["maize"]})["body"]
     check(
         "response carries the agreed fields only",
-        set(out) <= {"recommended_crop", "when", "why", "alternative", "reasons", "card_en", "card_lg"},
+        set(out) <= {"recommended_crop", "when", "why", "alternative", "reasons", "card_en", "card_lg", "season_assumption"},
         str(sorted(out)),
     )
+    check("response states the season assumption", "first rains" in out.get("season_assumption", ""), out.get("season_assumption", ""))
+
+    # GET /assumption returns the same sentence, with no model call.
+    assumption = service.assumption_response()["season_assumption"]
+    check("the assumption endpoint returns the same sentence", assumption == out["season_assumption"])
 
     print()
     if FAILURES:
