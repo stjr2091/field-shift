@@ -101,7 +101,7 @@ Three crops appear, each with three of four parameters sourced:
 |---|---|---|---|---|
 | Maize | 110-120 days, MAAIF manual, Soroti named in the row | 5.5-7.0, MAAIF | 30-34 optimum, limits 10 and 40 | unknown |
 | Common bean | 58-120 days, MAAIF | 5.8-6.5, acid limit 5.2 | 20-28 optimum, limits 15 and 32 | unknown |
-| Finger millet | 75-180 days, EcoCrop | 6-7 optimum, 5.5-8.2 absolute, EcoCrop | grows to 35, Uganda best above 27 average maximum, National Research Council | unknown |
+| Finger millet | 75-180 days, EcoCrop | 6-7 optimum, 5.5-8.2 absolute, EcoCrop | 18-30 optimum, limits 8 and 35, EcoCrop | unknown |
 
 Sorghum and groundnut do not appear. No manual for either is held, so no row is sourced for
 them and the cut rule removes them.
