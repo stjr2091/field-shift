@@ -51,6 +51,10 @@ python notebooks/field_shift_data.py   # rebuild results/site_climate.json
 top to bottom after the download. The app contract for `results/app_data.json`
 is `docs/app_data_schema.md`.
 
+## AI contribution
+
+An automated coding assistant helped write and check the code, the data analysis and the documentation in this repository. The project owner reviewed and merged every change. The assistant made no agricultural claim. All crops, thresholds, planting windows and reasons come from the cited sources and the rules table. Per-use detail is in `AI_USE.md`.
+
 ## Workflow
 
 main is protected; work goes on short branches; one review before merge. A sources file and AI-use credits are kept from day one.
