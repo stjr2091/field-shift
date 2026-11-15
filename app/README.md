@@ -1,21 +1,46 @@
 # App
 
-A thin webapp that only reads precomputed outputs (maps, graphs, tables). It does no
-computation when a page is opened. The framework is open.
+One small form and one advice card. No build step. No dependencies.
 
-## How to open it
+## Run it
 
-Serve the repository root. Do not serve this folder.
-
-The page reads its data from `results/app_data.json`, one level up. If this folder is
-the web root, the data request fails and the page shows nothing.
-
-From the repository root:
+Serve the repository root, then open `/app/index.html`:
 
     python3 -m http.server 8000
 
-Then open http://localhost:8000/app/index.html
+    http://localhost:8000/app/index.html
 
-The data file is built by `scripts/build_app_data.py`. It reads `results/site_climate.json`
-and `rules/rules.csv`. While `rules/rules.csv` holds no sourced crop rows, the page shows
-the rain and soil panels and a waiting state for crops.
+The district line reads the site name from `results/app_data.json`. A copy in
+this folder is used as a fallback.
+
+## Backend
+
+The form posts JSON to the advice service:
+
+    POST {previous_crops: string[], soil_ph?: number, moisture?: string, district?: string}
+
+The response shape the card expects:
+
+    {recommended_crop: string, when: string, why: string, alternative: string,
+     reasons: string[], card_en: string, card_lg?: string}
+
+`previous_crops` carries crop keys, oldest first, newest last:
+`maize`, `common_bean`, `finger_millet`, `sorghum`, `groundnut`, `other`.
+
+### Point it at the live service
+
+By default the page uses `mock_response.json`, a local sample, so the card can
+be tested before the service exists. Add the flag to use the real address:
+
+    http://localhost:8000/app/index.html?api=https://example.org/advice
+
+The service must allow the browser's origin (CORS) and answer with the JSON
+shape above. No other setting is needed.
+
+## Limits
+
+- The district is automatic and fixed to the site in `results/app_data.json`.
+  There is no picker. A location lookup is still a decision, not built here.
+- Optional values left blank are left out of the request. They never block the
+  form.
+- The card only repeats what the service returns. It adds no advice.
