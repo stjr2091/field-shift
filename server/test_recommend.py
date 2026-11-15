@@ -121,6 +121,82 @@ def main() -> int:
         ok, reason = card.check_card(text, bean)
         check(f"card guard rejects {name}", not ok, reason)
 
+    # The five English drafts that slipped past the first check. Each is a
+    # different way to change the answer while looking like a card.
+    tie_case = calc.recommend(["sorghum"], data=data)
+    slipped = {
+        "an invented crop": ("Maize. Planting window: 15 March to 15 August. Also potatoes.", tie_case),
+        "an abbreviated month": ("Maize. Planting window: 15 March to Sep.", tie_case),
+        "a season summary for the window": ("Maize. Two seasons. Alternative: Common bean.", tie_case),
+        "a different alternative crop": ("Maize. Planting window: 15 March to 15 August. Cassava is the alternative.", tie_case),
+        "a success claim": ("Maize. Planting window: 15 March to 15 August. Always does well.", tie_case),
+        "a wider scale": ("Maize. Planting window: 15 March to 15 August. A national figure.", tie_case),
+        "a reversed direction": ("Plant Common bean after maize. This is not a good idea.", bean),
+    }
+    for name, (text, target) in slipped.items():
+        ok, reason = card.check_card(text, target)
+        check(f"card guard rejects {name}", not ok, reason)
+
+    # A tie must reach both cards. The plain card carries it, and a card that
+    # leaves it out is refused.
+    check("a tie is disclosed in the facts", bool(tie_case["facts"].get("tie_line")))
+    check(
+        "the tie names every tied crop",
+        all(name in tie_case["facts"]["tie_line"] for name in tie_case["facts"]["tied_crops"]),
+    )
+    plain_tie = card.template_card(tie_case)
+    check("the plain card shows the tie", "tie" in plain_tie.lower() and "order" in plain_tie.lower())
+    ok, reason = card.check_card(plain_tie, tie_case)
+    check("the plain card with a tie passes", ok, reason)
+    ok, reason = card.check_card("Maize. Planting window: 15 March to 15 August.", tie_case)
+    check("a card that omits the tie is refused", not ok, reason)
+
+    # No tie, no tie sentence. A card is never told to claim one.
+    no_tie = calc.recommend(["maize"], data=data)
+    check("no tie is claimed when none occurred", not no_tie["facts"].get("tie_line"))
+
+    # A translated card is checked too. An unverified translation is dropped.
+    en = card.template_card(bean)
+    lg_text = (
+        "Ebikoola bya Common bean. Ekiseera ky'okusimba: Okuva mu March okutuuka "
+        "wakati wa April, oba wakati wa August okutuuka December. Ekyokulondako: Maize. "
+        "Kino kya disitulikiti."
+    )
+    lg_back = (
+        "Common bean. Planting window: March to mid-April, or mid-August to December. "
+        "Alternative: Maize. This is district-scale."
+    )
+    ok, reason = card.check_luganda(lg_text, en, lg_back, bean)
+    check("a faithful Luganda card passes", ok, reason)
+
+    lg_defects = {
+        "an invented crop in the translation": (
+            lg_text, "Common bean. Window March to mid-April. Also potatoes. district-scale."
+        ),
+        "a national claim in the translation": (
+            lg_text, "Common bean. Window March to mid-April. A national figure."
+        ),
+        "a reversed direction in the translation": (
+            lg_text, "Common bean. Window March to mid-April. Maize before it is not a good idea."
+        ),
+        "a dropped window month": (
+            "Ebikoola bya Common bean. Kino kya disitulikiti.", lg_back
+        ),
+        "a yield claim in the translation": (
+            lg_text, "Common bean. Window March to mid-April. This gives high yield."
+        ),
+        "no back-translation at all": (lg_text, ""),
+    }
+    for name, (text, back) in lg_defects.items():
+        ok, reason = card.check_luganda(text, en, back, bean)
+        check(f"Luganda guard rejects {name}", not ok, reason)
+
+    # A dropped Luganda card is reported, never shipped silently.
+    notes_text = " ".join(
+        card.build_cards(bean)[2]
+    )
+    check("the card notes say what each step did", bool(notes_text.strip()))
+
     # Without credentials the service still answers, and says why.
     card_en, card_lg, notes = card.build_cards(res)
     check("card exists with no credentials", bool(card_en))

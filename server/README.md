@@ -60,10 +60,21 @@ for the answer, one sentence each, in the order it was used.
 | Card text | the result fields only | Add a figure, a date, a month, a claim or a confidence word |
 | Luganda | Sunbird, from the English card | Change the meaning or add content |
 
+A translated card is checked before it is sent. The window months must survive
+translation, and the card is translated back to English and read again. A crop
+that appeared, a claim, a wider scope or a reversed direction drops the Luganda
+card. An unverified translation is never sent: the English card already carries
+the answer, and the notes say why the Luganda one was dropped.
+
 The card step calls a hosted model to phrase the supplied fields. Every draft is
-checked against those fields before it is used. A draft that holds a number or a
-month not in the fields, or a claim about yield, success or confidence, is
-rejected and the plain card is used instead. See `server/card.py`.
+checked against those fields before it is used. A draft is rejected when it adds
+a number, a crop or a claim that is not in the fields, widens the scale past the
+district, abbreviates a month, names a different alternative, reverses the
+direction of the reason, or drops a month of the published window.
+
+When the rules leave two or more crops level, the order of the crop list decided
+which one is named. Both cards say so, and a card that leaves the tie out is
+rejected. See `server/card.py`.
 
 ## Credentials
 
