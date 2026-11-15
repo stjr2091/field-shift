@@ -44,8 +44,9 @@ FIELDS = [
 
 # The request fields. district is accepted and echoed only as a check, because
 # the data file holds one site. A district other than that site is refused
-# rather than answered with another district's numbers.
-REQUEST_FIELDS = {"previous_crops", "soil_ph", "moisture", "district"}
+# rather than answered with another district's numbers. planting_date is
+# optional: an absent or blank one means today's date picks the season.
+REQUEST_FIELDS = {"previous_crops", "soil_ph", "moisture", "district", "planting_date"}
 
 
 def handle_request(payload: dict) -> dict:
@@ -75,6 +76,7 @@ def handle_request(payload: dict) -> dict:
         soil_ph=payload.get("soil_ph"),
         moisture=payload.get("moisture"),
         data=data,
+        planting_date=payload.get("planting_date"),
     )
     card_en, card_lg, notes = card.build_cards(result)
 

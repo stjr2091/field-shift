@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import re
 import sys
+from datetime import date as _date
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -113,7 +114,10 @@ def main() -> int:
 
     # A card that drops the published window, or the crop name, is refused. The
     # reader came for those two things, so losing them is a failed card.
-    bean = calc.recommend(["maize"], soil_ph=6.1, data=data)
+    # A crop is dropped, or the window is replaced, or a direction is turned.
+    # The request pins the first rains, so the fixture card carries the
+    # window that request was audited against.
+    bean = calc.recommend(["maize"], soil_ph=6.1, planting_date="2026-03-10", data=data)
     dropped = {
         "window replaced by a season word": "Common bean. Plant in the early season.",
         "crop name missing": "Plant in March to mid-April or mid-August to December.",
@@ -123,8 +127,10 @@ def main() -> int:
         check(f"card guard rejects {name}", not ok, reason)
 
     # The five English drafts that slipped past the first check. Each is a
-    # different way to change the answer while looking like a card.
-    tie_case = calc.recommend(["sorghum"], data=data)
+    # different way to change the answer while looking like a card. The
+    # requests pin the first rains with an explicit date, so the fixtures read
+    # the windows those cards were audited against.
+    tie_case = calc.recommend(["sorghum"], planting_date="2026-03-10", data=data)
     slipped = {
         "an invented crop": ("Maize. Planting window: 15 March to 15 August. Also potatoes.", tie_case),
         "an abbreviated month": ("Maize. Planting window: 15 March to Sep.", tie_case),
@@ -159,22 +165,24 @@ def main() -> int:
     # Fixtures from the second audit. Each card below was accepted once, and
     # each must now be refused.
 
-    # A favourable pair read as unusable. The whole defect is one word.
-    favour = calc.recommend(["maize"], data=data)
+    # A favourable pair read as unusable. The whole defect is one word. The
+    # request pins the first rains, so the fixtures carry the window that
+    # request was audited against.
+    favour = calc.recommend(["maize"], planting_date="2026-03-10", data=data)
     check(
         "the maize pair is held to be favourable",
         favour["facts"].get("pair_direction") == "for",
         str(favour["facts"].get("pair_direction")),
     )
     favour_en = (
-        "Plant Common bean. Planting window: March to mid-April, or mid-August to "
-        "December. Maize before Common bean is neutral to favourable. The first rains "
-        "start about 18 March; this figure is district-scale."
+        "Plant Common bean. Planting window: March to mid-April. Maize before "
+        "Common bean is neutral to favourable. The first rains start about "
+        "18 March; this figure is district-scale."
     )
     favour_back = (
-        "Plant Common bean. Planting window: March to mid-April, or mid-August to "
-        "December. Planting maize after common bean is not suitable. The first rains "
-        "start about 18 March; this figure is district-scale."
+        "Plant Common bean. Planting window: March to mid-April. Planting maize "
+        "after common bean is not suitable. The first rains start about "
+        "18 March; this figure is district-scale."
     )
     ok, reason = card.check_card(favour_back, favour)
     check("card guard rejects a favourable pair read as unsuitable", not ok, reason)
@@ -185,8 +193,9 @@ def main() -> int:
     # rendering changes between calls: the same Luganda word has come back as
     # "maize" and, in the round trip the audit read, as "beans". The fixture
     # holds the "beans" rendering, because the card names common bean once and
-    # that rendering names a bean crop three times.
-    made_up = calc.recommend(["sorghum"], data=data)
+    # that rendering names a bean crop three times. The request pins the first
+    # rains, so the fixture card carries the window it was audited against.
+    made_up = calc.recommend(["sorghum"], planting_date="2026-03-10", data=data)
     made_up_en = (
         "Maize is the recommended crop. Planting window: 15 March to 15 August. "
         "The previous crop was sorghum and no rotation rule is held for maize after "
@@ -252,8 +261,9 @@ def main() -> int:
     finally:
         card.luganda_crop_name = saved_lookup
 
-    # A tie line on a history that holds no tie.
-    two_crops = calc.recommend(["maize", "common_bean"], data=data)
+    # A tie line on a history that holds no tie. The first rains are pinned,
+    # so the fixture reads the window that history was audited against.
+    two_crops = calc.recommend(["maize", "common_bean"], planting_date="2026-03-10", data=data)
     check("the two-crop history holds no tie", not two_crops["facts"].get("tie_line"))
     false_tie = (
         "When: 15 March to 15 August. Maize is recommended. Planting window is 15 "
@@ -266,13 +276,24 @@ def main() -> int:
     check("card guard rejects a tie the facts do not hold", not ok, reason)
 
     # Fault: the season pick was silent. The response and the card must both
-    # state it, with the data fact that governs it.
-    for history in ([], ["sorghum"], ["groundnut"]):
-        res = calc.recommend(history, data=data)
+    # state it, with the data fact that governs it. With no date, today's
+    # date picks the season, and the sentence names the pick it made.
+    for today, expected in (
+        (_date(2026, 3, 10), "first rains"),
+        (_date(2026, 11, 15), "second rains"),
+    ):
+        res = calc.recommend(["sorghum"], today=today, data=data)
         line = res.get("season_assumption") or ""
-        check(f"season assumption is stated for {history}", "first rains" in line and "No planting season was entered" in line, line)
-        check(f"season assumption sits in the facts for {history}", res["facts"].get("season_assumption") == line)
-    season_case = calc.recommend(["sorghum"], data=data)
+        check(
+            f"season assumption names the pick for {today}",
+            expected in line and "today's date" in line and "No planting date was entered" in line,
+            line,
+        )
+        check(
+            f"season assumption sits in the facts for {today}",
+            res["facts"].get("season_assumption") == line,
+        )
+    season_case = calc.recommend(["sorghum"], planting_date="2026-03-10", data=data)
     plain_season = card.template_card(season_case)
     check("the plain card carries the season assumption word for word", season_case["facts"]["season_assumption"] in plain_season)
     no_season = "Plant Maize. Planting window: 15 March to 15 August. No rotation rule is held for Maize after Sorghum; the pair is unknown. Several crops tie on the rules held, so the listed order decided. Alternative crop: Common bean. This is district-scale advice, not a field reading."
@@ -326,15 +347,19 @@ def main() -> int:
     # The cards that audit kept must stay kept on the checks that audit was
     # about: crops, direction and tie. The contract has since gained the
     # season assumption, so a card that omits that line is now incomplete,
-    # and that omission is the only refusal these old cards may earn.
+    # and that omission is the only refusal these old cards may earn. Each
+    # request pins the first rains with an explicit date, the season those
+    # cards were audited under, and the first card's alternative window now
+    # names the first rains only, because a chosen-season request shows the
+    # chosen season's window.
     kept = [
-        (["sorghum"], None, None, "Plant Maize. Planting window: 15 March to 15 August. No rotation rule after sorghum, the pair is unknown. First rains start about 18 March, district-scale figure. The crops tie, no rule separated them, so the list order decided. Alternative crop is Common bean. Alternative window: March to mid-April or mid-August to December."),
+        (["sorghum"], None, None, "Plant Maize. Planting window: 15 March to 15 August. No rotation rule after sorghum, the pair is unknown. First rains start about 18 March, district-scale figure. The crops tie, no rule separated them, so the list order decided. Alternative crop is Common bean. Alternative window: March to mid-April."),
         ([], None, None, "Maize is recommended. Planting window: 15 March to 15 August. The first rains start about 18 March, a district-scale figure. No previous crop was given, so rotation was not judged. The crops tie and the list order decided. Alternative crop is Common bean. This is a district-scale recommendation."),
         (["groundnut"], 5.0, None, "Plant Maize from 15 March to 15 August. No rotation rule exists after groundnut, and the pair is unknown. Soil pH 5.0 is outside Maize's sourced range, making it a less-good match. The first rains usually begin around 18 March, a district-scale figure. The crops tie, so the listed order decided. Alternative is Common bean. Common bean also has no rotation rule after groundnut."),
         (["finger_millet"], 6.4, "moist", "Plant Maize. Planting window: 15 March to 15 August. Soil pH 6.4 fits the range for Maize. The first rains usually start about 18 March, a district-scale figure. The crops tie; no rule separates them, so the list order decided. Alternative crop is Common bean. No rotation rule is held for Maize after Finger millet."),
     ]
     for history, ph, wet, text in kept:
-        target = calc.recommend(history, soil_ph=ph, moisture=wet, data=data)
+        target = calc.recommend(history, soil_ph=ph, moisture=wet, planting_date="2026-03-10", data=data)
         ok, reason = card.check_card(text, target)
         kept_ok = ok or reason.startswith("card omits the season assumption")
         check(f"audited card for {history} keeps its facts", kept_ok, reason)
@@ -352,12 +377,12 @@ def main() -> int:
     en = card.template_card(bean)
     lg_text = (
         "Ebikoola bya Common bean. Ekiseera ky'okusimba: Okuva mu March okutuuka "
-        "wakati wa April, oba wakati wa August okutuuka December. Ekyokulondako: Maize. "
+        "wakati wa April. Season: February to May. Ekyokulondako: Maize. "
         "Kino kya disitulikiti."
     )
     lg_back = (
-        "Common bean. Planting window: March to mid-April, or mid-August to December. "
-        "Alternative: Maize. This is district-scale."
+        "Common bean. Planting window: March to mid-April. Season: February to "
+        "May. Alternative: Maize. This is district-scale."
     )
     ok, reason = card.check_luganda(lg_text, en, lg_back, bean)
     check("a faithful Luganda card passes", ok, reason)
@@ -421,11 +446,97 @@ def main() -> int:
         set(out) <= {"recommended_crop", "when", "why", "alternative", "reasons", "card_en", "card_lg", "season_assumption"},
         str(sorted(out)),
     )
-    check("response states the season assumption", "first rains" in out.get("season_assumption", ""), out.get("season_assumption", ""))
+    line = out.get("season_assumption", "")
+    check(
+        "response states the season pick and its basis",
+        "today's date" in line and "season" in line and "No planting date was entered" in line,
+        line,
+    )
 
-    # GET /assumption returns the same sentence, with no model call.
+    # GET /assumption returns the same sentence, with no model call. With no
+    # input it answers for the no-date default: today's date picks the season.
     assumption = service.assumption_response()["season_assumption"]
     check("the assumption endpoint returns the same sentence", assumption == out["season_assumption"])
+    check("the assumption endpoint answers the no-date default", "today's date" in assumption, assumption)
+
+    # The date contract. One optional planting_date picks the season; the
+    # windows shown are that season's; the ranking and the guards run
+    # unchanged. The boundary dates sit on both sides of both windows.
+    pick_cases = [
+        ("2026-01-31", "first_rains"),   # before the first window: next to come
+        ("2026-02-01", "first_rains"),   # first day inside the first window
+        ("2026-05-31", "first_rains"),   # last day inside the first window
+        ("2026-06-01", "second_rains"),  # between the windows: next to come
+        ("2026-07-31", "second_rains"),
+        ("2026-08-01", "second_rains"),  # first day inside the second window
+        ("2026-11-30", "second_rains"),  # last day inside the second window
+        ("2026-12-01", "first_rains"),   # after both windows: next year's first
+    ]
+    for day_text, expected in pick_cases:
+        row, _ = calc.pick_season(data, calc.normalise_planting_date(day_text))
+        got = (row or {}).get("season")
+        check(f"date {day_text} picks the {expected}", got == expected, str(got))
+
+    for bad in ("2026-13-01", "20 August 2026", "2026-8-2", "20260820", "2026-02-30"):
+        try:
+            calc.normalise_planting_date(bad)
+            check(f"a bad planting date is refused: {bad}", False)
+        except calc.RequestError:
+            check(f"a bad planting date is refused: {bad}", True)
+
+    # A date inside the second season gives the second window, and says so.
+    aug = calc.recommend(["maize"], planting_date="2026-08-20", data=data)
+    line = aug["season_assumption"]
+    check(
+        "a dated request names the season and the date",
+        "second rains" in line and "20 August 2026" in line,
+        line,
+    )
+    check("the dated advice shows the second-season window", aug["when"] == "mid-August to December", aug["when"])
+    check("the dated assumption sits in the facts", aug["facts"].get("season_assumption") == line)
+    ok, reason = card.check_card(card.template_card(aug), aug)
+    check("the plain card passes for a dated request", ok, reason)
+
+    # A crop with no sourced window for the chosen season says so. It is
+    # never shown the other season's window instead.
+    maize_aug = calc.recommend([], planting_date="2026-08-20", data=data)
+    check(
+        "a crop with no second-season window says so",
+        "no sourced planting window" in maize_aug["when"],
+        maize_aug["when"],
+    )
+    check(
+        "the no-window basis names the season",
+        "second rains" in maize_aug["facts"]["window_basis"],
+        maize_aug["facts"]["window_basis"],
+    )
+
+    # A date between the seasons is told what was chosen and why.
+    june = calc.recommend(["maize"], planting_date="2026-06-15", data=data)
+    check(
+        "a between-seasons date names the next season",
+        "next season to come" in june["season_assumption"] and "second rains" in june["season_assumption"],
+        june["season_assumption"],
+    )
+
+    # The guards run unchanged for a dated request. A dated request that
+    # holds no tie refuses a card that claims one.
+    two = calc.recommend(["maize", "common_bean"], planting_date="2026-08-20", data=data)
+    check("a dated two-crop request holds no tie", not two["facts"].get("tie_line"))
+    ok, reason = card.check_card(card.template_card(two) + " The crops tie.", two)
+    check("a dated card that claims a false tie is refused", not ok, reason)
+
+    # The route accepts the optional date, refuses a bad one, and reads a
+    # blank one as no date.
+    out = service.handle_request({"previous_crops": [], "planting_date": "2026-08-20"})["body"]
+    check("the route accepts a planting date", "second rains" in out["season_assumption"], out["season_assumption"])
+    blank = service.handle_request({"previous_crops": [], "planting_date": "   "})["body"]
+    check("a blank planting date means today", "today's date" in blank["season_assumption"], blank["season_assumption"])
+    try:
+        service.handle_request({"previous_crops": [], "planting_date": "20 August 2026"})
+        check("the route refuses a bad planting date", False)
+    except calc.RequestError:
+        check("the route refuses a bad planting date", True)
 
     print()
     if FAILURES:
