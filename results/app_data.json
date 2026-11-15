@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_utc": "2026-11-15T05:39:30Z",
+  "generated_utc": "2026-11-15T05:59:42Z",
   "data_status": {
     "site_climate": "ready",
     "crop_windows": "ready"
@@ -161,7 +161,8 @@
   "annual": {
     "rain_mm_mean": 843.0,
     "rain_mm_median": 839.4,
-    "n_years_complete": 35
+    "n_years_complete": 35,
+    "t2m_mean_c": 25.41
   },
   "onset": {
     "definition": {
@@ -1615,6 +1616,32 @@
       "note": "farmer knowledge from a survey, not a trial. Same page: 'The order of rotation was not consistent'",
       "tested": false,
       "test_note": "Not tested. No nitrogen, yield or trial data is held, so a rotation effect cannot be measured here."
+    }
+  ],
+  "sequence_reasons": [
+    {
+      "previous_crop": "sorghum",
+      "candidate": "finger_millet",
+      "label": "survey",
+      "direction": "against",
+      "reason": "Millet should not follow sorghum.",
+      "note": "Farmer knowledge from a Teso survey, not a trial. R8030 Final Technical Report, page 50."
+    },
+    {
+      "previous_crop": "common_bean",
+      "candidate": "maize",
+      "label": "assumption",
+      "direction": "for",
+      "reason": "Beans before maize is generally favourable.",
+      "note": "Direction only. No number."
+    },
+    {
+      "previous_crop": "maize",
+      "candidate": "common_bean",
+      "label": "assumption",
+      "direction": "for",
+      "reason": "Maize before beans is neutral to favourable.",
+      "note": "Direction only."
     }
   ],
   "crop_limitations": [

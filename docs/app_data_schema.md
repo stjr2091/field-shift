@@ -46,11 +46,13 @@ See `docs/crop_rules.md` for what the table supports.
 | `site` | object | `name`, `lat`, `lon`, `scale_note` |
 | `period` | object | `start_date`, `end_date`, `n_years` |
 | `monthly_climatology` | array[12] | one object per calendar month, Jan→Dec |
-| `annual` | object | `rain_mm_mean`, `rain_mm_median`, `n_years_complete` |
+| `annual` | object | `rain_mm_mean`, `rain_mm_median`, `n_years_complete`, `t2m_mean_c` |
 | `onset` | object | definition + summary + per-year rows |
 | `soil` | object | pH and texture, 0–30 cm depth-weighted |
 | `crops` | array | one object per crop; a crop with fewer than three sourced rules is cut |
 | `crop_rule_coverage` | array[object] | sourced rows per crop out of four, whether it appears, and the reason when it is cut |
+| `crop_rotation` | array[object] | rotation directions a source backs |
+| `sequence_reasons` | array[object] | rotation reasons a previous-crop choice can match, each with its own label |
 | `crop_limitations` | array[string] | the five limitation lines from the released rules table |
 | `notes` | array[string] | short honesty notes the app may show verbatim |
 
@@ -183,6 +185,20 @@ later than documented practice.
 }
 ```
 
+## `sequence_reasons[]`
+
+One object per rotation reason a previous-crop choice can match. The app reads
+the list and keeps the choice order itself.
+
+| Field | Type | Notes |
+| --- | --- | --- |
+| `previous_crop` | string | crop key the reason starts from |
+| `candidate` | string | crop key the reason applies to |
+| `label` | string | `"survey"` or `"assumption"`; never shown as computed |
+| `direction` | string | `"for"` or `"against"` the candidate |
+| `reason` | string | one plain sentence |
+| `note` | string | what backs it, and the limit of that backing |
+
 ## Example top-level skeleton
 
 ```json
@@ -194,7 +210,7 @@ later than documented practice.
   "site": { "name": "Soroti", "lat": 1.79, "lon": 33.5, "scale_note": "" },
   "period": { "start_date": "1991-01-01", "end_date": "2025-12-31", "n_years": 35 },
   "monthly_climatology": [],
-  "annual": { "rain_mm_mean": 843.0, "rain_mm_median": 839.4, "n_years_complete": 35 },
+  "annual": { "rain_mm_mean": 843.0, "rain_mm_median": 839.4, "n_years_complete": 35, "t2m_mean_c": 25.41 },
   "onset": { "definition": {}, "summary": [], "by_year": [] },
   "soil": { "ph_h2o": 6.12, "clay_pct": 40.73, "sand_pct": 38.87, "silt_pct": 20.32, "texture_sum_pct": 99.92 },
   "crops": [],

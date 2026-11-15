@@ -57,6 +57,43 @@ CUT_REASONS = {
     "the maize row. Neither counts toward the three of four.",
 }
 
+# Rotation reasons that a previous-crop choice can match. Each one carries its
+# own label, so an assumption is never shown as a measured effect. The order of
+# the crops in a sequence is kept by the app; this list only says what a pair
+# means. Text and citation come from the released rules table.
+SEQUENCE_REASONS = [
+    {
+        "previous_crop": "sorghum",
+        "candidate": "finger_millet",
+        "label": "survey",
+        "direction": "against",
+        "reason": "Millet should not follow sorghum.",
+        "note": "Farmer knowledge from a Teso survey, not a trial. "
+        "R8030 Final Technical Report, page 50.",
+    },
+    {
+        "previous_crop": "common_bean",
+        "candidate": "maize",
+        "label": "assumption",
+        "direction": "for",
+        "reason": "Beans before maize is generally favourable.",
+        "note": "Direction only. No number.",
+    },
+    {
+        "previous_crop": "maize",
+        "candidate": "common_bean",
+        "label": "assumption",
+        "direction": "for",
+        "reason": "Maize before beans is neutral to favourable.",
+        "note": "Direction only.",
+    },
+]
+
+# Day-weighted month lengths, used only to turn twelve monthly means into one
+# yearly mean. The data holds no single yearly temperature field, and a plain
+# average of months would over-weight February.
+MONTH_DAYS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+
 # The five limitation lines from the released crop rules workbook. They travel
 # with the crop rows, so a reader sees them beside the numbers they qualify.
 CROP_LIMITATIONS = [
@@ -247,6 +284,12 @@ def main() -> None:
     # Counted from rules.csv directly, so a crop with no rows reads 0 of 4
     # rather than being flattered by its absence from the crops list.
     rules_by_crop = read_rules()
+    monthly = climate["monthly_climatology"]
+    t2m_mean = round(
+        sum(row["t2m_mean_c"] * days for row, days in zip(monthly, MONTH_DAYS))
+        / sum(MONTH_DAYS),
+        2,
+    )
     coverage = [
         {
             "crop": crop,
@@ -320,6 +363,10 @@ def main() -> None:
             "rain_mm_mean": round_or_none(climate["annual"]["rain_mm_mean"], 1),
             "rain_mm_median": round_or_none(climate["annual"]["rain_mm_median"], 1),
             "n_years_complete": climate["annual"]["n_years_complete"],
+            # One yearly mean, built from the twelve monthly means by month
+            # length. The app needs a site temperature to compare with a crop
+            # optimum, and it must read that number rather than type it in.
+            "t2m_mean_c": t2m_mean,
         },
         "onset": {
             "definition": climate["onset_definition"],
@@ -361,6 +408,7 @@ def main() -> None:
         "crops": crops,
         "crop_rule_coverage": coverage,
         "crop_rotation": build_rotation(rules_by_crop),
+        "sequence_reasons": SEQUENCE_REASONS,
         "crop_limitations": CROP_LIMITATIONS,
         "data_quality": climate["data_quality"],
         "notes": [
