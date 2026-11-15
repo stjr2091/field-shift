@@ -148,9 +148,8 @@ The check record is `qa/app_rebuild/check_soroti_app_numbers.md`.
   the region.
 - No computed season length. Cessation is not implemented, so a crop's published duration is
   never compared with a season we measured.
-- No per-crop window comparison. The app has a table for it, but the rainfall-supported window
-  and the gap in days are not computed, so that table reads "no data" for every crop. It is
-  not filled in with a rule that does not exist.
+- No per-crop window comparison. The rainfall-supported window and the gap in days are not
+  computed, so no such table is shown. It is not filled in with a rule that does not exist.
 - No field measurement of soil. The pH and texture are model estimates.
 - No causal claim that an onset date leads to a good crop. The link is not tested.
 
@@ -165,9 +164,11 @@ The check record is `qa/app_rebuild/check_soroti_app_numbers.md`.
   never compared.
 - A second rainfall record (CHIRPS) was pulled during the analysis and is held outside the
   repository. It is not shown in the app and no record is chosen as primary. The two disagree.
-- Rotation is recorded as a direction only, with no number. The two crop-pair rows have no
-  source, so they are not published. No rotation effect is tested, because no nitrogen, yield
-  or trial data is held.
+- Rotation is recorded as a direction only, with no number. The app shows all three tagged
+  rows when a previous crop is chosen: the finger millet row as farmer survey, not a trial,
+  and the two crop-pair rows as assumed, with no source. Each row is labelled untested, and
+  the panel states that no nitrogen, yield, plot or trial data is held, so no rotation
+  effect can be measured. No rotation reason is advice.
 
 ## Sources
 
@@ -181,6 +182,6 @@ The check record is `qa/app_rebuild/check_soroti_app_numbers.md`.
 ## Status of this draft
 
 This is a draft for review. Figures are from the committed results and the check record.
-One item is not final: the crop section follows the corrected table once it is merged and
-checked. The millet rainfall row is settled: it stays as reference evidence with its tag
-unchanged, it is not a Soroti sowing trigger, and no parameter is reclassified.
+The crop section follows the corrected table, which is merged. The millet rainfall row is
+settled: it stays as reference evidence with its tag unchanged, it is not a Soroti sowing
+trigger, and no parameter is reclassified.

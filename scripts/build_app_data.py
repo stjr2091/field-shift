@@ -69,7 +69,7 @@ SEQUENCE_REASONS = [
         "direction": "against",
         "reason": "Millet should not follow sorghum.",
         "note": "Farmer knowledge from a Teso survey, not a trial. "
-        "R8030 Final Technical Report, page 50.",
+        "R8030 Final Technical Report, page 50. Not tested: no weed counts are held.",
     },
     {
         "previous_crop": "common_bean",
@@ -77,7 +77,8 @@ SEQUENCE_REASONS = [
         "label": "assumption",
         "direction": "for",
         "reason": "Beans before maize is generally favourable.",
-        "note": "Direction only. No number.",
+        "note": "Assumed. No source, direction only, no number. Not tested: no "
+        "nitrogen or trial data is held.",
     },
     {
         "previous_crop": "maize",
@@ -85,7 +86,8 @@ SEQUENCE_REASONS = [
         "label": "assumption",
         "direction": "for",
         "reason": "Maize before beans is neutral to favourable.",
-        "note": "Direction only.",
+        "note": "Assumed. No source, direction only, no number. Not tested: no "
+        "nitrogen or trial data is held.",
     },
 ]
 

@@ -605,10 +605,19 @@
     }
 
     var caveat = $("#sequence-caveat");
-    if (caveat && first) {
-      caveat.textContent = "In " + first.years_with_dry_spell_ge_7d_in_next_30d +
-        " of " + first.years_evaluated + " years a dry spell of 7 days or more " +
-        "followed within 30 days of the onset. This applies to every crop equally.";
+    if (caveat) {
+      var dry = "";
+      if (first) {
+        dry = "In " + first.years_with_dry_spell_ge_7d_in_next_30d +
+          " of " + first.years_evaluated + " years a dry spell of 7 days or more " +
+          "followed within 30 days of the onset. This applies to every crop equally. ";
+      }
+      // The rotation reasons are direction only. No data is held to measure an
+      // effect, so the panel says so once, in the same place every time.
+      caveat.textContent = dry +
+        "No rotation effect is tested anywhere above. No nitrogen, yield, plot or " +
+        "trial data is held, so a rotation effect cannot be measured here. " +
+        "No reason above is advice.";
     }
   }
 
