@@ -490,6 +490,7 @@ main > .view > h2 {
 
 .reason-dir--for { color: var(--green); }
 .reason-dir--against { color: var(--clay); }
+.reason-dir--mixed { color: var(--ochre); }
 
 .reason-detail {
   display: block;

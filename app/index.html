@@ -152,8 +152,9 @@
       </p>
       <p class="note">
         The cut is shown rather than hidden: sorghum and groundnut have no sourced
-        rows in the released table, so they do not appear. The table below reads
-        <code>results/app_data.json</code> and computes nothing.
+        rows in the released table, so neither is a candidate and both read 0 of 4
+        below. The table below reads <code>results/app_data.json</code> and computes
+        nothing.
       </p>
     </article>
 
@@ -173,17 +174,18 @@
       <header class="panel-head">
         <h3>Previous crops, next crop</h3>
         <p class="panel-sub">
-          Choose up to three crops you grew before. Each candidate next crop is
-          read against this history, the site record and the crop rules. Order is
-          not used: the history is a set of crops, not a sequence. Nothing here is
-          a yield estimate.
+          Choose up to three crops you grew before, most recent first. The first
+          field is the crop this season follows, and rotation reasons use only that
+          one, because a rotation pair is about what grew immediately before. Each
+          candidate next crop is read against the history, the site record and the
+          crop rules. Nothing here is a yield estimate.
         </p>
       </header>
 
       <div class="sequence-input">
-        <p class="sequence-label" id="sequence-input-label">What did you grow before?</p>
+        <p class="sequence-label" id="sequence-input-label">What did you grow last?</p>
         <div class="sequence-fields" role="group" aria-labelledby="sequence-input-label">
-          <label>Previous crop 1
+          <label>This season follows
             <select id="prev-1">
               <option value="">Not chosen</option>
               <option value="maize">Maize</option>
@@ -195,7 +197,7 @@
               <option value="unsure">Unsure</option>
             </select>
           </label>
-          <label>Previous crop 2
+          <label>One before that
             <select id="prev-2">
               <option value="">Not chosen</option>
               <option value="maize">Maize</option>
@@ -207,7 +209,7 @@
               <option value="unsure">Unsure</option>
             </select>
           </label>
-          <label>Previous crop 3
+          <label>Two before that
             <select id="prev-3">
               <option value="">Not chosen</option>
               <option value="maize">Maize</option>
@@ -228,7 +230,7 @@
       </p>
 
       <table class="grid grid--wide" id="table-sequence">
-        <caption class="sr">Candidate crops read against the chosen previous crops</caption>
+        <caption class="sr">Candidate crops read against the crop grown last and the site record</caption>
         <thead>
           <tr>
             <th scope="col">Candidate</th>

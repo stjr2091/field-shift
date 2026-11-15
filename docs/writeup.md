@@ -173,10 +173,16 @@ The check record is `qa/app_rebuild/check_soroti_app_numbers.md`.
   the panel states that no nitrogen, yield, plot or trial data is held, so no rotation
   effect can be measured. No rotation reason is advice.
 - The interaction evaluates candidate next crops. A user enters up to three crops they grew
-  before, and each candidate is read against that history, the site record and the crop
-  rules. It is not a comparison of whole sequences: the entered crops are a set, and their
-  order does not change any reason, any count or the ranking. The screen says so and the
-  three fields are not labelled by recency.
+  before, most recent first, and each candidate is read against that history, the site
+  record and the crop rules. It is not a comparison of whole sequences: there is no
+  alternative sequence on the screen and no whole-sequence comparison. Order matters for one
+  input only. A rotation pair is about what grew immediately before, so rotation reasons use
+  the most recent crop alone, and the page says when an earlier crop is therefore not
+  judged. The pH, temperature and season reasons do not depend on order.
+- A season-length reason is not counted for or against when the two ends of the published
+  duration disagree. For finger millet the shortest duration fits before the second rains
+  and the longest overlaps them, so the reason shows both ends and is marked as mixed. It is
+  never shown as a supporting reason.
 
 ## Sources
 

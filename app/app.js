@@ -447,12 +447,29 @@
       return node ? node.value : "";
     }).filter(function (value) { return value !== ""; });
 
+    /* The crop grown most recently. A rotation pair is about what grew
+       immediately before the next crop, so only this field decides a rotation
+       reason. The other two fields are context and are not used for rotation. */
+    var immediateNode = $("#prev-1");
+    var immediate = immediateNode ? immediateNode.value : "";
+    var earlier = ["#prev-2", "#prev-3"].map(function (sel) {
+      var node = $(sel);
+      return node ? node.value : "";
+    }).filter(function (value) { return value !== "" && value !== immediate; });
+
     var unknownChosen = previous.some(function (key) {
       return key === "other" || key === "unsure";
     });
 
     var rotationRows = (data.sequence_reasons || []).filter(function (row) {
-      return previous.indexOf(row.previous_crop) !== -1;
+      return row.previous_crop === immediate;
+    });
+
+    /* Pairs whose source crop appears further back than the last crop. These are
+       named in a note instead of being shown as a reason, because the crop does
+       not immediately precede the candidate. */
+    var starvedRows = (data.sequence_reasons || []).filter(function (row) {
+      return earlier.indexOf(row.previous_crop) !== -1;
     });
 
     var rows = crops.map(function (crop) {
@@ -511,7 +528,7 @@
         var disagree = highEnd != null && highFits !== fits;
         reasons.push({
           label: "computed",
-          direction: fits ? "for" : "against",
+          direction: disagree ? "mixed" : (fits ? "for" : "against"),
           text: "Onset " + doyLabel(startDoy) + " plus " +
             crop.season_length_days + " days, the shortest published duration, ends " +
             doyLabel(end) + ". It " + (fits ? "fits" : "overlaps") +
@@ -520,7 +537,7 @@
               ? " At the longest published duration, " + crop.season_length_days_max +
                 " days, it ends " + doyLabel(highEnd) + " and " +
                 (highFits ? "still fits" : "overlaps that window") +
-                ". The two ends do not agree."
+                ". The two ends do not agree, so this is not counted for or against."
               : (highEnd != null
                   ? " At the longest published duration, " + crop.season_length_days_max +
                     " days, it ends " + doyLabel(highEnd) + " and the answer is the same."
@@ -610,14 +627,30 @@
 
     var note = $("#sequence-rotation-note");
     if (note) {
+      var earlierNames = starvedRows.map(function (row) {
+        return cropLabel(data, row.previous_crop);
+      }).filter(function (value, index, all) {
+        return all.indexOf(value) === index;
+      });
       if (!previous.length) {
         note.textContent = "Rotation is not judged until a previous crop is chosen.";
       } else if (unknownChosen && !rotationRows.length) {
         note.textContent = "Rotation is not judged because the previous crop is unknown.";
       } else if (unknownChosen) {
         note.textContent = "Rotation is not judged for the previous crop marked unknown.";
+      } else if (!rotationRows.length && earlierNames.length) {
+        note.textContent = "No rotation reason applies to " +
+          cropLabel(data, immediate) + ", the crop grown last." +
+          " " + earlierNames.join(" and ") +
+          " grew earlier, and a rotation pair is about what grew immediately" +
+          " before, so it is not judged here.";
       } else if (!rotationRows.length) {
         note.textContent = "No rotation reason in the data matches this choice.";
+      } else if (earlierNames.length) {
+        note.textContent = "Rotation is judged only on " +
+          cropLabel(data, immediate) + ", the crop grown last." +
+          " " + earlierNames.join(" and ") +
+          " grew earlier and is not judged as a rotation pair.";
       } else {
         note.textContent = "";
       }
