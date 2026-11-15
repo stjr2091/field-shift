@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_utc": "2026-11-15T05:14:52Z",
+  "generated_utc": "2026-11-15T05:21:11Z",
   "data_status": {
     "site_climate": "ready",
     "crop_windows": "ready"
@@ -877,7 +877,7 @@
     {
       "crop": "maize",
       "crop_label": "Maize",
-      "status": "sourced",
+      "status": "partial",
       "documented_window_start_doy": 74,
       "documented_window_end_doy": 227,
       "supported_window_start_doy": null,
@@ -902,11 +902,13 @@
         "maize/planting_window/planting_window",
         "maize/soil/soil_type",
         "maize/temperature/temp_range",
-        "maize/water/annual_rainfall",
-        "maize/water/planting_rainfall_threshold",
-        "maize/water/planting_rainfall_threshold"
+        "maize/water/water_need_mm",
+        "maize/water/water_need_mm",
+        "maize/water/water_need_mm"
       ],
-      "unknown_rules": [],
+      "unknown_rules": [
+        "planting_rainfall_threshold"
+      ],
       "rule_rows": [
         {
           "crop": "maize",
@@ -923,7 +925,7 @@
           "source_url": "https://www.agriculture.go.ug/wp-content/uploads/2019/09/Maize-training-manual-for-extension-workers-in-Uganda.pdf",
           "page_or_quote": "PDF p67, Annex 2, row 'Districts of Kaberamaido, Katakwi, Amuria, Soroti, Kumi, Bukedea...': growth duration '110-120 days'",
           "basis": "",
-          "note": "Soroti is named in the row"
+          "note": "Soroti is named in the row. Annex 2 of the same manual gives the same 110-120 for the zone that names Soroti, so the released table value and the annex agree here"
         },
         {
           "crop": "maize",
@@ -962,7 +964,7 @@
         {
           "crop": "maize",
           "stage": "water",
-          "parameter": "planting_rainfall_threshold",
+          "parameter": "water_need_mm",
           "rule": "rain needed per season",
           "value": "600-1200 (optimum), 400-1800 (absolute)",
           "value_min": "600",
@@ -979,7 +981,7 @@
         {
           "crop": "maize",
           "stage": "water",
-          "parameter": "annual_rainfall",
+          "parameter": "water_need_mm",
           "rule": "annual rainfall",
           "value": "optimum 600-1200, absolute 400-1800",
           "value_min": "600",
@@ -1008,7 +1010,7 @@
           "source_url": "https://www.agriculture.go.ug/wp-content/uploads/2019/09/Maize-training-manual-for-extension-workers-in-Uganda.pdf",
           "page_or_quote": "PDF p25: 'Maize grows well an optimum soil pH) ranges from 5.5 to 7.0'",
           "basis": "",
-          "note": "same manual PDF p9 says 'An optimum soil pH 5.0 – 7.0'. The manual disagrees with itself"
+          "note": "kept at the workbook page 25 value, 5.5-7.0. PDF p9 gives 5.0-7.0 for the same crop in the same manual; that variant is recorded here and the two are not averaged. The generic \"pH range 5.5 to 6.5 for most crops\" lines on PDF p21 and p24 are textbook lines, not a maize value, and are not used"
         },
         {
           "crop": "maize",
@@ -1064,7 +1066,7 @@
         {
           "crop": "maize",
           "stage": "water",
-          "parameter": "planting_rainfall_threshold",
+          "parameter": "water_need_mm",
           "rule": "rainfall per season (maize manual)",
           "value": "500 to 600",
           "value_min": "500",
@@ -1126,8 +1128,8 @@
         "common_bean/planting_window/season_spans",
         "common_bean/soil/soil_type",
         "common_bean/temperature/temp_range",
-        "common_bean/water/annual_rainfall",
-        "common_bean/water/planting_rainfall_threshold"
+        "common_bean/water/water_need_mm",
+        "common_bean/water/water_need_mm"
       ],
       "unknown_rules": [
         "planting_rainfall_threshold"
@@ -1148,7 +1150,7 @@
           "source_url": "https://www.agriculture.go.ug/wp-content/uploads/2019/09/Beans-training-manual-for-extension-workers-in-Uganda.pdf",
           "page_or_quote": "PDF p11: 'Beans have a short maturity period of 58 to 120 days from planting time'",
           "basis": "",
-          "note": "national, not Soroti-specific"
+          "note": "national, not Soroti-specific. The released table value is kept. A variety-level 80-95 figure was looked for in the annexes and not found, so none is recorded"
         },
         {
           "crop": "common_bean",
@@ -1221,7 +1223,7 @@
         {
           "crop": "common_bean",
           "stage": "water",
-          "parameter": "planting_rainfall_threshold",
+          "parameter": "water_need_mm",
           "rule": "rain needed per season",
           "value": "500-2000 (optimum), 300-4300 (absolute)",
           "value_min": "500",
@@ -1238,7 +1240,7 @@
         {
           "crop": "common_bean",
           "stage": "water",
-          "parameter": "annual_rainfall",
+          "parameter": "water_need_mm",
           "rule": "annual rainfall",
           "value": "optimum 500-2000, absolute 300-4300",
           "value_min": "500",
@@ -1321,13 +1323,220 @@
           "note": "optimum range in value_min and value_max; outer limits 15 and 32 degrees C in this note, read as one requirement"
         }
       ]
+    },
+    {
+      "crop": "finger_millet",
+      "crop_label": "Finger millet",
+      "status": "partial",
+      "documented_window_start_doy": null,
+      "documented_window_end_doy": null,
+      "supported_window_start_doy": null,
+      "supported_window_end_doy": null,
+      "gap_days": null,
+      "rain_threshold_mm_10d": null,
+      "season_length_days": 75,
+      "ph_range": [
+        6.0,
+        7.0
+      ],
+      "temp_range_c": [
+        18.0,
+        35.0
+      ],
+      "rules_used": [
+        "finger_millet/duration/days_to_maturity",
+        "finger_millet/duration/season_length",
+        "finger_millet/ph/ph_range",
+        "finger_millet/planting_window/planting_window",
+        "finger_millet/rotation/rotation",
+        "finger_millet/soil/soil_type",
+        "finger_millet/temperature/temp_range",
+        "finger_millet/water/water_need_mm",
+        "finger_millet/water/water_need_mm",
+        "finger_millet/water/water_need_mm"
+      ],
+      "unknown_rules": [
+        "planting_rainfall_threshold"
+      ],
+      "rule_rows": [
+        {
+          "crop": "finger_millet",
+          "stage": "duration",
+          "parameter": "season_length",
+          "rule": "crop cycle (EcoCrop)",
+          "value": "75-180",
+          "value_min": "75",
+          "value_max": "180",
+          "unit": "days",
+          "window": "",
+          "tag": "sourced",
+          "source": "FAO EcoCrop data sheet",
+          "source_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=5657",
+          "page_or_quote": "EcoCrop data sheet, crop cycle",
+          "basis": "",
+          "note": "global range"
+        },
+        {
+          "crop": "finger_millet",
+          "stage": "duration",
+          "parameter": "days_to_maturity",
+          "rule": "days to maturity, Soroti",
+          "value": "75-180, working value 180",
+          "value_min": "75",
+          "value_max": "180",
+          "unit": "days",
+          "window": "",
+          "tag": "assumed",
+          "source": "FAO EcoCrop data sheet",
+          "source_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=5657",
+          "page_or_quote": "",
+          "basis": "No Ugandan figure found. EcoCrop's global crop cycle used, with the upper end (180) as the working value so the duration check is the strictest case",
+          "note": "notebook can also run 75 to show the range"
+        },
+        {
+          "crop": "finger_millet",
+          "stage": "planting_window",
+          "parameter": "planting_window",
+          "rule": "planting window, Soroti",
+          "value": "15/03 to 15/08",
+          "value_min": "",
+          "value_max": "",
+          "unit": "date (dd/mm)",
+          "window": "15/03 to 15/08",
+          "tag": "assumed",
+          "source": "MAAIF maize training manual (2023)",
+          "source_url": "https://www.agriculture.go.ug/wp-content/uploads/2019/09/Maize-training-manual-for-extension-workers-in-Uganda.pdf",
+          "page_or_quote": "",
+          "basis": "Borrowed from the MAAIF maize Soroti row (PDF p67), since both are rain-fed cereals planted in the same rains. No sorghum or millet calendar for Teso was opened",
+          "note": "biggest assumption in the table"
+        },
+        {
+          "crop": "finger_millet",
+          "stage": "water",
+          "parameter": "water_need_mm",
+          "rule": "rain needed per season",
+          "value": "500-1100 (optimum), 300-4300 (absolute)",
+          "value_min": "500",
+          "value_max": "1100",
+          "unit": "mm per season",
+          "window": "",
+          "tag": "assumed",
+          "source": "FAO EcoCrop data sheet",
+          "source_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=5657",
+          "page_or_quote": "",
+          "basis": "EcoCrop's ANNUAL rainfall range used as the season need (Soroti one long wet season, per the team's POWER analysis)",
+          "note": "kept visible beside the millet chapter reference row below"
+        },
+        {
+          "crop": "finger_millet",
+          "stage": "water",
+          "parameter": "water_need_mm",
+          "rule": "annual rainfall",
+          "value": "optimum 500-1100, absolute 300-4300",
+          "value_min": "500",
+          "value_max": "1100",
+          "unit": "mm per year",
+          "window": "",
+          "tag": "sourced",
+          "source": "FAO EcoCrop data sheet",
+          "source_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=5657",
+          "page_or_quote": "EcoCrop data sheet, annual rainfall",
+          "basis": "",
+          "note": "global, per year"
+        },
+        {
+          "crop": "finger_millet",
+          "stage": "ph",
+          "parameter": "ph_range",
+          "rule": "soil pH (EcoCrop)",
+          "value": "optimum 6-7, absolute 5.5-8.2",
+          "value_min": "6",
+          "value_max": "7",
+          "unit": "pH",
+          "window": "",
+          "tag": "sourced",
+          "source": "FAO EcoCrop data sheet",
+          "source_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=5657",
+          "page_or_quote": "EcoCrop data sheet, soil pH",
+          "basis": "",
+          "note": "the millet chapter (NRC 1996) has no pH line anywhere, so this value comes from EcoCrop only. EcoCrop gives optimum 6-7 and absolute 5.5-8.2 for the crop globally"
+        },
+        {
+          "crop": "finger_millet",
+          "stage": "soil",
+          "parameter": "soil_type",
+          "rule": "soil type",
+          "value": "unknown",
+          "value_min": "",
+          "value_max": "",
+          "unit": "",
+          "window": "",
+          "tag": "unknown",
+          "source": "",
+          "source_url": "",
+          "page_or_quote": "",
+          "basis": "",
+          "note": "not needed for the timing check"
+        },
+        {
+          "crop": "finger_millet",
+          "stage": "rotation",
+          "parameter": "rotation",
+          "rule": "rotation: not after sorghum",
+          "value": "millet should not follow sorghum (striga weed)",
+          "value_min": "",
+          "value_max": "",
+          "unit": "",
+          "window": "",
+          "tag": "sourced",
+          "source": "R8030 Final Technical Report",
+          "source_url": "",
+          "page_or_quote": "PDF p50: 'Some farmers especially in Teso were aware that millet should not follow sorghum because of the striga weed'",
+          "basis": "",
+          "note": "farmer knowledge from a survey, not a trial. Same page: 'The order of rotation was not consistent'"
+        },
+        {
+          "crop": "finger_millet",
+          "stage": "water",
+          "parameter": "water_need_mm",
+          "rule": "rainfall per season (millet chapter)",
+          "value": "500-1,000",
+          "value_min": "500",
+          "value_max": "1000",
+          "unit": "mm per season",
+          "window": "",
+          "tag": "assumed",
+          "source": "National Research Council (1996), Lost Crops of Africa Vol. I, chapter 2",
+          "source_url": "https://nap.nationalacademies.org/read/2305/chapter/5",
+          "page_or_quote": "Page 56, section Rainfall: \"It requires a moderate rainfall (500-1,000 mm), well distributed during the growing season with an absence of prolonged droughts. Dry weather is required for drying the grain at harvest.\"",
+          "basis": "The millet chapter gives one millimetre figure for the crop, not a threshold for this site. It is reference evidence, carried so a reader can see it beside the EcoCrop assumption, and it is not a release of the crop table",
+          "note": "reference figure from the millet chapter, 500-1,000 mm, not a Soroti threshold. The caveat travels with the number: absence of prolonged drought, and grain needs dry weather at harvest. Does not count toward the three of four"
+        },
+        {
+          "crop": "finger_millet",
+          "stage": "temperature",
+          "parameter": "temp_range",
+          "rule": "temperature",
+          "value": "can grow where temperatures are as high as 35 C; in Uganda grows best where the average maximum exceeds 27 C and the average minimum does not fall below 18 C",
+          "value_min": "18",
+          "value_max": "35",
+          "unit": "degrees C",
+          "window": "",
+          "tag": "sourced",
+          "source": "National Research Council (1996), Lost Crops of Africa Vol. I, chapter 2",
+          "source_url": "https://nap.nationalacademies.org/read/2305/chapter/5",
+          "page_or_quote": "Page 57, section High Temperature: \"Finger millet thrives under hot conditions. It can grow where temperatures are as high as 35°C. In Uganda, the crop grows best where the average maximum temperature exceeds 27°C and the average minimum does not fall below 18°C.\"",
+          "basis": "",
+          "note": "the two ends are not an optimum range: 18 is the Uganda average-minimum floor and 35 is the growth ceiling. The Uganda optimum statement, average maximum above 27, is in the quote and is not converted into a range"
+        }
+      ]
     }
   ],
   "crop_rule_coverage": [
     {
       "crop": "maize",
       "crop_label": "Maize",
-      "n_rules_sourced": 4,
+      "n_rules_sourced": 3,
       "n_rules_expected": 4,
       "appears": true,
       "cut_reason": ""
@@ -1343,10 +1552,10 @@
     {
       "crop": "finger_millet",
       "crop_label": "Finger millet",
-      "n_rules_sourced": 2,
+      "n_rules_sourced": 3,
       "n_rules_expected": 4,
-      "appears": false,
-      "cut_reason": "Two of the four parameters have a sourced row: duration and pH. The water row is reference evidence from the millet chapter, 500-1,000 mm, and is not a Soroti threshold. The planting window is borrowed from the maize row. Under the three-of-four rule this crop is cut."
+      "appears": true,
+      "cut_reason": ""
     },
     {
       "crop": "sorghum",

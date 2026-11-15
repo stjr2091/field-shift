@@ -12,9 +12,9 @@ row. That rule is fixed in `docs/plan.md` and this table does not change it.
 
 | Crop | Sourced of four | Unknown | Appears |
 | --- | --- | --- | --- |
-| Maize | 4 | none | yes |
-| Common bean | 3 | water | yes |
-| Finger millet | 2 | water, temperature | no, cut |
+| Maize | 3 | rainfall threshold | yes |
+| Common bean | 3 | rainfall threshold | yes |
+| Finger millet | 3 | rainfall threshold | yes |
 | Sorghum | 0 | all four | no, not in the table |
 | Groundnut | 0 | all four | no, not in the table |
 
@@ -22,11 +22,17 @@ Sorghum and groundnut are not in the released table, so they are not in this
 file and they do not appear in the app. The app shows the cut on its rules
 coverage table, with the count of sourced rows beside it.
 
-Finger millet is cut for a second reason, and the app data states it in
-`cut_reason`. Two of its four parameters have a sourced row: duration and pH.
-Its water row is reference evidence from the millet chapter, 500-1,000 mm, and
-is not a Soroti threshold. Its planting window is borrowed from the maize row.
-Two sourced parameters is under the three-of-four rule, so the crop is cut.
+The four parameters the cut counts are exactly the names in the code:
+`planting_rainfall_threshold`, `season_length`, `ph_range` and `temp_range`.
+Seasonal rainfall figures do not sit under `planting_rainfall_threshold`. They
+are carried as separate rows, because a seasonal total is not a 10-day trigger.
+So the threshold stays unknown for every crop, and each crop clears the cut on
+season length, pH and temperature.
+
+Finger millet's water and planting-window rows are also reference evidence: the
+millet chapter gives 500-1,000 mm for the crop, not a Soroti threshold, and the
+planting window is borrowed from the maize row. Neither counts toward the cut.
+
 
 ## Two later sources, added beside the table
 
@@ -47,7 +53,7 @@ should see the earlier assumption and the later evidence together.
    The quote is checked word for word, and it is carried as `assumed`, not
    `sourced`. It is the chapter's single millimetre figure for the crop, not a
    threshold for this site and not a release of the crop table. So it does not
-   count toward the three of four, and finger millet is cut.
+   count toward the three of four.
 
 ## Temperature
 
@@ -62,9 +68,31 @@ are quoted as printed, including their `oC` form:
   Temperatures above 32oC and below 15oC will cause poor pod set resulting in
   yield loss."
 
-Each is one row. The optimum range is the value; the outer limits sit in the note
-of the same row. No temperature row was added for finger millet, because no
-source opened for it gives one. Its temperature stays unknown.
+- Finger millet, page 57, section High Temperature: "Finger millet thrives under
+  hot conditions. It can grow where temperatures are as high as 35°C. In Uganda,
+  the crop grows best where the average maximum temperature exceeds 27°C and the
+  average minimum does not fall below 18°C."
+
+Each is one row. For maize and beans the optimum range is the value and the
+outer limits sit in the note. For finger millet the two ends are not an optimum:
+18 is the Uganda average-minimum floor and 35 is the growth ceiling. Its note
+says so, and the Uganda optimum line stays in the quote rather than being
+converted into a range.
+
+## pH
+
+Maize keeps the workbook value from PDF page 25, 5.5-7.0. The same manual gives
+5.0-7.0 on page 9; that variant is recorded in the note and the two are not
+averaged. The generic "pH range 5.5 to 6.5 for most crops" lines on pages 21 and
+24 are textbook lines, not a maize value, and are not used.
+
+Beans uses 5.8-6.5 from PDF page 11, with the sensitivity below 5.2 in the same
+quote.
+
+Finger millet has no pH line anywhere in the millet chapter, so its pH comes from
+EcoCrop alone: optimum 6-7, absolute 5.5-8.2. That row is sourced, because
+EcoCrop states it for the crop, but it is not a Ugandan figure and the note says
+so.
 
 The beans temperature passage is on PDF page 9. An earlier note placed it on
 page 11, which is the maturity page; page 9 is where the sentence sits.
