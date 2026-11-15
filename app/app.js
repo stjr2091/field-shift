@@ -21,6 +21,9 @@
   var USE_MOCK = !API_PARAM || MOCK_FILES.hasOwnProperty(API_PARAM);
   var MOCK_FILE = USE_MOCK ? (MOCK_FILES[API_PARAM] || MOCK_FILES.mock) : "";
   var API_URL = USE_MOCK ? "" : API_PARAM;
+  /* The advice base: the POST URL without its endpoint, e.g. the ?api= URL
+     minus a trailing /recommend. The pre-submit assumption reads from here. */
+  var API_BASE = API_URL.replace(/\/recommend\/?$/, "");
 
   var state = { crops: [], district: "" };
 
@@ -201,15 +204,27 @@
   var SEASON_MISSING = "The service did not state the season this advice assumes.";
 
   /* The assumption sits by the submit control, so the user reads it before
-     asking for advice. In mock mode the sample fills it on load; with the
-     live service it fills from the first response. */
+     asking for advice. In mock mode the sample fills it on load. With the
+     live service it fills from GET <api-base>/assumption on load, and stays
+     empty until the first response if that fetch fails. */
   function showSeasonNote(text) {
     setText(seasonNoteText, text || SEASON_MISSING);
     seasonNote.hidden = false;
   }
 
   function loadSampleSeason() {
-    if (!USE_MOCK) return;
+    if (!USE_MOCK) {
+      fetch(API_BASE + "/assumption", { cache: "no-store" })
+        .then(function (response) {
+          if (!response.ok) throw new Error("HTTP " + response.status);
+          return response.json();
+        })
+        .then(function (data) {
+          if (data && data.season_assumption) showSeasonNote(data.season_assumption);
+        })
+        .catch(function () { /* the note stays empty until the first response */ });
+      return;
+    }
     fetch(MOCK_FILE, { cache: "no-store" })
       .then(function (response) { return response.ok ? response.json() : null; })
       .then(function (data) {

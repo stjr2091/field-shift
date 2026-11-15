@@ -48,6 +48,12 @@ shows the missing-card note instead.
 The service must allow the browser's origin (CORS) and answer with the JSON
 shape above. No other setting is needed.
 
+On page load the form also asks `GET <api-base>/assumption` for the season
+assumption, where the base is the `?api=` URL without a trailing
+`/recommend`. It returns `{season_assumption: string}` and fills the note by
+the submit button before any advice is requested. If that fetch fails, the
+note stays empty until the first advice.
+
 ## Limits
 
 - The district is automatic and fixed to the site in `results/app_data.json`.
