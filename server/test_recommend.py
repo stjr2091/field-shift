@@ -459,6 +459,23 @@ def main() -> int:
     check("the assumption endpoint returns the same sentence", assumption == out["season_assumption"])
     check("the assumption endpoint answers the no-date default", "today's date" in assumption, assumption)
 
+    # The assumption endpoint takes the same optional date the route takes,
+    # by the same picking rule, so a page can show the season a chosen date
+    # implies before the request is sent.
+    dated = service.assumption_response(planting_date="2026-08-20")["season_assumption"]
+    check(
+        "the assumption endpoint names the season a date implies",
+        "second rains" in dated and "20 August 2026" in dated and "today's date" not in dated,
+        dated,
+    )
+    first = service.assumption_response(planting_date="2026-03-10")["season_assumption"]
+    check("the assumption endpoint picks the first rains for a March date", "first rains" in first, first)
+    try:
+        service.assumption_response(planting_date="20 August 2026")
+        check("the assumption endpoint refuses a bad date", False)
+    except calc.RequestError:
+        check("the assumption endpoint refuses a bad date", True)
+
     # The date contract. One optional planting_date picks the season; the
     # windows shown are that season's; the ranking and the guards run
     # unchanged. The boundary dates sit on both sides of both windows.

@@ -4,7 +4,8 @@
     PORT=9000 python server/app.py
 
 Two routes: POST /recommend answers one request. GET /assumption returns the
-season assumption, so the page can show it before any advice is given. GET
+season assumption, so the page can show it before any advice is given; an
+optional ?date=YYYY-MM-DD names the season that date implies. GET
 /health returns a fixed word.
 
 The response carries the agreed fields only. Any extra field the calculation
@@ -19,6 +20,7 @@ import os
 import sys
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+from urllib.parse import parse_qs, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -88,9 +90,18 @@ def handle_request(payload: dict) -> dict:
     return {"body": out, "notes": notes}
 
 
-def assumption_response(data: dict | None = None) -> dict:
-    """The body of GET /assumption. Same data file, same sentence, no model."""
-    return {"season_assumption": calc.season_assumption(data if data is not None else calc.load_data())}
+def assumption_response(data: dict | None = None, planting_date=None) -> dict:
+    """The body of GET /assumption. Same data file, same sentence, no model.
+
+    An optional date makes the sentence name the season that date implies,
+    by the same picking rule the recommendation route uses. No date keeps
+    the today's-date default.
+    """
+    return {
+        "season_assumption": calc.season_assumption(
+            data if data is not None else calc.load_data(), planting_date
+        )
+    }
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -111,11 +122,20 @@ class Handler(BaseHTTPRequestHandler):
         self._send(204, {})
 
     def do_GET(self) -> None:  # noqa: N802
-        path = self.path.rstrip("/")
+        split = urlsplit(self.path)
+        path = split.path.rstrip("/")
         if path in ("/health", ""):
             return self._send(200, {"status": "ok"})
         if path == "/assumption":
-            return self._send(200, assumption_response())
+            query = parse_qs(split.query)
+            # One optional date. The same picking rule the recommendation
+            # route uses, so the note a page shows before submitting is the
+            # note the answer will carry. A bad date is refused, not guessed.
+            raw = (query.get("date") or [None])[0]
+            try:
+                return self._send(200, assumption_response(planting_date=raw))
+            except calc.RequestError as error:
+                return self._send(422, {"error": str(error)})
         self._send(404, {"error": "Use POST /recommend or GET /assumption."})
 
     def do_POST(self) -> None:  # noqa: N802

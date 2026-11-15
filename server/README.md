@@ -15,7 +15,11 @@ no credentials.
 - `POST /recommend` answers one request.
 - `GET /assumption` returns `{"season_assumption": "..."}`, the same sentence
   the POST response carries. It reads the data file only, with no model call,
-  so the page can show the assumption before any advice is given.
+  so the page can show the assumption before any advice is given. An optional
+  `?date=YYYY-MM-DD` names the season that date implies, by the same picking
+  rule the route uses, so a form can show what a chosen date means before it
+  is submitted. Without the parameter it answers for today's date. A date
+  that is not a real calendar day is refused with `422`.
 - `GET /health` returns a fixed word.
 
 ## Request
