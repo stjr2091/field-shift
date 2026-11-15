@@ -272,9 +272,9 @@ the other way, oldest first and newest last.
 
 A handler must reverse the field order, or build from `prev-3` to `prev-1`.
 
-This is the one mistake the index cannot catch. A reversed key is still a real
-crop path, so it exists in the index and the lookup succeeds. It returns a
-different pairing with no error. For example, `sorghum>finger_millet` reports
+The index cannot catch this. A reversed key is still a real crop path, so it
+exists in the index and the lookup succeeds. It returns a different pairing with
+no error. For example, `sorghum>finger_millet` reports
 one reason against, and `finger_millet>sorghum` reports none. Both keys are
 present. Only the first carries the warning that finger millet should not
 follow sorghum.
