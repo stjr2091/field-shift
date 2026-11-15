@@ -35,8 +35,21 @@ Python notebooks on Colab or Kaggle; pandas and xarray for data; geopandas and r
 - `data/processed` - cleaned outputs of notebooks
 - `notebooks` - analysis, reproducible top to bottom
 - `rules` - rules CSV, one source per row
+- `results` - the four published outputs (`site_climate.json`, `crop_windows.csv`, `fig_*.png`, `app_data.json`), committed so the app and the write-up read them
 - `app` - thin webapp over precomputed results
 - `docs` - write-up and the standing brief
+
+## Running the data layer
+
+```bash
+pip install -r requirements.txt
+python scripts/download_data.py        # POWER + SoilGrids into data/raw (no key)
+python notebooks/field_shift_data.py   # rebuild results/site_climate.json
+```
+
+`notebooks/field_shift.ipynb` is the readable version of the same steps and runs
+top to bottom after the download. The app contract for `results/app_data.json`
+is `docs/app_data_schema.md`.
 
 ## Workflow
 

@@ -1,0 +1,1647 @@
+{
+  "schema_version": "1.0",
+  "generated_utc": "2026-11-15T05:31:01Z",
+  "data_status": {
+    "site_climate": "ready",
+    "crop_windows": "ready"
+  },
+  "meta": {
+    "sources": [
+      {
+        "name": "NASA POWER daily point (MERRA-2)",
+        "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR,T2M,GWETROOT&community=AG&longitude=33.5&latitude=1.79&start=19910101&end=20251231&format=CSV",
+        "accessed": "2026-11-14"
+      },
+      {
+        "name": "ISRIC SoilGrids v2.0 point query",
+        "url": "https://rest.isric.org/soilgrids/v2.0/properties/query?lon=33.5&lat=1.79&property=phh2o&property=clay&property=sand&property=silt&depth=0-5cm&depth=5-15cm&depth=15-30cm&value=mean&value=Q0.5",
+        "accessed": "2026-11-14"
+      }
+    ],
+    "assumptions": [
+      "Planting is possible on the first day the trailing 10-day rainfall sum reaches the threshold, having been below it before, with root-zone soil wetness at or above 0.40. This is an assumption, not a sourced rule.",
+      "This figure is the day the 10-day threshold is first met, not the first rain day. It can lag the first rain by up to 9 days."
+    ],
+    "raw_cache_sha256": "ac0df9b99463c212fc1c444670ba219b9cccf5e986090151fb81daef36a6743e",
+    "pipeline": "notebooks/field_shift.ipynb"
+  },
+  "site": {
+    "name": "Soroti",
+    "lat": 1.79,
+    "lon": 33.5,
+    "scale_note": "One NASA POWER grid cell (0.5 x 0.625 deg, ~50 km). District-scale, not parcel-scale."
+  },
+  "period": {
+    "start_date": "1991-01-01",
+    "end_date": "2025-12-31",
+    "n_years": 35
+  },
+  "monthly_climatology": [
+    {
+      "month": 1,
+      "rain_mm_mean": 19.6,
+      "rain_mm_median": 15.8,
+      "rain_mm_p25": 6.4,
+      "rain_mm_p75": 32.1,
+      "n_years": 35,
+      "t2m_mean_c": 26.64,
+      "gwetroot_mean": 0.39
+    },
+    {
+      "month": 2,
+      "rain_mm_mean": 18.6,
+      "rain_mm_median": 11.1,
+      "rain_mm_p25": 5.7,
+      "rain_mm_p75": 26.7,
+      "n_years": 35,
+      "t2m_mean_c": 27.77,
+      "gwetroot_mean": 0.38
+    },
+    {
+      "month": 3,
+      "rain_mm_mean": 48.8,
+      "rain_mm_median": 35.7,
+      "rain_mm_p25": 25.6,
+      "rain_mm_p75": 62.1,
+      "n_years": 35,
+      "t2m_mean_c": 27.83,
+      "gwetroot_mean": 0.39
+    },
+    {
+      "month": 4,
+      "rain_mm_mean": 90.8,
+      "rain_mm_median": 83.4,
+      "rain_mm_p25": 54.5,
+      "rain_mm_p75": 120.5,
+      "n_years": 35,
+      "t2m_mean_c": 26.28,
+      "gwetroot_mean": 0.41
+    },
+    {
+      "month": 5,
+      "rain_mm_mean": 114.4,
+      "rain_mm_median": 115.9,
+      "rain_mm_p25": 87.7,
+      "rain_mm_p75": 138.9,
+      "n_years": 35,
+      "t2m_mean_c": 24.6,
+      "gwetroot_mean": 0.43
+    },
+    {
+      "month": 6,
+      "rain_mm_mean": 84.1,
+      "rain_mm_median": 90.8,
+      "rain_mm_p25": 55.8,
+      "rain_mm_p75": 106.8,
+      "n_years": 35,
+      "t2m_mean_c": 23.81,
+      "gwetroot_mean": 0.43
+    },
+    {
+      "month": 7,
+      "rain_mm_mean": 91.5,
+      "rain_mm_median": 87.1,
+      "rain_mm_p25": 65.3,
+      "rain_mm_p75": 123.9,
+      "n_years": 35,
+      "t2m_mean_c": 23.3,
+      "gwetroot_mean": 0.43
+    },
+    {
+      "month": 8,
+      "rain_mm_mean": 104.3,
+      "rain_mm_median": 101.2,
+      "rain_mm_p25": 77.6,
+      "rain_mm_p75": 124.3,
+      "n_years": 35,
+      "t2m_mean_c": 23.65,
+      "gwetroot_mean": 0.43
+    },
+    {
+      "month": 9,
+      "rain_mm_mean": 93.7,
+      "rain_mm_median": 84.8,
+      "rain_mm_p25": 69.8,
+      "rain_mm_p75": 120.4,
+      "n_years": 35,
+      "t2m_mean_c": 24.9,
+      "gwetroot_mean": 0.43
+    },
+    {
+      "month": 10,
+      "rain_mm_mean": 94.8,
+      "rain_mm_median": 101.1,
+      "rain_mm_p25": 64.2,
+      "rain_mm_p75": 114.4,
+      "n_years": 35,
+      "t2m_mean_c": 25.2,
+      "gwetroot_mean": 0.43
+    },
+    {
+      "month": 11,
+      "rain_mm_mean": 55.2,
+      "rain_mm_median": 50.3,
+      "rain_mm_p25": 36.9,
+      "rain_mm_p75": 67.8,
+      "n_years": 35,
+      "t2m_mean_c": 25.22,
+      "gwetroot_mean": 0.41
+    },
+    {
+      "month": 12,
+      "rain_mm_mean": 27.1,
+      "rain_mm_median": 19.8,
+      "rain_mm_p25": 12.4,
+      "rain_mm_p75": 43.0,
+      "n_years": 35,
+      "t2m_mean_c": 25.88,
+      "gwetroot_mean": 0.4
+    }
+  ],
+  "annual": {
+    "rain_mm_mean": 843.0,
+    "rain_mm_median": 839.4,
+    "n_years_complete": 35
+  },
+  "onset": {
+    "definition": {
+      "rain_10d_threshold_mm": 20.0,
+      "gwetroot_min": 0.4,
+      "rain_variable": "PRECTOTCORR (mm/day)",
+      "soil_variable": "GWETROOT (root-zone soil wetness, 0-1)",
+      "crossing_rule": "trailing 10-day rain sum >= threshold and previous 10-day sum < threshold",
+      "dry_day_mm": 1.0,
+      "dry_spell_window_days": 30
+    },
+    "summary": [
+      {
+        "season": "first_rains",
+        "label": "First rains (Feb–May)",
+        "window_start_md": "02-01",
+        "window_end_md": "05-31",
+        "onset_doy_median": 77.0,
+        "onset_doy_p25": 55.5,
+        "onset_doy_p75": 90.0,
+        "years_evaluated": 35,
+        "years_found": 35,
+        "years_with_dry_spell_ge_7d_in_next_30d": 21,
+        "threshold_sensitivity": [
+          {
+            "rain_10d_threshold_mm": 15.0,
+            "years_found": 35,
+            "onset_doy_median": 72.0
+          },
+          {
+            "rain_10d_threshold_mm": 20.0,
+            "years_found": 35,
+            "onset_doy_median": 77.0
+          },
+          {
+            "rain_10d_threshold_mm": 25.0,
+            "years_found": 35,
+            "onset_doy_median": 85.0
+          }
+        ]
+      },
+      {
+        "season": "second_rains",
+        "label": "Second rains (Aug–Nov)",
+        "window_start_md": "08-01",
+        "window_end_md": "11-30",
+        "onset_doy_median": 225.0,
+        "onset_doy_p25": 214.0,
+        "onset_doy_p75": 243.2,
+        "years_evaluated": 35,
+        "years_found": 34,
+        "years_with_dry_spell_ge_7d_in_next_30d": 8,
+        "threshold_sensitivity": [
+          {
+            "rain_10d_threshold_mm": 15.0,
+            "years_found": 35,
+            "onset_doy_median": 248.0
+          },
+          {
+            "rain_10d_threshold_mm": 20.0,
+            "years_found": 34,
+            "onset_doy_median": 225.0
+          },
+          {
+            "rain_10d_threshold_mm": 25.0,
+            "years_found": 35,
+            "onset_doy_median": 220.0
+          }
+        ]
+      }
+    ],
+    "by_year": [
+      {
+        "year": 1991,
+        "season": "first_rains",
+        "onset_date": "1991-03-27",
+        "onset_doy": 86,
+        "onset_found": true,
+        "rain_next_30d_mm": 74.9,
+        "longest_dry_spell_next_30d": 8
+      },
+      {
+        "year": 1992,
+        "season": "first_rains",
+        "onset_date": "1992-04-08",
+        "onset_doy": 99,
+        "onset_found": true,
+        "rain_next_30d_mm": 78.3,
+        "longest_dry_spell_next_30d": 14
+      },
+      {
+        "year": 1993,
+        "season": "first_rains",
+        "onset_date": "1993-03-23",
+        "onset_doy": 82,
+        "onset_found": true,
+        "rain_next_30d_mm": 21.8,
+        "longest_dry_spell_next_30d": 25
+      },
+      {
+        "year": 1994,
+        "season": "first_rains",
+        "onset_date": "1994-04-22",
+        "onset_doy": 112,
+        "onset_found": true,
+        "rain_next_30d_mm": 154.7,
+        "longest_dry_spell_next_30d": 2
+      },
+      {
+        "year": 1995,
+        "season": "first_rains",
+        "onset_date": "1995-02-13",
+        "onset_doy": 44,
+        "onset_found": true,
+        "rain_next_30d_mm": 37.7,
+        "longest_dry_spell_next_30d": 11
+      },
+      {
+        "year": 1996,
+        "season": "first_rains",
+        "onset_date": "1996-03-18",
+        "onset_doy": 78,
+        "onset_found": true,
+        "rain_next_30d_mm": 121.5,
+        "longest_dry_spell_next_30d": 6
+      },
+      {
+        "year": 1997,
+        "season": "first_rains",
+        "onset_date": "1997-03-29",
+        "onset_doy": 88,
+        "onset_found": true,
+        "rain_next_30d_mm": 177.9,
+        "longest_dry_spell_next_30d": 5
+      },
+      {
+        "year": 1998,
+        "season": "first_rains",
+        "onset_date": "1998-02-13",
+        "onset_doy": 44,
+        "onset_found": true,
+        "rain_next_30d_mm": 19.0,
+        "longest_dry_spell_next_30d": 23
+      },
+      {
+        "year": 1999,
+        "season": "first_rains",
+        "onset_date": "1999-03-15",
+        "onset_doy": 74,
+        "onset_found": true,
+        "rain_next_30d_mm": 15.6,
+        "longest_dry_spell_next_30d": 23
+      },
+      {
+        "year": 2000,
+        "season": "first_rains",
+        "onset_date": "2000-05-08",
+        "onset_doy": 129,
+        "onset_found": true,
+        "rain_next_30d_mm": 69.2,
+        "longest_dry_spell_next_30d": 6
+      },
+      {
+        "year": 2001,
+        "season": "first_rains",
+        "onset_date": "2001-03-07",
+        "onset_doy": 66,
+        "onset_found": true,
+        "rain_next_30d_mm": 44.1,
+        "longest_dry_spell_next_30d": 7
+      },
+      {
+        "year": 2002,
+        "season": "first_rains",
+        "onset_date": "2002-03-10",
+        "onset_doy": 69,
+        "onset_found": true,
+        "rain_next_30d_mm": 38.9,
+        "longest_dry_spell_next_30d": 7
+      },
+      {
+        "year": 2003,
+        "season": "first_rains",
+        "onset_date": "2003-04-21",
+        "onset_doy": 111,
+        "onset_found": true,
+        "rain_next_30d_mm": 151.9,
+        "longest_dry_spell_next_30d": 4
+      },
+      {
+        "year": 2004,
+        "season": "first_rains",
+        "onset_date": "2004-04-03",
+        "onset_doy": 94,
+        "onset_found": true,
+        "rain_next_30d_mm": 165.8,
+        "longest_dry_spell_next_30d": 1
+      },
+      {
+        "year": 2005,
+        "season": "first_rains",
+        "onset_date": "2005-02-01",
+        "onset_doy": 32,
+        "onset_found": true,
+        "rain_next_30d_mm": 19.4,
+        "longest_dry_spell_next_30d": 24
+      },
+      {
+        "year": 2006,
+        "season": "first_rains",
+        "onset_date": "2006-03-01",
+        "onset_doy": 60,
+        "onset_found": true,
+        "rain_next_30d_mm": 35.3,
+        "longest_dry_spell_next_30d": 8
+      },
+      {
+        "year": 2007,
+        "season": "first_rains",
+        "onset_date": "2007-04-14",
+        "onset_doy": 104,
+        "onset_found": true,
+        "rain_next_30d_mm": 105.2,
+        "longest_dry_spell_next_30d": 6
+      },
+      {
+        "year": 2008,
+        "season": "first_rains",
+        "onset_date": "2008-02-11",
+        "onset_doy": 42,
+        "onset_found": true,
+        "rain_next_30d_mm": 39.5,
+        "longest_dry_spell_next_30d": 19
+      },
+      {
+        "year": 2009,
+        "season": "first_rains",
+        "onset_date": "2009-03-31",
+        "onset_doy": 90,
+        "onset_found": true,
+        "rain_next_30d_mm": 106.0,
+        "longest_dry_spell_next_30d": 6
+      },
+      {
+        "year": 2010,
+        "season": "first_rains",
+        "onset_date": "2010-02-25",
+        "onset_doy": 56,
+        "onset_found": true,
+        "rain_next_30d_mm": 91.3,
+        "longest_dry_spell_next_30d": 9
+      },
+      {
+        "year": 2011,
+        "season": "first_rains",
+        "onset_date": "2011-03-18",
+        "onset_doy": 77,
+        "onset_found": true,
+        "rain_next_30d_mm": 54.6,
+        "longest_dry_spell_next_30d": 8
+      },
+      {
+        "year": 2012,
+        "season": "first_rains",
+        "onset_date": "2012-03-06",
+        "onset_doy": 66,
+        "onset_found": true,
+        "rain_next_30d_mm": 11.8,
+        "longest_dry_spell_next_30d": 13
+      },
+      {
+        "year": 2013,
+        "season": "first_rains",
+        "onset_date": "2013-03-29",
+        "onset_doy": 88,
+        "onset_found": true,
+        "rain_next_30d_mm": 137.8,
+        "longest_dry_spell_next_30d": 1
+      },
+      {
+        "year": 2014,
+        "season": "first_rains",
+        "onset_date": "2014-05-07",
+        "onset_doy": 127,
+        "onset_found": true,
+        "rain_next_30d_mm": 135.1,
+        "longest_dry_spell_next_30d": 4
+      },
+      {
+        "year": 2015,
+        "season": "first_rains",
+        "onset_date": "2015-03-31",
+        "onset_doy": 90,
+        "onset_found": true,
+        "rain_next_30d_mm": 125.7,
+        "longest_dry_spell_next_30d": 4
+      },
+      {
+        "year": 2016,
+        "season": "first_rains",
+        "onset_date": "2016-04-03",
+        "onset_doy": 94,
+        "onset_found": true,
+        "rain_next_30d_mm": 151.5,
+        "longest_dry_spell_next_30d": 3
+      },
+      {
+        "year": 2017,
+        "season": "first_rains",
+        "onset_date": "2017-02-01",
+        "onset_doy": 32,
+        "onset_found": true,
+        "rain_next_30d_mm": 58.9,
+        "longest_dry_spell_next_30d": 16
+      },
+      {
+        "year": 2018,
+        "season": "first_rains",
+        "onset_date": "2018-03-01",
+        "onset_doy": 60,
+        "onset_found": true,
+        "rain_next_30d_mm": 99.9,
+        "longest_dry_spell_next_30d": 4
+      },
+      {
+        "year": 2019,
+        "season": "first_rains",
+        "onset_date": "2019-02-24",
+        "onset_doy": 55,
+        "onset_found": true,
+        "rain_next_30d_mm": 24.5,
+        "longest_dry_spell_next_30d": 17
+      },
+      {
+        "year": 2020,
+        "season": "first_rains",
+        "onset_date": "2020-02-01",
+        "onset_doy": 32,
+        "onset_found": true,
+        "rain_next_30d_mm": 35.2,
+        "longest_dry_spell_next_30d": 19
+      },
+      {
+        "year": 2021,
+        "season": "first_rains",
+        "onset_date": "2021-02-20",
+        "onset_doy": 51,
+        "onset_found": true,
+        "rain_next_30d_mm": 17.2,
+        "longest_dry_spell_next_30d": 16
+      },
+      {
+        "year": 2022,
+        "season": "first_rains",
+        "onset_date": "2022-03-25",
+        "onset_doy": 84,
+        "onset_found": true,
+        "rain_next_30d_mm": 93.6,
+        "longest_dry_spell_next_30d": 12
+      },
+      {
+        "year": 2023,
+        "season": "first_rains",
+        "onset_date": "2023-03-15",
+        "onset_doy": 74,
+        "onset_found": true,
+        "rain_next_30d_mm": 194.3,
+        "longest_dry_spell_next_30d": 8
+      },
+      {
+        "year": 2024,
+        "season": "first_rains",
+        "onset_date": "2024-02-20",
+        "onset_doy": 51,
+        "onset_found": true,
+        "rain_next_30d_mm": 44.1,
+        "longest_dry_spell_next_30d": 11
+      },
+      {
+        "year": 2025,
+        "season": "first_rains",
+        "onset_date": "2025-03-25",
+        "onset_doy": 84,
+        "onset_found": true,
+        "rain_next_30d_mm": 84.7,
+        "longest_dry_spell_next_30d": 6
+      },
+      {
+        "year": 1991,
+        "season": "second_rains",
+        "onset_date": "1991-10-12",
+        "onset_doy": 285,
+        "onset_found": true,
+        "rain_next_30d_mm": 111.2,
+        "longest_dry_spell_next_30d": 3
+      },
+      {
+        "year": 1992,
+        "season": "second_rains",
+        "onset_date": "1992-09-02",
+        "onset_doy": 246,
+        "onset_found": true,
+        "rain_next_30d_mm": 127.4,
+        "longest_dry_spell_next_30d": 4
+      },
+      {
+        "year": 1993,
+        "season": "second_rains",
+        "onset_date": "1993-08-02",
+        "onset_doy": 214,
+        "onset_found": true,
+        "rain_next_30d_mm": 75.5,
+        "longest_dry_spell_next_30d": 4
+      },
+      {
+        "year": 1994,
+        "season": "second_rains",
+        "onset_date": "1994-09-11",
+        "onset_doy": 254,
+        "onset_found": true,
+        "rain_next_30d_mm": 38.8,
+        "longest_dry_spell_next_30d": 16
+      },
+      {
+        "year": 1995,
+        "season": "second_rains",
+        "onset_date": "1995-08-18",
+        "onset_doy": 230,
+        "onset_found": true,
+        "rain_next_30d_mm": 97.8,
+        "longest_dry_spell_next_30d": 4
+      },
+      {
+        "year": 1996,
+        "season": "second_rains",
+        "onset_date": "1996-08-12",
+        "onset_doy": 225,
+        "onset_found": true,
+        "rain_next_30d_mm": 155.0,
+        "longest_dry_spell_next_30d": 1
+      },
+      {
+        "year": 1997,
+        "season": "second_rains",
+        "onset_date": "1997-08-01",
+        "onset_doy": 213,
+        "onset_found": true,
+        "rain_next_30d_mm": 93.6,
+        "longest_dry_spell_next_30d": 6
+      },
+      {
+        "year": 1998,
+        "season": "second_rains",
+        "onset_date": "1998-08-18",
+        "onset_doy": 230,
+        "onset_found": true,
+        "rain_next_30d_mm": 48.7,
+        "longest_dry_spell_next_30d": 8
+      },
+      {
+        "year": 1999,
+        "season": "second_rains",
+        "onset_date": "1999-08-13",
+        "onset_doy": 225,
+        "onset_found": true,
+        "rain_next_30d_mm": 94.9,
+        "longest_dry_spell_next_30d": 8
+      },
+      {
+        "year": 2000,
+        "season": "second_rains",
+        "onset_date": "2000-08-01",
+        "onset_doy": 214,
+        "onset_found": true,
+        "rain_next_30d_mm": 120.2,
+        "longest_dry_spell_next_30d": 1
+      },
+      {
+        "year": 2001,
+        "season": "second_rains",
+        "onset_date": "2001-09-07",
+        "onset_doy": 250,
+        "onset_found": true,
+        "rain_next_30d_mm": 107.8,
+        "longest_dry_spell_next_30d": 9
+      },
+      {
+        "year": 2002,
+        "season": "second_rains",
+        "onset_date": "2002-08-04",
+        "onset_doy": 216,
+        "onset_found": true,
+        "rain_next_30d_mm": 95.9,
+        "longest_dry_spell_next_30d": 5
+      },
+      {
+        "year": 2003,
+        "season": "second_rains",
+        "onset_date": "2003-08-12",
+        "onset_doy": 224,
+        "onset_found": true,
+        "rain_next_30d_mm": 159.7,
+        "longest_dry_spell_next_30d": 2
+      },
+      {
+        "year": 2004,
+        "season": "second_rains",
+        "onset_date": "2004-09-08",
+        "onset_doy": 252,
+        "onset_found": true,
+        "rain_next_30d_mm": 85.3,
+        "longest_dry_spell_next_30d": 4
+      },
+      {
+        "year": 2005,
+        "season": "second_rains",
+        "onset_date": "2005-08-22",
+        "onset_doy": 234,
+        "onset_found": true,
+        "rain_next_30d_mm": 112.7,
+        "longest_dry_spell_next_30d": 4
+      },
+      {
+        "year": 2006,
+        "season": "second_rains",
+        "onset_date": "2006-08-12",
+        "onset_doy": 224,
+        "onset_found": true,
+        "rain_next_30d_mm": 45.9,
+        "longest_dry_spell_next_30d": 7
+      },
+      {
+        "year": 2007,
+        "season": "second_rains",
+        "onset_date": null,
+        "onset_doy": null,
+        "onset_found": false,
+        "rain_next_30d_mm": null,
+        "longest_dry_spell_next_30d": null
+      },
+      {
+        "year": 2008,
+        "season": "second_rains",
+        "onset_date": "2008-08-01",
+        "onset_doy": 214,
+        "onset_found": true,
+        "rain_next_30d_mm": 103.8,
+        "longest_dry_spell_next_30d": 2
+      },
+      {
+        "year": 2009,
+        "season": "second_rains",
+        "onset_date": "2009-08-16",
+        "onset_doy": 228,
+        "onset_found": true,
+        "rain_next_30d_mm": 87.4,
+        "longest_dry_spell_next_30d": 2
+      },
+      {
+        "year": 2010,
+        "season": "second_rains",
+        "onset_date": "2010-08-23",
+        "onset_doy": 235,
+        "onset_found": true,
+        "rain_next_30d_mm": 150.7,
+        "longest_dry_spell_next_30d": 0
+      },
+      {
+        "year": 2011,
+        "season": "second_rains",
+        "onset_date": "2011-08-01",
+        "onset_doy": 213,
+        "onset_found": true,
+        "rain_next_30d_mm": 193.2,
+        "longest_dry_spell_next_30d": 5
+      },
+      {
+        "year": 2012,
+        "season": "second_rains",
+        "onset_date": "2012-10-25",
+        "onset_doy": 299,
+        "onset_found": true,
+        "rain_next_30d_mm": 118.9,
+        "longest_dry_spell_next_30d": 7
+      },
+      {
+        "year": 2013,
+        "season": "second_rains",
+        "onset_date": "2013-08-17",
+        "onset_doy": 229,
+        "onset_found": true,
+        "rain_next_30d_mm": 134.7,
+        "longest_dry_spell_next_30d": 2
+      },
+      {
+        "year": 2014,
+        "season": "second_rains",
+        "onset_date": "2014-09-25",
+        "onset_doy": 268,
+        "onset_found": true,
+        "rain_next_30d_mm": 135.5,
+        "longest_dry_spell_next_30d": 2
+      },
+      {
+        "year": 2015,
+        "season": "second_rains",
+        "onset_date": "2015-08-01",
+        "onset_doy": 213,
+        "onset_found": true,
+        "rain_next_30d_mm": 48.1,
+        "longest_dry_spell_next_30d": 10
+      },
+      {
+        "year": 2016,
+        "season": "second_rains",
+        "onset_date": "2016-08-01",
+        "onset_doy": 214,
+        "onset_found": true,
+        "rain_next_30d_mm": 87.3,
+        "longest_dry_spell_next_30d": 4
+      },
+      {
+        "year": 2017,
+        "season": "second_rains",
+        "onset_date": "2017-08-01",
+        "onset_doy": 213,
+        "onset_found": true,
+        "rain_next_30d_mm": 72.8,
+        "longest_dry_spell_next_30d": 4
+      },
+      {
+        "year": 2018,
+        "season": "second_rains",
+        "onset_date": "2018-08-23",
+        "onset_doy": 235,
+        "onset_found": true,
+        "rain_next_30d_mm": 45.1,
+        "longest_dry_spell_next_30d": 6
+      },
+      {
+        "year": 2019,
+        "season": "second_rains",
+        "onset_date": "2019-10-03",
+        "onset_doy": 276,
+        "onset_found": true,
+        "rain_next_30d_mm": 164.0,
+        "longest_dry_spell_next_30d": 2
+      },
+      {
+        "year": 2020,
+        "season": "second_rains",
+        "onset_date": "2020-08-06",
+        "onset_doy": 219,
+        "onset_found": true,
+        "rain_next_30d_mm": 88.2,
+        "longest_dry_spell_next_30d": 1
+      },
+      {
+        "year": 2021,
+        "season": "second_rains",
+        "onset_date": "2021-09-06",
+        "onset_doy": 249,
+        "onset_found": true,
+        "rain_next_30d_mm": 92.2,
+        "longest_dry_spell_next_30d": 4
+      },
+      {
+        "year": 2022,
+        "season": "second_rains",
+        "onset_date": "2022-08-01",
+        "onset_doy": 213,
+        "onset_found": true,
+        "rain_next_30d_mm": 179.4,
+        "longest_dry_spell_next_30d": 5
+      },
+      {
+        "year": 2023,
+        "season": "second_rains",
+        "onset_date": "2023-08-01",
+        "onset_doy": 213,
+        "onset_found": true,
+        "rain_next_30d_mm": 40.5,
+        "longest_dry_spell_next_30d": 10
+      },
+      {
+        "year": 2024,
+        "season": "second_rains",
+        "onset_date": "2024-08-01",
+        "onset_doy": 214,
+        "onset_found": true,
+        "rain_next_30d_mm": 51.3,
+        "longest_dry_spell_next_30d": 4
+      },
+      {
+        "year": 2025,
+        "season": "second_rains",
+        "onset_date": "2025-08-01",
+        "onset_doy": 213,
+        "onset_found": true,
+        "rain_next_30d_mm": 129.3,
+        "longest_dry_spell_next_30d": 3
+      }
+    ]
+  },
+  "soil": {
+    "ph_h2o": 6.12,
+    "clay_pct": 40.73,
+    "sand_pct": 38.87,
+    "silt_pct": 20.32,
+    "texture_sum_pct": 99.92
+  },
+  "crops": [
+    {
+      "crop": "maize",
+      "crop_label": "Maize",
+      "status": "partial",
+      "documented_window_start_doy": 74,
+      "documented_window_end_doy": 227,
+      "supported_window_start_doy": null,
+      "supported_window_end_doy": null,
+      "gap_days": null,
+      "rain_threshold_mm_10d": null,
+      "season_length_days": 110,
+      "ph_range": [
+        5.5,
+        7.0
+      ],
+      "temp_range_c": [
+        30.0,
+        34.0
+      ],
+      "rules_used": [
+        "maize/duration/crop_cycle_ecocrop",
+        "maize/duration/season_length",
+        "maize/harvest_window/harvest_window",
+        "maize/ph/ph_range",
+        "maize/ph/ph_range",
+        "maize/planting_window/planting_window",
+        "maize/soil/soil_type",
+        "maize/temperature/temp_range",
+        "maize/water/season_water_need_mm",
+        "maize/water/season_water_need_mm",
+        "maize/water/season_water_need_mm"
+      ],
+      "unknown_rules": [
+        "planting_rainfall_threshold"
+      ],
+      "unknown_notes": {
+        "planting_rainfall_threshold": "no planting rainfall threshold is published for this crop, so this value stays unknown rather than guessed. The season water need is a seasonal total, not a sowing trigger."
+      },
+      "source_label": "threshold unknown: no planting rainfall figure is published. Season water need is a seasonal total, not a sowing trigger",
+      "rule_rows": [
+        {
+          "crop": "maize",
+          "stage": "duration",
+          "parameter": "season_length",
+          "rule": "days to maturity",
+          "value": "110-120",
+          "value_min": "110",
+          "value_max": "120",
+          "unit": "days",
+          "window": "",
+          "tag": "sourced",
+          "source": "MAAIF maize training manual (2023)",
+          "source_url": "https://www.agriculture.go.ug/wp-content/uploads/2019/09/Maize-training-manual-for-extension-workers-in-Uganda.pdf",
+          "page_or_quote": "PDF p67, Annex 2, row 'Districts of Kaberamaido, Katakwi, Amuria, Soroti, Kumi, Bukedea...': growth duration '110-120 days'",
+          "basis": "",
+          "note": "Soroti is named in the row. Annex 2 of the same manual gives the same 110-120 for the zone that names Soroti, so the released table value and the annex agree here"
+        },
+        {
+          "crop": "maize",
+          "stage": "planting_window",
+          "parameter": "planting_window",
+          "rule": "planting window",
+          "value": "15/03 to 15/08",
+          "value_min": "74",
+          "value_max": "227",
+          "unit": "date (dd/mm)",
+          "window": "15/03 to 15/08",
+          "tag": "sourced",
+          "source": "MAAIF maize training manual (2023)",
+          "source_url": "https://www.agriculture.go.ug/wp-content/uploads/2019/09/Maize-training-manual-for-extension-workers-in-Uganda.pdf",
+          "page_or_quote": "PDF p67, same row: planting onset '15/03', planting end '15/08'",
+          "basis": "",
+          "note": "one window, not split into first and second season. value_min and value_max are day-of-year 74 and 227, which are 15 March and 15 August on a non-leap calendar"
+        },
+        {
+          "crop": "maize",
+          "stage": "harvest_window",
+          "parameter": "harvest_window",
+          "rule": "harvest window",
+          "value": "05/07 to 20/12",
+          "value_min": "",
+          "value_max": "",
+          "unit": "date (dd/mm)",
+          "window": "05/07 to 20/12",
+          "tag": "sourced",
+          "source": "MAAIF maize training manual (2023)",
+          "source_url": "https://www.agriculture.go.ug/wp-content/uploads/2019/09/Maize-training-manual-for-extension-workers-in-Uganda.pdf",
+          "page_or_quote": "PDF p67, same row: harvesting onset '05/07', end '20/12'",
+          "basis": "",
+          "note": ""
+        },
+        {
+          "crop": "maize",
+          "stage": "water",
+          "parameter": "season_water_need_mm",
+          "rule": "rain needed per season",
+          "value": "600-1200 (optimum), 400-1800 (absolute)",
+          "value_min": "600",
+          "value_max": "1200",
+          "unit": "mm per season",
+          "window": "",
+          "tag": "assumed",
+          "source": "FAO EcoCrop data sheet",
+          "source_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2175",
+          "page_or_quote": "",
+          "basis": "EcoCrop's ANNUAL rainfall range used as the season need, because the team's POWER analysis found Soroti behaves like one long Mar-Oct wet season. No per-season figure found in the MAAIF manual",
+          "note": "replace if a Ugandan source gives a per-season figure. Kept visible beside the sourced maize row below"
+        },
+        {
+          "crop": "maize",
+          "stage": "water",
+          "parameter": "season_water_need_mm",
+          "rule": "annual rainfall",
+          "value": "optimum 600-1200, absolute 400-1800",
+          "value_min": "600",
+          "value_max": "1200",
+          "unit": "mm per year",
+          "window": "",
+          "tag": "sourced",
+          "source": "FAO EcoCrop data sheet",
+          "source_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2175",
+          "page_or_quote": "EcoCrop data sheet, annual rainfall",
+          "basis": "",
+          "note": "global, per year, not the season need"
+        },
+        {
+          "crop": "maize",
+          "stage": "ph",
+          "parameter": "ph_range",
+          "rule": "soil pH (MAAIF)",
+          "value": "5.5-7.0",
+          "value_min": "5.5",
+          "value_max": "7.0",
+          "unit": "pH",
+          "window": "",
+          "tag": "sourced",
+          "source": "MAAIF maize training manual (2023)",
+          "source_url": "https://www.agriculture.go.ug/wp-content/uploads/2019/09/Maize-training-manual-for-extension-workers-in-Uganda.pdf",
+          "page_or_quote": "PDF p25: 'Maize grows well an optimum soil pH) ranges from 5.5 to 7.0'",
+          "basis": "",
+          "note": "kept at the workbook page 25 value, 5.5-7.0. PDF p9 gives 5.0-7.0 for the same crop in the same manual; that variant is recorded here and the two are not averaged. The generic \"pH range 5.5 to 6.5 for most crops\" lines on PDF p21 and p24 are textbook lines, not a maize value, and are not used"
+        },
+        {
+          "crop": "maize",
+          "stage": "ph",
+          "parameter": "ph_range",
+          "rule": "soil pH (EcoCrop)",
+          "value": "optimum 5-7, absolute 4.5-8.5",
+          "value_min": "5",
+          "value_max": "7",
+          "unit": "pH",
+          "window": "",
+          "tag": "sourced",
+          "source": "FAO EcoCrop data sheet",
+          "source_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2175",
+          "page_or_quote": "EcoCrop data sheet, soil pH",
+          "basis": "",
+          "note": ""
+        },
+        {
+          "crop": "maize",
+          "stage": "soil",
+          "parameter": "soil_type",
+          "rule": "soil type",
+          "value": "loams or loamy soils which are fertile",
+          "value_min": "",
+          "value_max": "",
+          "unit": "",
+          "window": "",
+          "tag": "sourced",
+          "source": "MAAIF maize training manual (2023)",
+          "source_url": "https://www.agriculture.go.ug/wp-content/uploads/2019/09/Maize-training-manual-for-extension-workers-in-Uganda.pdf",
+          "page_or_quote": "PDF p9: 'loams or loamy soils which are fertile'",
+          "basis": "",
+          "note": ""
+        },
+        {
+          "crop": "maize",
+          "stage": "duration",
+          "parameter": "crop_cycle_ecocrop",
+          "rule": "crop cycle (EcoCrop)",
+          "value": "unknown",
+          "value_min": "",
+          "value_max": "",
+          "unit": "days",
+          "window": "",
+          "tag": "unknown",
+          "source": "FAO EcoCrop data sheet",
+          "source_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2175",
+          "page_or_quote": "",
+          "basis": "",
+          "note": "not needed, MAAIF gives 110-120 for Soroti"
+        },
+        {
+          "crop": "maize",
+          "stage": "water",
+          "parameter": "season_water_need_mm",
+          "rule": "rainfall per season (maize manual)",
+          "value": "500 to 600",
+          "value_min": "500",
+          "value_max": "600",
+          "unit": "mm per season",
+          "window": "",
+          "tag": "sourced",
+          "source": "MAAIF maize training manual (2023)",
+          "source_url": "https://www.agriculture.go.ug/wp-content/uploads/2019/09/Maize-training-manual-for-extension-workers-in-Uganda.pdf",
+          "page_or_quote": "PDF p8: \"Maize prefers rainfall of 500 to 600 mm as the optimal range and well distributed over the growing season.\"",
+          "basis": "",
+          "note": "stated by the manual as a seasonal figure. Added beside the assumed EcoCrop row, not in place of it"
+        },
+        {
+          "crop": "maize",
+          "stage": "temperature",
+          "parameter": "temp_range",
+          "rule": "temperature",
+          "value": "optimum 30oC - 34oC; below 10oC and above 40oC poor growth",
+          "value_min": "30",
+          "value_max": "34",
+          "unit": "degrees C",
+          "window": "",
+          "tag": "sourced",
+          "source": "MAAIF maize training manual (2023)",
+          "source_url": "https://www.agriculture.go.ug/wp-content/uploads/2019/09/Maize-training-manual-for-extension-workers-in-Uganda.pdf",
+          "page_or_quote": "PDF p8: \"It is well adapted in warm condition with optimum temperature for plant growth ranges of 30oC – 34oC. Temperatures below 10oC and above 40oC result in poor growth and death of the maize plant.\"",
+          "basis": "",
+          "note": "optimum range in value_min and value_max; outer limits 10 and 40 degrees C in this note, read as one requirement"
+        }
+      ]
+    },
+    {
+      "crop": "common_bean",
+      "crop_label": "Common bean",
+      "status": "partial",
+      "documented_window_start_doy": null,
+      "documented_window_end_doy": null,
+      "supported_window_start_doy": null,
+      "supported_window_end_doy": null,
+      "gap_days": null,
+      "rain_threshold_mm_10d": null,
+      "season_length_days": 58,
+      "ph_range": [
+        5.8,
+        6.5
+      ],
+      "temp_range_c": [
+        20.0,
+        28.0
+      ],
+      "rules_used": [
+        "common_bean/duration/crop_cycle_ecocrop",
+        "common_bean/duration/season_length",
+        "common_bean/ph/ph_range",
+        "common_bean/ph/ph_range",
+        "common_bean/planting_window/planting_window",
+        "common_bean/planting_window/planting_window_second",
+        "common_bean/planting_window/season_spans",
+        "common_bean/soil/soil_type",
+        "common_bean/temperature/temp_range",
+        "common_bean/water/season_water_need_mm",
+        "common_bean/water/season_water_need_mm"
+      ],
+      "unknown_rules": [
+        "planting_rainfall_threshold"
+      ],
+      "unknown_notes": {
+        "planting_rainfall_threshold": "no planting rainfall threshold is published for this crop, so this value stays unknown rather than guessed. The season water need is a seasonal total, not a sowing trigger."
+      },
+      "source_label": "threshold unknown: no planting rainfall figure is published. Season water need is a seasonal total, not a sowing trigger",
+      "rule_rows": [
+        {
+          "crop": "common_bean",
+          "stage": "duration",
+          "parameter": "season_length",
+          "rule": "days to maturity",
+          "value": "58-120",
+          "value_min": "58",
+          "value_max": "120",
+          "unit": "days",
+          "window": "",
+          "tag": "sourced",
+          "source": "MAAIF beans training manual (2023)",
+          "source_url": "https://www.agriculture.go.ug/wp-content/uploads/2019/09/Beans-training-manual-for-extension-workers-in-Uganda.pdf",
+          "page_or_quote": "PDF p11: 'Beans have a short maturity period of 58 to 120 days from planting time'",
+          "basis": "",
+          "note": "national, not Soroti-specific. The released table value is kept. A variety-level 80-95 figure was looked for in the annexes and not found, so none is recorded"
+        },
+        {
+          "crop": "common_bean",
+          "stage": "duration",
+          "parameter": "crop_cycle_ecocrop",
+          "rule": "crop cycle (EcoCrop)",
+          "value": "50-270",
+          "value_min": "50",
+          "value_max": "270",
+          "unit": "days",
+          "window": "",
+          "tag": "sourced",
+          "source": "FAO EcoCrop data sheet",
+          "source_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1668",
+          "page_or_quote": "EcoCrop data sheet, crop cycle",
+          "basis": "",
+          "note": ""
+        },
+        {
+          "crop": "common_bean",
+          "stage": "planting_window",
+          "parameter": "planting_window",
+          "rule": "planting window, first season",
+          "value": "March to mid-April",
+          "value_min": "",
+          "value_max": "",
+          "unit": "month",
+          "window": "March to mid-April",
+          "tag": "sourced",
+          "source": "MAAIF beans training manual (2023)",
+          "source_url": "https://www.agriculture.go.ug/wp-content/uploads/2019/09/Beans-training-manual-for-extension-workers-in-Uganda.pdf",
+          "page_or_quote": "PDF p16: 'the first season is dominated by planting in March up to Mid-April and harvesting in June-July'",
+          "basis": "",
+          "note": "national, not Soroti. Month level only, so it is not converted to a single day and no day-of-year is given"
+        },
+        {
+          "crop": "common_bean",
+          "stage": "planting_window",
+          "parameter": "planting_window_second",
+          "rule": "planting window, second season",
+          "value": "mid-August to December",
+          "value_min": "",
+          "value_max": "",
+          "unit": "month",
+          "window": "mid-August to December",
+          "tag": "sourced",
+          "source": "MAAIF beans training manual (2023)",
+          "source_url": "https://www.agriculture.go.ug/wp-content/uploads/2019/09/Beans-training-manual-for-extension-workers-in-Uganda.pdf",
+          "page_or_quote": "PDF p16: 'the second season is from mid-August to December, depending on the area and variety'",
+          "basis": "",
+          "note": "PDF p78 Annex 7, Eastern row, gives the second season as 'Mid July-Mid November'. The two do not match"
+        },
+        {
+          "crop": "common_bean",
+          "stage": "planting_window",
+          "parameter": "season_spans",
+          "rule": "season spans, Eastern region",
+          "value": "first: mid March - mid July, second: mid July - mid November",
+          "value_min": "",
+          "value_max": "",
+          "unit": "month",
+          "window": "",
+          "tag": "sourced",
+          "source": "MAAIF beans training manual (2023)",
+          "source_url": "https://www.agriculture.go.ug/wp-content/uploads/2019/09/Beans-training-manual-for-extension-workers-in-Uganda.pdf",
+          "page_or_quote": "PDF p78, Annex 7 'Bean Cropping calendar for Uganda', Eastern row",
+          "basis": "",
+          "note": "regional, Soroti is in Eastern"
+        },
+        {
+          "crop": "common_bean",
+          "stage": "water",
+          "parameter": "season_water_need_mm",
+          "rule": "rain needed per season",
+          "value": "500-2000 (optimum), 300-4300 (absolute)",
+          "value_min": "500",
+          "value_max": "2000",
+          "unit": "mm per season",
+          "window": "",
+          "tag": "assumed",
+          "source": "FAO EcoCrop data sheet",
+          "source_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1668",
+          "page_or_quote": "",
+          "basis": "EcoCrop's ANNUAL rainfall range used as the season need (Soroti one long wet season, per the team's POWER analysis). No per-season figure found in the MAAIF manual",
+          "note": "very wide range, weak as a filter. The beans manual has no millimetre water figure, so this parameter stays unknown"
+        },
+        {
+          "crop": "common_bean",
+          "stage": "water",
+          "parameter": "season_water_need_mm",
+          "rule": "annual rainfall",
+          "value": "optimum 500-2000, absolute 300-4300",
+          "value_min": "500",
+          "value_max": "2000",
+          "unit": "mm per year",
+          "window": "",
+          "tag": "sourced",
+          "source": "FAO EcoCrop data sheet",
+          "source_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1668",
+          "page_or_quote": "EcoCrop data sheet, annual rainfall",
+          "basis": "",
+          "note": "global, per year, not the season need"
+        },
+        {
+          "crop": "common_bean",
+          "stage": "ph",
+          "parameter": "ph_range",
+          "rule": "soil pH (MAAIF)",
+          "value": "optimum 5.8-6.5, sensitive below 5.2",
+          "value_min": "5.8",
+          "value_max": "6.5",
+          "unit": "pH",
+          "window": "",
+          "tag": "sourced",
+          "source": "MAAIF beans training manual (2023)",
+          "source_url": "https://www.agriculture.go.ug/wp-content/uploads/2019/09/Beans-training-manual-for-extension-workers-in-Uganda.pdf",
+          "page_or_quote": "PDF p11: 'An optimum soil pH of 5.8 to 6.5. Beans are highly sensitive to acidic soils (pH < 5.2)'",
+          "basis": "",
+          "note": ""
+        },
+        {
+          "crop": "common_bean",
+          "stage": "ph",
+          "parameter": "ph_range",
+          "rule": "soil pH (EcoCrop)",
+          "value": "optimum 5.5-7.5, absolute 4-9",
+          "value_min": "5.5",
+          "value_max": "7.5",
+          "unit": "pH",
+          "window": "",
+          "tag": "sourced",
+          "source": "FAO EcoCrop data sheet",
+          "source_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1668",
+          "page_or_quote": "EcoCrop data sheet, soil pH",
+          "basis": "",
+          "note": ""
+        },
+        {
+          "crop": "common_bean",
+          "stage": "soil",
+          "parameter": "soil_type",
+          "rule": "soil type",
+          "value": "loams or loamy soils",
+          "value_min": "",
+          "value_max": "",
+          "unit": "",
+          "window": "",
+          "tag": "sourced",
+          "source": "MAAIF beans training manual (2023)",
+          "source_url": "https://www.agriculture.go.ug/wp-content/uploads/2019/09/Beans-training-manual-for-extension-workers-in-Uganda.pdf",
+          "page_or_quote": "PDF p11: 'loams or loamy soils'",
+          "basis": "",
+          "note": ""
+        },
+        {
+          "crop": "common_bean",
+          "stage": "temperature",
+          "parameter": "temp_range",
+          "rule": "temperature",
+          "value": "optimum 20 to 28oC; minimum 15oC and maximum 32oC",
+          "value_min": "20",
+          "value_max": "28",
+          "unit": "degrees C",
+          "window": "",
+          "tag": "sourced",
+          "source": "MAAIF beans training manual (2023)",
+          "source_url": "https://www.agriculture.go.ug/wp-content/uploads/2019/09/Beans-training-manual-for-extension-workers-in-Uganda.pdf",
+          "page_or_quote": "PDF p9: \"Beans thrives best in a warm climate of optimum growing temperature range of 20 to 28oC with a minimum of 15oC and a maximum of 32oC. Temperatures above 32oC and below 15oC will cause poor pod set resulting in yield loss.\"",
+          "basis": "",
+          "note": "optimum range in value_min and value_max; outer limits 15 and 32 degrees C in this note, read as one requirement"
+        }
+      ]
+    },
+    {
+      "crop": "finger_millet",
+      "crop_label": "Finger millet",
+      "status": "partial",
+      "documented_window_start_doy": null,
+      "documented_window_end_doy": null,
+      "supported_window_start_doy": null,
+      "supported_window_end_doy": null,
+      "gap_days": null,
+      "rain_threshold_mm_10d": null,
+      "season_length_days": 75,
+      "ph_range": [
+        6.0,
+        7.0
+      ],
+      "temp_range_c": [
+        18.0,
+        30.0
+      ],
+      "rules_used": [
+        "finger_millet/duration/days_to_maturity",
+        "finger_millet/duration/season_length",
+        "finger_millet/ph/ph_range",
+        "finger_millet/planting_window/planting_window",
+        "finger_millet/rotation/rotation",
+        "finger_millet/soil/soil_type",
+        "finger_millet/temperature/temp_range",
+        "finger_millet/temperature/temp_range",
+        "finger_millet/water/season_water_need_mm",
+        "finger_millet/water/season_water_need_mm",
+        "finger_millet/water/season_water_need_mm"
+      ],
+      "unknown_rules": [
+        "planting_rainfall_threshold"
+      ],
+      "unknown_notes": {
+        "planting_rainfall_threshold": "no planting rainfall threshold is published for this crop, so this value stays unknown rather than guessed. The season water need is a seasonal total, not a sowing trigger."
+      },
+      "source_label": "threshold unknown: no planting rainfall figure is published. Season water need is a seasonal total, not a sowing trigger",
+      "rule_rows": [
+        {
+          "crop": "finger_millet",
+          "stage": "duration",
+          "parameter": "season_length",
+          "rule": "crop cycle (EcoCrop)",
+          "value": "75-180",
+          "value_min": "75",
+          "value_max": "180",
+          "unit": "days",
+          "window": "",
+          "tag": "sourced",
+          "source": "FAO EcoCrop data sheet",
+          "source_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=5657",
+          "page_or_quote": "EcoCrop data sheet, crop cycle",
+          "basis": "",
+          "note": "global range"
+        },
+        {
+          "crop": "finger_millet",
+          "stage": "duration",
+          "parameter": "days_to_maturity",
+          "rule": "days to maturity, Soroti",
+          "value": "75-180, working value 180",
+          "value_min": "75",
+          "value_max": "180",
+          "unit": "days",
+          "window": "",
+          "tag": "assumed",
+          "source": "FAO EcoCrop data sheet",
+          "source_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=5657",
+          "page_or_quote": "",
+          "basis": "No Ugandan figure found. EcoCrop's global crop cycle used, with the upper end (180) as the working value so the duration check is the strictest case",
+          "note": "notebook can also run 75 to show the range"
+        },
+        {
+          "crop": "finger_millet",
+          "stage": "planting_window",
+          "parameter": "planting_window",
+          "rule": "planting window, Soroti",
+          "value": "15/03 to 15/08",
+          "value_min": "",
+          "value_max": "",
+          "unit": "date (dd/mm)",
+          "window": "15/03 to 15/08",
+          "tag": "assumed",
+          "source": "MAAIF maize training manual (2023)",
+          "source_url": "https://www.agriculture.go.ug/wp-content/uploads/2019/09/Maize-training-manual-for-extension-workers-in-Uganda.pdf",
+          "page_or_quote": "",
+          "basis": "Borrowed from the MAAIF maize Soroti row (PDF p67), since both are rain-fed cereals planted in the same rains. No sorghum or millet calendar for Teso was opened",
+          "note": "biggest assumption in the table"
+        },
+        {
+          "crop": "finger_millet",
+          "stage": "water",
+          "parameter": "season_water_need_mm",
+          "rule": "rain needed per season",
+          "value": "500-1100 (optimum), 300-4300 (absolute)",
+          "value_min": "500",
+          "value_max": "1100",
+          "unit": "mm per season",
+          "window": "",
+          "tag": "assumed",
+          "source": "FAO EcoCrop data sheet",
+          "source_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=5657",
+          "page_or_quote": "",
+          "basis": "EcoCrop's ANNUAL rainfall range used as the season need (Soroti one long wet season, per the team's POWER analysis)",
+          "note": "kept visible beside the millet chapter reference row below"
+        },
+        {
+          "crop": "finger_millet",
+          "stage": "water",
+          "parameter": "season_water_need_mm",
+          "rule": "annual rainfall",
+          "value": "optimum 500-1100, absolute 300-4300",
+          "value_min": "500",
+          "value_max": "1100",
+          "unit": "mm per year",
+          "window": "",
+          "tag": "sourced",
+          "source": "FAO EcoCrop data sheet",
+          "source_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=5657",
+          "page_or_quote": "EcoCrop data sheet, annual rainfall",
+          "basis": "",
+          "note": "global, per year"
+        },
+        {
+          "crop": "finger_millet",
+          "stage": "ph",
+          "parameter": "ph_range",
+          "rule": "soil pH (EcoCrop)",
+          "value": "optimum 6-7, absolute 5.5-8.2",
+          "value_min": "6",
+          "value_max": "7",
+          "unit": "pH",
+          "window": "",
+          "tag": "sourced",
+          "source": "FAO EcoCrop data sheet",
+          "source_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=5657",
+          "page_or_quote": "EcoCrop data sheet, soil pH",
+          "basis": "",
+          "note": "the millet chapter (NRC 1996) has no pH line anywhere, so this value comes from EcoCrop only. EcoCrop gives optimum 6-7 and absolute 5.5-8.2 for the crop globally"
+        },
+        {
+          "crop": "finger_millet",
+          "stage": "soil",
+          "parameter": "soil_type",
+          "rule": "soil type",
+          "value": "unknown",
+          "value_min": "",
+          "value_max": "",
+          "unit": "",
+          "window": "",
+          "tag": "unknown",
+          "source": "",
+          "source_url": "",
+          "page_or_quote": "",
+          "basis": "",
+          "note": "not needed for the timing check"
+        },
+        {
+          "crop": "finger_millet",
+          "stage": "rotation",
+          "parameter": "rotation",
+          "rule": "rotation: not after sorghum",
+          "value": "millet should not follow sorghum (striga weed)",
+          "value_min": "",
+          "value_max": "",
+          "unit": "",
+          "window": "",
+          "tag": "sourced",
+          "source": "R8030 Final Technical Report",
+          "source_url": "",
+          "page_or_quote": "PDF p50: 'Some farmers especially in Teso were aware that millet should not follow sorghum because of the striga weed'",
+          "basis": "",
+          "note": "farmer knowledge from a survey, not a trial. Same page: 'The order of rotation was not consistent'"
+        },
+        {
+          "crop": "finger_millet",
+          "stage": "water",
+          "parameter": "season_water_need_mm",
+          "rule": "rainfall per season (millet chapter)",
+          "value": "500-1,000",
+          "value_min": "500",
+          "value_max": "1000",
+          "unit": "mm per season",
+          "window": "",
+          "tag": "assumed",
+          "source": "National Research Council (1996), Lost Crops of Africa Vol. I, chapter 2",
+          "source_url": "https://nap.nationalacademies.org/read/2305/chapter/5",
+          "page_or_quote": "Page 56, section Rainfall: \"It requires a moderate rainfall (500-1,000 mm), well distributed during the growing season with an absence of prolonged droughts. Dry weather is required for drying the grain at harvest.\"",
+          "basis": "The millet chapter gives one millimetre figure for the crop, not a threshold for this site. It is reference evidence, carried so a reader can see it beside the EcoCrop assumption, and it is not a release of the crop table",
+          "note": "reference figure from the millet chapter, 500-1,000 mm, not a Soroti threshold. The caveat travels with the number: absence of prolonged drought, and grain needs dry weather at harvest. Does not count toward the three of four"
+        },
+        {
+          "crop": "finger_millet",
+          "stage": "temperature",
+          "parameter": "temp_range",
+          "rule": "temperature (EcoCrop)",
+          "value": "optimum 18-30, absolute 8-35",
+          "value_min": "18",
+          "value_max": "30",
+          "unit": "degrees C",
+          "window": "",
+          "tag": "sourced",
+          "source": "FAO EcoCrop data sheet",
+          "source_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=5657",
+          "page_or_quote": "EcoCrop data sheet, temperature requirement: optimum 18-30 C, absolute 8-35 C",
+          "basis": "",
+          "note": "optimum range in value_min and value_max; absolute limits 8 and 35 degrees C in this note, read as one requirement. Cross-checked against the millet chapter, page 57, for Uganda: growth reported up to 35 C, best where the average maximum exceeds 27 C and the average minimum does not fall below 18 C"
+        },
+        {
+          "crop": "finger_millet",
+          "stage": "temperature",
+          "parameter": "temp_range",
+          "rule": "temperature",
+          "value": "can grow where temperatures are as high as 35 C; in Uganda grows best where the average maximum exceeds 27 C and the average minimum does not fall below 18 C",
+          "value_min": "",
+          "value_max": "",
+          "unit": "degrees C",
+          "window": "",
+          "tag": "sourced",
+          "source": "National Research Council (1996), Lost Crops of Africa Vol. I, chapter 2",
+          "source_url": "https://nap.nationalacademies.org/read/2305/chapter/5",
+          "page_or_quote": "Page 57, section High Temperature: \"Finger millet thrives under hot conditions. It can grow where temperatures are as high as 35°C. In Uganda, the crop grows best where the average maximum temperature exceeds 27°C and the average minimum does not fall below 18°C.\"",
+          "basis": "",
+          "note": "cross-check row, not a range. The chapter gives a growth ceiling of 35 C and a Uganda average-minimum floor of 18 C, which is not an optimum pair, so it is left out of value_min and value_max. The EcoCrop row beside it supplies the range the app reads"
+        }
+      ]
+    }
+  ],
+  "crop_rule_coverage": [
+    {
+      "crop": "maize",
+      "crop_label": "Maize",
+      "n_rules_sourced": 3,
+      "n_rules_expected": 4,
+      "appears": true,
+      "cut_reason": ""
+    },
+    {
+      "crop": "common_bean",
+      "crop_label": "Common bean",
+      "n_rules_sourced": 3,
+      "n_rules_expected": 4,
+      "appears": true,
+      "cut_reason": ""
+    },
+    {
+      "crop": "finger_millet",
+      "crop_label": "Finger millet",
+      "n_rules_sourced": 3,
+      "n_rules_expected": 4,
+      "appears": true,
+      "cut_reason": ""
+    },
+    {
+      "crop": "sorghum",
+      "crop_label": "Sorghum",
+      "n_rules_sourced": 0,
+      "n_rules_expected": 4,
+      "appears": false,
+      "cut_reason": ""
+    },
+    {
+      "crop": "groundnut",
+      "crop_label": "Groundnut",
+      "n_rules_sourced": 0,
+      "n_rules_expected": 4,
+      "appears": false,
+      "cut_reason": ""
+    }
+  ],
+  "crop_limitations": [
+    "Finger millet planting dates for Soroti are borrowed from the MAAIF maize window. No Soroti millet calendar was found",
+    "Finger millet maturity uses FAO EcoCrop's global range, not a Ugandan figure",
+    "Rain needed per season uses EcoCrop's yearly ranges, because Soroti's rain behaves like one long season",
+    "Rotation effects (beans before maize and the reverse) give a direction only, with no number",
+    "Beans planting dates are national and Eastern region, not Soroti, and two pages of the manual do not match"
+  ],
+  "data_quality": {
+    "days_expected": 12784,
+    "days_present": 12784,
+    "duplicate_dates": 0,
+    "missing_dates_count": 0,
+    "missing_dates_sample": [],
+    "sentinel_counts": {
+      "PRECTOTCORR": 0,
+      "T2M": 0,
+      "GWETROOT": 0
+    },
+    "sentinel_value": -999.0,
+    "nan_counts": {
+      "rain_mm": 0,
+      "t2m_c": 0,
+      "gwetroot": 0
+    },
+    "months_incomplete": 0,
+    "months_incomplete_sample": [],
+    "gwetroot_days_below_gate": 4732,
+    "gwetroot_gate_note": "GWETROOT fell below the 0.40 gate on some days; those days cannot be an onset."
+  },
+  "notes": [
+    "One NASA POWER cell covers about 50 km. District-scale, not parcel-scale.",
+    "Missing days are shown, never filled. This record has none.",
+    "Zero rain is a real dry day and stays in every sum.",
+    "The rainfall rule for each crop is a seasonal total in millimetres. No crop in this table has a 10-day rainfall trigger, so the 10-day threshold field is null for every crop and nothing is guessed into it.",
+    "Crop rule limit: Finger millet planting dates for Soroti are borrowed from the MAAIF maize window. No Soroti millet calendar was found",
+    "Crop rule limit: Finger millet maturity uses FAO EcoCrop's global range, not a Ugandan figure",
+    "Crop rule limit: Rain needed per season uses EcoCrop's yearly ranges, because Soroti's rain behaves like one long season",
+    "Crop rule limit: Rotation effects (beans before maize and the reverse) give a direction only, with no number",
+    "Crop rule limit: Beans planting dates are national and Eastern region, not Soroti, and two pages of the manual do not match"
+  ]
+}
