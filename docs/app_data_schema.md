@@ -247,8 +247,9 @@ single-crop request returns an empty result rather than a missing key.
 1. Drop blank values.
 2. Drop the sentinel values `other` and `unsure`. They are not crops, and the
    model has no rules for them. A key that contains either has no entry.
-3. Remove duplicate crops in the same history. The model reads a path newest
-   last, so a repeated crop adds no comparison.
+3. Keep a crop that repeats in the same history. The model assesses each
+   adjacent pair, so `maize>maize` is a real path with a real answer: no rule is
+   held for that pair. Do not remove the repeat.
 4. Join the rest with `>`, newest last.
 
 The index holds no empty-key entry and no key with an empty segment.
