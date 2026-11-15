@@ -4,8 +4,8 @@ Thirty-five rule rows, one per rule, in `rules/rules.csv`. Each row carries a
 tag: `sourced`, `assumed` or `unknown`. A row is `sourced` only when it has a
 link, a page and the line quoted as printed.
 
-The app counts four parameters per crop: season length, water, pH and
-temperature. A crop appears only when at least three of the four have a sourced
+The app counts four parameters per crop: the planting rainfall threshold,
+season length, pH and temperature. A crop appears only when at least three of the four have a sourced
 row. That rule is fixed in `docs/plan.md` and this table does not change it.
 
 ## What appears, and why
