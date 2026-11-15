@@ -244,13 +244,25 @@ single-crop request returns an empty result rather than a missing key.
 
 ## What the screen must do before it looks up
 
-1. Drop blank values.
-2. Drop the sentinel values `other` and `unsure`. They are not crops, and the
-   model has no rules for them. A key that contains either has no entry.
-3. Keep a crop that repeats in the same history. The model assesses each
+1. Read `prev-1` first. It is the crop grown last. Look up only if it holds a
+   real crop. If `prev-1` is blank, `other` or `unsure`, do not look up. Say
+   that rotation is not judged until the crop grown last is known.
+2. Drop blank values.
+3. Drop the sentinel values `other` and `unsure` from the older fields. They are
+   not crops, and the model has no rules for them. A key that contains either
+   has no entry.
+4. Keep a crop that repeats in the same history. The model assesses each
    adjacent pair, so `maize>maize` is a real path with a real answer: no rule is
    held for that pair. Do not remove the repeat.
-4. Join the rest with `>`, newest last.
+5. Join the rest with `>`, newest last.
+
+Step 1 matters more than it looks. Without it, a blank newest field is dropped
+by step 2 and an older field takes the newest position. The shortened key is a
+real path, so the lookup succeeds and returns a rotation verdict for a history
+that has no crop grown last. Three such cases return a verdict: `sorghum` then
+`finger_millet` reports one reason against, and two maize and common bean pairs
+report one reason for. A user who leaves the newest field empty must not get a
+warning about a crop they did not grow last.
 
 ## Order matters, and a wrong order does not fail
 
