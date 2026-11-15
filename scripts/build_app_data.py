@@ -49,26 +49,53 @@ CROP_LABELS = {
 
 MIN_SOURCED_RULES = 3
 
+# The five limitation lines from the released crop rules workbook. They travel
+# with the crop rows, so a reader sees them beside the numbers they qualify.
+CROP_LIMITATIONS = [
+    "Finger millet planting dates for Soroti are borrowed from the MAAIF maize window. "
+    "No Soroti millet calendar was found",
+    "Finger millet maturity uses FAO EcoCrop's global range, not a Ugandan figure",
+    "Rain needed per season uses EcoCrop's yearly ranges, because Soroti's rain behaves "
+    "like one long season",
+    "Rotation effects (beans before maize and the reverse) give a direction only, with no number",
+    "Beans planting dates are national and Eastern region, not Soroti, and two pages of "
+    "the manual do not match",
+]
+
 
 def round_or_none(value, digits):
     return None if value is None else round(float(value), digits)
 
 
 def read_rules():
-    """Return {crop: [row, ...]} with only rows that carry a real source."""
+    """Return {crop: [row, ...]} for every rule row of that crop.
+
+    A row is kept when it carries a tag and a crop. The tag decides whether the
+    row counts as sourced: a row tagged assumed or unknown stays in the file so
+    the app can show it, but it never counts toward the three-of-four cut.
+    """
     if not RULES.exists():
         return {}
     by_crop: dict[str, list[dict]] = {}
     with RULES.open(newline="", encoding="utf-8") as handle:
         for row in csv.DictReader(handle):
             crop = (row.get("crop") or "").strip()
-            source = (row.get("source") or "").strip()
-            if not crop or not source or source.lower() == "unknown":
+            tag = (row.get("tag") or "").strip().lower()
+            if not crop or not tag:
                 continue
             by_crop.setdefault(crop, []).append(
                 {key: (value or "").strip() for key, value in row.items() if key}
             )
     return by_crop
+
+
+def sourced_parameters(rows):
+    """The four cut parameters that have at least one row tagged sourced."""
+    return {
+        row.get("parameter")
+        for row in rows
+        if row.get("tag") == "sourced" and row.get("parameter") in RULE_PARAMETERS
+    }
 
 
 def rule_value(row, key):
@@ -86,28 +113,40 @@ def build_crops(rules_by_crop):
     crops = []
     for key in CROP_ORDER:
         rows = rules_by_crop.get(key, [])
-        if len(rows) < MIN_SOURCED_RULES:
+        found = sourced_parameters(rows)
+        if len(found) < MIN_SOURCED_RULES:
             continue
-        found = {row.get("parameter") for row in rows}
         unknown = [name for name in RULE_PARAMETERS if name not in found]
 
         def first(parameter, field):
+            """Read a field from a sourced row, so an assumed row never wins."""
             for row in rows:
-                if row.get("parameter") == parameter:
+                if row.get("parameter") == parameter and row.get("tag") == "sourced":
                     return rule_value(row, field)
             return None
 
+        def pair(parameter):
+            """Return [low, high] from a sourced row, or None."""
+            low = first(parameter, "value_min")
+            high = first(parameter, "value_max")
+            if low is None and high is None:
+                return None
+            return [low, high]
+
         season_length = first("season_length", "value_min")
-        onsets = [
-            row
-            for row in rows
-            if row.get("parameter") in ("planting_window_start", "planting_window_end")
-        ]
+        # A planting window reaches the app only from a sourced row. The
+        # workbook states one window per crop, so value_min and value_max hold
+        # the start and end as day-of-year. A month-level row stays null,
+        # because a month cannot be turned into one honest day.
         start = end = None
-        for row in onsets:
-            if row.get("parameter") == "planting_window_start":
+        for row in rows:
+            if row.get("tag") != "sourced":
+                continue
+            if row.get("parameter") in ("planting_window", "planting_window_start"):
                 start = rule_value(row, "value_min")
-            else:
+                if row.get("parameter") == "planting_window":
+                    end = rule_value(row, "value_max")
+            elif row.get("parameter") == "planting_window_end":
                 end = rule_value(row, "value_min")
 
         crops.append(
@@ -120,10 +159,13 @@ def build_crops(rules_by_crop):
                 "supported_window_start_doy": None,
                 "supported_window_end_doy": None,
                 "gap_days": None,
-                "rain_threshold_mm_10d": first("planting_rainfall_threshold", "value_min"),
+                # The 10-day field holds only a 10-day rule. The workbook gives
+                # seasonal millimetres, which are not a 10-day trigger, so this
+                # stays null and the season figure is kept in its own row.
+                "rain_threshold_mm_10d": None,
                 "season_length_days": int(season_length) if season_length else None,
-                "ph_range": None,
-                "temp_range_c": None,
+                "ph_range": pair("ph_range"),
+                "temp_range_c": pair("temp_range"),
                 "rules_used": sorted(
                     f"{row.get('crop')}/{row.get('stage')}/{row.get('parameter')}"
                     for row in rows
@@ -151,13 +193,7 @@ def main() -> None:
         {
             "crop": crop,
             "crop_label": label,
-            "n_rules_sourced": len(
-                {
-                    row.get("parameter")
-                    for row in rules_by_crop.get(crop, [])
-                    if row.get("parameter") in RULE_PARAMETERS
-                }
-            ),
+            "n_rules_sourced": len(sourced_parameters(rules_by_crop.get(crop, []))),
             "n_rules_expected": len(RULE_PARAMETERS),
         }
         for crop, label in CROP_LABELS.items()
@@ -261,12 +297,19 @@ def main() -> None:
         | {"texture_sum_pct": climate["soil"]["texture_sum_pct"]},
         "crops": crops,
         "crop_rule_coverage": coverage,
+        "crop_limitations": CROP_LIMITATIONS,
         "data_quality": climate["data_quality"],
         "notes": [
             "One NASA POWER cell covers about 50 km. District-scale, not parcel-scale.",
             "Missing days are shown, never filled. This record has none.",
             "Zero rain is a real dry day and stays in every sum.",
-        ],
+            "The rainfall rule for each crop is a seasonal total in millimetres. "
+            "No crop in this table has a 10-day rainfall trigger, so the 10-day "
+            "threshold field is null for every crop and nothing is guessed into it.",
+        ]
+        # The five limitation lines also ride in notes, which the schema says the
+        # app may show verbatim, so a reader meets them beside the crop numbers.
+        + [f"Crop rule limit: {line}" for line in CROP_LIMITATIONS],
     }
 
     OUT.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
