@@ -457,9 +457,10 @@
       return node ? node.value : "";
     }).filter(function (value) { return value !== "" && value !== immediate; });
 
-    var unknownChosen = previous.some(function (key) {
-      return key === "other" || key === "unsure";
-    });
+    /* Rotation reasons read the most recent field only, so the unknown check for
+       rotation must read that field only too. One test for a different set of
+       fields was printing a note that contradicted the reason above it. */
+    var immediateUnknown = immediate === "other" || immediate === "unsure";
 
     var rotationRows = (data.sequence_reasons || []).filter(function (row) {
       return row.previous_crop === immediate;
@@ -628,12 +629,12 @@
       }).filter(function (value, index, all) {
         return all.indexOf(value) === index;
       });
-      if (!previous.length) {
-        note.textContent = "Rotation is not judged until a previous crop is chosen.";
-      } else if (unknownChosen && !rotationRows.length) {
-        note.textContent = "Rotation is not judged because the previous crop is unknown.";
-      } else if (unknownChosen) {
-        note.textContent = "Rotation is not judged for the previous crop marked unknown.";
+      if (!immediate) {
+        note.textContent = earlierNames.length
+          ? "Rotation is not judged for an earlier crop. Choose the crop grown last to judge a rotation pair."
+          : "Rotation is not judged until a previous crop is chosen.";
+      } else if (immediateUnknown) {
+        note.textContent = "Rotation is not judged because the crop grown last is unknown.";
       } else if (!rotationRows.length && earlierNames.length) {
         note.textContent = "No rotation reason applies to " +
           cropLabel(data, immediate) + ", the crop grown last." +
