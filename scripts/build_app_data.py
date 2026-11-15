@@ -202,6 +202,39 @@ def build_crops(rules_by_crop):
     return crops
 
 
+def build_rotation(rules_by_crop):
+    """Return the rotation rows that a source backs, as their own list.
+
+    Rotation rows cannot ride in the crops list. A crop pair such as
+    "beans then maize" is not a crop, so the build loop over CROP_ORDER never
+    reaches it. Each entry states its own tag and what backs it, so the page can
+    label a direction rather than present it as a result.
+
+    Only rows tagged sourced are returned. An unsourced direction has nothing
+    behind it, and this page does not publish advice it cannot support.
+    """
+    out = []
+    for crop, rows in rules_by_crop.items():
+        for row in rows:
+            if row.get("stage") != "rotation" or row.get("tag") != "sourced":
+                continue
+            out.append(
+                {
+                    "subject": crop,
+                    "direction": row.get("value"),
+                    "rule": row.get("rule"),
+                    "source": row.get("source"),
+                    "source_url": row.get("source_url") or None,
+                    "page_or_quote": row.get("page_or_quote"),
+                    "note": row.get("note"),
+                    "tested": False,
+                    "test_note": "Not tested. No nitrogen, yield or trial data "
+                    "is held, so a rotation effect cannot be measured here.",
+                }
+            )
+    return out
+
+
 def main() -> None:
     climate = json.loads(CLIMATE.read_text(encoding="utf-8"))
     meta = climate["meta"]
@@ -327,6 +360,7 @@ def main() -> None:
         | {"texture_sum_pct": climate["soil"]["texture_sum_pct"]},
         "crops": crops,
         "crop_rule_coverage": coverage,
+        "crop_rotation": build_rotation(rules_by_crop),
         "crop_limitations": CROP_LIMITATIONS,
         "data_quality": climate["data_quality"],
         "notes": [

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_utc": "2026-11-15T05:31:01Z",
+  "generated_utc": "2026-11-15T05:39:30Z",
   "data_status": {
     "site_climate": "ready",
     "crop_windows": "ready"
@@ -1602,6 +1602,19 @@
       "n_rules_expected": 4,
       "appears": false,
       "cut_reason": ""
+    }
+  ],
+  "crop_rotation": [
+    {
+      "subject": "finger_millet",
+      "direction": "millet should not follow sorghum (striga weed)",
+      "rule": "rotation: not after sorghum",
+      "source": "R8030 Final Technical Report",
+      "source_url": null,
+      "page_or_quote": "PDF p50: 'Some farmers especially in Teso were aware that millet should not follow sorghum because of the striga weed'",
+      "note": "farmer knowledge from a survey, not a trial. Same page: 'The order of rotation was not consistent'",
+      "tested": false,
+      "test_note": "Not tested. No nitrogen, yield or trial data is held, so a rotation effect cannot be measured here."
     }
   ],
   "crop_limitations": [
