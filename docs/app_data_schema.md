@@ -53,6 +53,7 @@ See `docs/crop_rules.md` for what the table supports.
 | `crop_rule_coverage` | array[object] | sourced rows per crop out of four, whether it appears, and the reason when it is cut |
 | `crop_rotation` | array[object] | rotation directions a source backs |
 | `sequence_reasons` | array[object] | rotation reasons a previous-crop choice can match, each with its own label |
+| `crop_path_assumption` | string | the one-step model, stated plainly: each crop affects only the crop that follows it |
 | `crop_limitations` | array[string] | the five limitation lines from the released rules table |
 | `notes` | array[string] | short honesty notes the app may show verbatim |
 
@@ -199,6 +200,22 @@ the list and keeps the choice order itself.
 | `direction` | string | `"for"` or `"against"` the candidate |
 | `reason` | string | one plain sentence |
 | `note` | string | what backs it, and the limit of that backing |
+
+Rows are generated from `notebooks/crop_path.py`, which the notebook and the
+build both call. A pair row tagged `assumed` is team expertise for this
+prototype, written as a direction with no number. A row tagged `sourced` is
+farmer knowledge from a survey. Neither is a measured rotation effect.
+
+## Ordered paths
+
+A crop path is a list of crop keys in order, for example
+`["maize", "common_bean", "finger_millet"]`. It is read pair by pair:
+`maize->common_bean` then `common_bean->finger_millet`. The path is kept as a
+path and is never collapsed to a set, so two paths with the same crops in a
+different order give a different result.
+
+The model assumes each crop affects only the crop that follows it. It does not
+test a crop against a crop two steps back.
 
 ## Example top-level skeleton
 

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_utc": "2026-11-15T06:38:10Z",
+  "generated_utc": "2026-11-15T07:04:45Z",
   "data_status": {
     "site_climate": "ready",
     "crop_windows": "ready"
@@ -1623,30 +1623,31 @@
   ],
   "sequence_reasons": [
     {
-      "previous_crop": "sorghum",
-      "candidate": "finger_millet",
-      "label": "survey",
-      "direction": "against",
-      "reason": "Millet should not follow sorghum.",
-      "note": "Farmer knowledge from a Teso survey, not a trial. R8030 Final Technical Report, page 50. Not tested: no weed counts are held."
-    },
-    {
       "previous_crop": "common_bean",
       "candidate": "maize",
       "label": "assumption",
       "direction": "for",
-      "reason": "Beans before maize is generally favourable.",
-      "note": "Assumed. No source, direction only, no number. Not tested: no nitrogen or trial data is held."
+      "reason": "Common bean before Maize is favourable.",
+      "note": "Team expertise, used as a prototype assumption. Direction only, no number. Not tested."
     },
     {
       "previous_crop": "maize",
       "candidate": "common_bean",
       "label": "assumption",
       "direction": "for",
-      "reason": "Maize before beans is neutral to favourable.",
-      "note": "Assumed. No source, direction only, no number. Not tested: no nitrogen or trial data is held."
+      "reason": "Maize before Common bean is neutral to favourable.",
+      "note": "Team expertise, used as a prototype assumption. Direction only, no number. Not tested."
+    },
+    {
+      "previous_crop": "sorghum",
+      "candidate": "finger_millet",
+      "label": "survey",
+      "direction": "against",
+      "reason": "Finger millet should not follow Sorghum.",
+      "note": "R8030 Final Technical Report. PDF p50. Farmer knowledge from a survey, not a trial. Same page: 'The order of rotation was not consistent'. Not tested: no weed counts are held."
     }
   ],
+  "crop_path_assumption": "Each crop affects only the crop that follows it. An ordered path is assessed pair by pair, first-order only.",
   "crop_limitations": [
     "Finger millet planting dates for Soroti are borrowed from the MAAIF maize window. No Soroti millet calendar was found",
     "Finger millet maturity uses FAO EcoCrop's global range, not a Ugandan figure",

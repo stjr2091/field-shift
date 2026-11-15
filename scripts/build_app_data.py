@@ -19,10 +19,17 @@ from __future__ import annotations
 import csv
 import hashlib
 import json
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+
+# The ordered-path model lives in the notebook data layer so the notebook and
+# this build call one implementation. Two copies would drift apart.
+sys.path.insert(0, str(ROOT / "notebooks"))
+import crop_path  # noqa: E402
+
 CLIMATE = ROOT / "results" / "site_climate.json"
 RULES = ROOT / "rules" / "rules.csv"
 OUT = ROOT / "results" / "app_data.json"
@@ -57,39 +64,15 @@ CUT_REASONS = {
     "the maize row. Neither counts toward the three of four.",
 }
 
-# Rotation reasons that a previous-crop choice can match. Each one carries its
-# own label, so an assumption is never shown as a measured effect. The order of
-# the crops in a sequence is kept by the app; this list only says what a pair
-# means. Text and citation come from the released rules table.
-SEQUENCE_REASONS = [
-    {
-        "previous_crop": "sorghum",
-        "candidate": "finger_millet",
-        "label": "survey",
-        "direction": "against",
-        "reason": "Millet should not follow sorghum.",
-        "note": "Farmer knowledge from a Teso survey, not a trial. "
-        "R8030 Final Technical Report, page 50. Not tested: no weed counts are held.",
-    },
-    {
-        "previous_crop": "common_bean",
-        "candidate": "maize",
-        "label": "assumption",
-        "direction": "for",
-        "reason": "Beans before maize is generally favourable.",
-        "note": "Assumed. No source, direction only, no number. Not tested: no "
-        "nitrogen or trial data is held.",
-    },
-    {
-        "previous_crop": "maize",
-        "candidate": "common_bean",
-        "label": "assumption",
-        "direction": "for",
-        "reason": "Maize before beans is neutral to favourable.",
-        "note": "Assumed. No source, direction only, no number. Not tested: no "
-        "nitrogen or trial data is held.",
-    },
-]
+# Rotation reasons a previous-crop choice can match. These are generated from
+# the same ordered-path model the notebook uses, so the page and the notebook
+# cannot disagree about what a pair means. Each reason carries its own label:
+# survey for farmer knowledge, assumption for team expertise. Neither is a
+# measured effect and neither carries a number.
+def build_sequence_reasons():
+    """One flat list of rotation reasons, from the shared ordered-path model."""
+    return crop_path.pair_reasons()
+
 
 # Day-weighted month lengths, used only to turn twelve monthly means into one
 # yearly mean. The data holds no single yearly temperature field, and a plain
@@ -417,7 +400,14 @@ def main() -> None:
         "crops": crops,
         "crop_rule_coverage": coverage,
         "crop_rotation": build_rotation(rules_by_crop),
-        "sequence_reasons": SEQUENCE_REASONS,
+        "sequence_reasons": build_sequence_reasons(),
+        # The ordered-path model, first-order only: each crop affects the next.
+        # A path is kept as a path and read pair by pair. Present here so the
+        # backend and the notebook answer the same question the same way.
+        "crop_path_assumption": (
+            "Each crop affects only the crop that follows it. "
+            "An ordered path is assessed pair by pair, first-order only."
+        ),
         "crop_limitations": CROP_LIMITATIONS,
         "data_quality": climate["data_quality"],
         "notes": [
