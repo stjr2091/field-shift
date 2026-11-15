@@ -10,6 +10,10 @@
 <a class="skip" href="#main">Skip to content</a>
 
 <header class="masthead">
+  <div class="lang-toggle" role="group" aria-label="Language / Olulimi">
+    <button type="button" id="lang-en" class="lang-btn" aria-pressed="true">English</button>
+    <button type="button" id="lang-lg" class="lang-btn" aria-pressed="false">Luganda</button>
+  </div>
   <span class="mark" aria-hidden="true">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
       <path d="M5 19c0-7 4-12 14-14-2 10-7 14-14 14Z"></path>
@@ -17,43 +21,43 @@
     </svg>
   </span>
   <h1>Agricloud</h1>
-  <p class="standfirst">One field, one season. Advice from the rain record and the soil, in plain words.</p>
+  <p class="standfirst" data-i18n="standfirst">One field, one season. Advice from the rain record and the soil, in plain words.</p>
 </header>
 
 <main id="main">
   <section class="panel" aria-labelledby="form-title">
-    <h2 id="form-title">Tell us about the field</h2>
+    <h2 id="form-title" data-i18n="form-title">Tell us about the field</h2>
 
     <form id="advice-form" novalidate>
       <div class="field">
-        <label for="crop-select">Previous crops</label>
-        <p class="hint" id="crop-hint">Oldest first. The last one is the crop grown most recently.</p>
+        <label for="crop-select" data-i18n="label-previous-crops">Previous crops</label>
+        <p class="hint" id="crop-hint" data-i18n="hint-previous-crops">Oldest first. The last one is the crop grown most recently.</p>
         <div class="crop-add">
           <select id="crop-select" aria-describedby="crop-hint">
-            <option value="">Choose a crop</option>
-            <option value="maize">Maize</option>
-            <option value="common_bean">Common bean</option>
-            <option value="finger_millet">Finger millet</option>
-            <option value="sorghum">Sorghum</option>
-            <option value="groundnut">Groundnut</option>
-            <option value="other">Other</option>
+            <option value="" data-i18n="option-choose">Choose a crop</option>
+            <option value="maize" data-i18n="crop-maize">Maize</option>
+            <option value="common_bean" data-i18n="crop-common_bean">Common bean</option>
+            <option value="finger_millet" data-i18n="crop-finger_millet">Finger millet</option>
+            <option value="sorghum" data-i18n="crop-sorghum">Sorghum</option>
+            <option value="groundnut" data-i18n="crop-groundnut">Groundnut</option>
+            <option value="other" data-i18n="crop-other">Other</option>
           </select>
-          <button class="btn btn--quiet" type="button" id="add-crop">Add</button>
+          <button class="btn btn--quiet" type="button" id="add-crop" data-i18n="add-crop">Add</button>
         </div>
         <ol class="chips" id="crop-list" aria-live="polite"></ol>
-        <p class="empty" id="crop-empty">No previous crops added.</p>
+        <p class="empty" id="crop-empty" data-i18n="crop-empty">No previous crops added.</p>
       </div>
 
       <div class="row">
         <div class="field">
-          <label for="soil-ph">Soil pH <span class="optional">optional</span></label>
+          <label for="soil-ph"><span data-i18n="label-soil-ph">Soil pH</span> <span class="optional" data-i18n="optional">optional</span></label>
           <input id="soil-ph" name="soil_ph" type="number" inputmode="decimal" step="0.1" min="0" max="14" placeholder="e.g. 6.1">
-          <p class="hint">Leave blank if unknown.</p>
+          <p class="hint" data-i18n="hint-unknown">Leave blank if unknown.</p>
         </div>
         <div class="field">
-          <label for="moisture">Moisture <span class="optional">optional</span></label>
+          <label for="moisture"><span data-i18n="label-moisture">Moisture</span> <span class="optional" data-i18n="optional">optional</span></label>
           <input id="moisture" name="moisture" type="text" placeholder="e.g. moist">
-          <p class="hint">Leave blank if unknown.</p>
+          <p class="hint" data-i18n="hint-unknown">Leave blank if unknown.</p>
         </div>
       </div>
 
@@ -64,13 +68,13 @@
             <circle cx="12" cy="11" r="2.2"></circle>
           </svg>
         </span>
-        <span>District</span>
+        <span data-i18n="label-district">District</span>
         <strong id="district">Checking the site…</strong>
-        <span class="auto">automatic</span>
+        <span class="auto" data-i18n="tag-automatic">automatic</span>
       </p>
 
       <p class="season-note" id="season-note" hidden>
-        <span class="season-note-label">Assumed season</span>
+        <span class="season-note-label" data-i18n="label-season-note">Assumed season</span>
         <span id="season-note-text"></span>
       </p>
 
@@ -86,7 +90,7 @@
   <section class="result" id="result" hidden aria-labelledby="result-title">
     <div class="result-band" aria-hidden="true"></div>
     <div class="result-head">
-      <p class="eyebrow">Recommended crop</p>
+      <p class="eyebrow" data-i18n="eyebrow-crop">Recommended crop</p>
       <h2 id="result-title">—</h2>
       <p class="when">
         <span class="icon" aria-hidden="true">
@@ -97,13 +101,14 @@
         </span>
         <span id="when">—</span>
       </p>
-      <span class="badge" id="mock-badge" hidden>Sample response</span>
+      <span class="badge" id="mock-badge" data-i18n="badge-sample" hidden>Sample response</span>
     </div>
 
     <p class="card-text" id="card-en"></p>
+    <p class="luganda-missing" id="card-lg-fallback" data-i18n="lg-missing" hidden>Luganda card unavailable for this advice</p>
 
     <div class="why" id="why-block">
-      <h3>Why</h3>
+      <h3 data-i18n="why-heading">Why</h3>
       <p id="why"></p>
       <ul id="reasons"></ul>
     </div>
@@ -115,26 +120,27 @@
         </svg>
       </span>
       <div>
-        <span class="label">Supported alternative</span>
+        <span class="label" data-i18n="label-alternative">Supported alternative</span>
         <strong id="alternative">—</strong>
       </div>
     </div>
 
     <div class="season" id="season-block">
-      <h3>Assumed season</h3>
+      <h3 data-i18n="label-season-note">Assumed season</h3>
       <p id="season"></p>
     </div>
 
     <div class="luganda" id="luganda-block" lang="lg">
-      <h3>Luganda</h3>
+      <h3 data-i18n="luganda-heading">Luganda</h3>
       <p id="card-lg"></p>
-      <p class="luganda-missing" id="luganda-missing" hidden>Luganda card unavailable for this advice</p>
+      <p class="luganda-missing" id="luganda-missing" data-i18n="lg-missing" hidden>Luganda card unavailable for this advice</p>
     </div>
   </section>
 </main>
 
-<footer class="footer">prototype advice, not field-validated.</footer>
+<footer class="footer" data-i18n="footer">prototype advice, not field-validated.</footer>
 
+<script src="translations_lg.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

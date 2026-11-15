@@ -27,6 +27,58 @@
 
   var state = { crops: [], district: "" };
 
+  /* ── language: one toggle, whole page ───────────────────────── */
+
+  /* English defaults for text the page writes itself. The Luganda strings
+     live in translations_lg.js; a missing key keeps the English text. */
+  var EN = {
+    "district-checking": "Checking the site…",
+    "district-none": "Not available",
+    "submit-idle": "Get advice",
+    "submit-loading": "Getting advice…",
+    "status-loading": "Reading the field and the season.",
+    "error-service": "The advice service did not answer. Check the connection and try again.",
+    "error-ph": "Enter a soil pH between 0 and 14, or leave it blank.",
+    "when-fallback": "No supported timing in this response.",
+    "card-fallback": "No advice text was returned.",
+    "lg-missing": "Luganda card unavailable for this advice"
+  };
+
+  var lang = "en";
+  var lastData = null;
+
+  function t(key) {
+    if (lang === "lg" && window.LG_STRINGS && window.LG_STRINGS[key]) {
+      return window.LG_STRINGS[key];
+    }
+    return EN[key] || null;
+  }
+
+  /* Static page text carries data-i18n. The English text is captured once
+     from the markup, then the table replaces it key by key. */
+  var i18nNodes = Array.prototype.slice.call(document.querySelectorAll("[data-i18n]"));
+  i18nNodes.forEach(function (node) {
+    node.dataset.en = node.textContent;
+  });
+
+  function applyStaticLang() {
+    i18nNodes.forEach(function (node) {
+      var key = node.getAttribute("data-i18n");
+      var text = (lang === "lg" && window.LG_STRINGS && window.LG_STRINGS[key]) || node.dataset.en;
+      node.textContent = text;
+    });
+  }
+
+  function setLang(next) {
+    lang = next;
+    document.documentElement.lang = lang === "lg" ? "lg" : "en";
+    document.getElementById("lang-en").setAttribute("aria-pressed", lang === "en" ? "true" : "false");
+    document.getElementById("lang-lg").setAttribute("aria-pressed", lang === "lg" ? "true" : "false");
+    applyStaticLang();
+    drawCrops();
+    if (lastData) renderCard(lastData, { moveFocus: false });
+  }
+
   var form = document.getElementById("advice-form");
   var cropSelect = document.getElementById("crop-select");
   var addButton = document.getElementById("add-crop");
@@ -60,6 +112,9 @@
   /* ── previous crops ─────────────────────────────────────────── */
 
   function label(key) {
+    if (lang === "lg" && window.LG_STRINGS && window.LG_STRINGS["crop-" + key]) {
+      return window.LG_STRINGS["crop-" + key];
+    }
     return CROP_LABELS[key] || key;
   }
 
@@ -113,7 +168,7 @@
 
     function next() {
       if (index >= urls.length) {
-        districtEl.textContent = "Not available";
+        districtEl.textContent = t("district-none");
         return;
       }
       fetch(urls[index], { cache: "no-store" })
@@ -150,8 +205,8 @@
 
   function setLoading(on) {
     submitButton.disabled = on;
-    submitButton.textContent = on ? "Getting advice…" : "Get advice";
-    statusEl.textContent = on ? "Reading the field and the season." : "";
+    submitButton.textContent = on ? t("submit-loading") : t("submit-idle");
+    statusEl.textContent = on ? t("status-loading") : "";
   }
 
   function buildRequest() {
@@ -161,7 +216,7 @@
     if (rawPh !== "") {
       var ph = Number(rawPh);
       if (!isFinite(ph) || ph < 0 || ph > 14) {
-        showError("Enter a soil pH between 0 and 14, or leave it blank.");
+        showError(t("error-ph"));
         soilPh.focus();
         return null;
       }
@@ -233,10 +288,22 @@
       .catch(function () { /* the card still shows the assumption after submit */ });
   }
 
-  function renderCard(data) {
+  function renderCard(data, opts) {
+    lastData = data;
+    var lg = lang === "lg";
+
     setText(resultTitle, data.recommended_crop || "Advice");
-    setText(whenEl, data.when || "No supported timing in this response.");
-    setText(cardEn, data.card_en || data.why || "No advice text was returned.");
+    setText(whenEl, data.when || t("when-fallback"));
+
+    /* LG mode shows the checked Luganda card when the service returned one;
+       otherwise it keeps the English text and the honest fallback line. */
+    if (lg && data.card_lg) {
+      setText(cardEn, data.card_lg);
+      cardEn.setAttribute("lang", "lg");
+    } else {
+      setText(cardEn, data.card_en || data.why || t("card-fallback"));
+      cardEn.removeAttribute("lang");
+    }
     setText(whyEl, data.why || "");
 
     reasonsEl.innerHTML = "";
@@ -250,16 +317,24 @@
     setText(alternativeEl, data.alternative || "");
     alternativeBlock.hidden = !data.alternative;
 
-    setText(cardLg, data.card_lg || "");
-    lugandaBlock.hidden = false;
-    if (data.card_lg) {
-      cardLg.hidden = false;
-      lugandaMissing.hidden = true;
-      lugandaBlock.setAttribute("lang", "lg");
+    if (lg) {
+      /* The whole card already reads in Luganda or carries the fallback
+         line, so the separate Luganda block has nothing left to add. */
+      lugandaBlock.hidden = true;
+      document.getElementById("card-lg-fallback").hidden = !!data.card_lg;
     } else {
-      cardLg.hidden = true;
-      lugandaMissing.hidden = false;
-      lugandaBlock.setAttribute("lang", "en");
+      lugandaBlock.hidden = false;
+      document.getElementById("card-lg-fallback").hidden = true;
+      setText(cardLg, data.card_lg || "");
+      if (data.card_lg) {
+        cardLg.hidden = false;
+        lugandaMissing.hidden = true;
+        lugandaBlock.setAttribute("lang", "lg");
+      } else {
+        cardLg.hidden = true;
+        lugandaMissing.hidden = false;
+        lugandaBlock.setAttribute("lang", "en");
+      }
     }
 
     setText(seasonEl, data.season_assumption || SEASON_MISSING);
@@ -268,11 +343,18 @@
 
     badge.hidden = !USE_MOCK;
 
-    result.hidden = false;
-    resultTitle.setAttribute("tabindex", "-1");
-    resultTitle.focus({ preventScroll: true });
-    result.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (!opts || opts.moveFocus !== false) {
+      result.hidden = false;
+      resultTitle.setAttribute("tabindex", "-1");
+      resultTitle.focus({ preventScroll: true });
+      result.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      result.hidden = false;
+    }
   }
+
+  document.getElementById("lang-en").addEventListener("click", function () { setLang("en"); });
+  document.getElementById("lang-lg").addEventListener("click", function () { setLang("lg"); });
 
   form.addEventListener("submit", function (event) {
     event.preventDefault();
@@ -285,7 +367,7 @@
     getAdvice(body)
       .then(renderCard)
       .catch(function () {
-        showError("The advice service did not answer. Check the connection and try again.");
+        showError(t("error-service"));
       })
       .then(function () { setLoading(false); });
   });

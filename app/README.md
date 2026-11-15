@@ -13,6 +13,20 @@ Serve the repository root, then open `/app/index.html`:
 The district line reads the site name from `results/app_data.json`. A copy in
 this folder is used as a fallback.
 
+## Language
+
+A single toggle at the top of the page switches the whole page between
+English and Luganda: headings, form labels and hints, submit, footer, and
+the result card. It re-renders in place and does not reload.
+
+The Luganda strings live in `translations_lg.js`, one dict of key to Luganda.
+Every string there comes from the Sunbird translation pass with a read-back
+check. A key without an entry keeps its English text; nothing is invented.
+The Luganda card itself comes from the service response (`card_lg`), which is
+checked separately. In Luganda mode the card shows `card_lg` when the
+response has one, and otherwise keeps the English card text with the
+fallback line 'Luganda card unavailable for this advice' in Luganda.
+
 ## Backend
 
 The form posts JSON to the advice service:
