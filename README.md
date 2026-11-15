@@ -6,7 +6,7 @@ It is a decision-support prototype built for the NASA Space Apps 2026 Field Shif
 
 ## Setup
 
-Tested on Python 3.14 (Linux). Then:
+Tested on Python 3.14 (Linux). The pinned versions need Python 3.12 or newer, because numpy 2.5.4 does; on an older Python pip refuses the install with "No matching distribution found for numpy==2.5.4". Then:
 
 ```bash
 pip install -r requirements.txt
@@ -54,6 +54,8 @@ python server/test_recommend.py          # the service checks, no network needed
 ```
 
 `scripts/qa_path_check.py` and `scripts/qa_path_index_check.py` expect the built results in place, so run the build step first. Optional environment variables for the service's card and translation steps are documented in `server/README.md`; without them the service answers with the plain card.
+
+These steps were run in order from a clean clone on Python 3.14 (Linux) on 15 Nov 2026. Every command completed, the QA checks and the service checks passed, and the regenerated files in `results/` matched the committed ones apart from the build timestamp each file carries.
 
 ## Repository map
 
