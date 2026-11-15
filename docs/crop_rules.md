@@ -128,7 +128,10 @@ is unknown, and the season water need is a seasonal total.
 
 - `value` holds the figure as the source states it.
 - `value_min` and `value_max` hold the numeric ends, so a script can read them.
-- `page_or_quote` holds the page and the quoted line. Every sourced row has one.
+- `page_or_quote` holds the page and the quoted line. Every sourced row has one. Nine of them
+  are web datasheets rather than printed pages, so the locator names the datasheet and its
+  link instead of a page number. One row, the millet rotation row, has a page and no link,
+  because that report has no public copy.
 - `basis` holds the reasoning, on assumed rows only.
 - `note` holds a caveat, a disagreement or a scope limit.
 
