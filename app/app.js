@@ -15,11 +15,14 @@
 
   /* The API flag. No flag, or "?api=mock", uses the local sample response.
      "?api=mock-nolg" uses the sample without a Luganda card.
-     "?api=https://example.org/advice" posts to the live service instead. */
+     "?api=https://example.org/advice" posts to the live service instead.
+     The sample itself follows the request: a planting date shows the
+     dated sample, a blank date shows the default second-season sample. */
   var API_PARAM = new URLSearchParams(window.location.search).get("api");
-  var MOCK_FILES = { "mock": "mock_response.json", "mock-nolg": "mock_response_nolg.json" };
-  var USE_MOCK = !API_PARAM || MOCK_FILES.hasOwnProperty(API_PARAM);
-  var MOCK_FILE = USE_MOCK ? (MOCK_FILES[API_PARAM] || MOCK_FILES.mock) : "";
+  var USE_MOCK = !API_PARAM || API_PARAM === "mock" || API_PARAM === "mock-nolg";
+  var STRIP_LG = API_PARAM === "mock-nolg";
+  var MOCK_DEFAULT_FILE = "mock_response.json";
+  var MOCK_DATED_FILE = "mock_response_dated.json";
   var API_URL = USE_MOCK ? "" : API_PARAM;
   /* The advice base: the POST URL without its endpoint, e.g. the ?api= URL
      minus a trailing /recommend. The pre-submit assumption reads from here. */
@@ -34,6 +37,7 @@
   var cropEmpty = document.getElementById("crop-empty");
   var soilPh = document.getElementById("soil-ph");
   var moisture = document.getElementById("moisture");
+  var plantingDate = document.getElementById("planting-date");
   var districtEl = document.getElementById("district");
   var submitButton = document.getElementById("submit");
   var statusEl = document.getElementById("status");
@@ -170,18 +174,33 @@
 
     var rawMoisture = moisture.value.trim();
     if (rawMoisture !== "") body.moisture = rawMoisture;
+
+    /* A date is sent only when given. The type=date input already limits
+       the value to ISO YYYY-MM-DD or empty; further checks are the
+       server's business. */
+    if (plantingDate.value) body.planting_date = plantingDate.value;
+
     if (state.district) body.district = state.district;
 
     return body;
   }
 
+  function mockFileFor(body) {
+    return body && body.planting_date ? MOCK_DATED_FILE : MOCK_DEFAULT_FILE;
+  }
+
   function getAdvice(body) {
     if (USE_MOCK) {
+      var file = mockFileFor(body);
       return new Promise(function (resolve) { setTimeout(resolve, 450); })
-        .then(function () { return fetch(MOCK_FILE, { cache: "no-store" }); })
+        .then(function () { return fetch(file, { cache: "no-store" }); })
         .then(function (response) {
           if (!response.ok) throw new Error("HTTP " + response.status);
           return response.json();
+        })
+        .then(function (data) {
+          if (STRIP_LG) delete data.card_lg;
+          return data;
         });
     }
 
@@ -204,9 +223,10 @@
   var SEASON_MISSING = "The service did not state the season this advice assumes.";
 
   /* The assumption sits by the submit control, so the user reads it before
-     asking for advice. In mock mode the sample fills it on load. With the
-     live service it fills from GET <api-base>/assumption on load, and stays
-     empty until the first response if that fetch fails. */
+     asking for advice. In mock mode the sample for the current date choice
+     fills it, and a date change refreshes it. With the live service it
+     fills from GET <api-base>/assumption on load, and stays empty until
+     the first response if that fetch fails. */
   function showSeasonNote(text) {
     setText(seasonNoteText, text || SEASON_MISSING);
     seasonNote.hidden = false;
@@ -225,13 +245,23 @@
         .catch(function () { /* the note stays empty until the first response */ });
       return;
     }
-    fetch(MOCK_FILE, { cache: "no-store" })
+    fetch(MOCK_DEFAULT_FILE, { cache: "no-store" })
       .then(function (response) { return response.ok ? response.json() : null; })
       .then(function (data) {
         if (data && data.season_assumption) showSeasonNote(data.season_assumption);
       })
       .catch(function () { /* the card still shows the assumption after submit */ });
   }
+
+  plantingDate.addEventListener("change", function () {
+    if (!USE_MOCK) return;
+    fetch(mockFileFor({ planting_date: plantingDate.value || null }), { cache: "no-store" })
+      .then(function (response) { return response.ok ? response.json() : null; })
+      .then(function (data) {
+        if (data && data.season_assumption) showSeasonNote(data.season_assumption);
+      })
+      .catch(function () { /* the note keeps its last text */ });
+  });
 
   function renderCard(data) {
     setText(resultTitle, data.recommended_crop || "Advice");
@@ -283,7 +313,15 @@
 
     setLoading(true);
     getAdvice(body)
-      .then(renderCard)
+      .then(function (data) {
+        /* The server owns date checks. If it reports a problem, show its
+           message in the form error line instead of the card. */
+        if (data && data.error) {
+          showError(String(data.error));
+          return;
+        }
+        renderCard(data);
+      })
       .catch(function () {
         showError("The advice service did not answer. Check the connection and try again.");
       })
