@@ -231,14 +231,30 @@ returns: `steps`, `n_steps`, `n_matched`, `n_for`, `n_against`, `n_unmatched`
 and `path_labels`. Each step carries `from`, `to`, `matched`, `label`,
 `direction`, `reason` and `note`. There is no translation layer.
 
+The value is a subset of the model's result. `path` and `assumption` are
+dropped, because the key already states the path and the assumption is one
+statement for the whole file. A screen shows the one-step assumption from
+`crop_path_assumption` in `results/app_data.json`, not from this file.
+
 Every entry is produced by calling the model. The index is a projection of
 `notebooks/crop_path.py`, not a second implementation.
 
 It covers the five crop keys at lengths 1 to 3. Length 1 is included, so a
 single-crop request returns an empty result rather than a missing key.
 
-The screen drops blanks before it builds a key. The index therefore holds no
-empty-key entry and no key with an empty segment.
+## What the screen must do before it looks up
+
+1. Drop blank values.
+2. Drop the sentinel values `other` and `unsure`. They are not crops, and the
+   model has no rules for them. A key that contains either has no entry.
+3. Remove duplicate crops in the same history. The model reads a path newest
+   last, so a repeated crop adds no comparison.
+4. Join the rest with `>`, newest last.
+
+The index holds no empty-key entry and no key with an empty segment.
+
+If the lookup finds no entry, the screen says no comparison is available for
+that path. Do not invent a result and do not fall back to a shorter path.
 
 `scripts/qa_path_index_check.py` checks the file against the live model.
 
